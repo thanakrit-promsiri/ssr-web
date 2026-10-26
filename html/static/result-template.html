@@ -4,13 +4,34 @@
     AI
   </div>
   <div class="bg-slate-900/80 border border-purple-500/20 p-4 md:p-6 rounded-2xl rounded-tl-none max-w-xl shadow-lg w-full text-sm text-slate-200 leading-relaxed">
-    <h3 class="font-semibold text-amber-300 mb-2">✨ ผลการคำนวณดวงชะตา</h3>
+    <h3 class="font-semibold text-amber-300 mb-2">✨ สรุปข้อมูลดวงชะตา</h3>
     <div id="predictionResult">
-      <p>✅ บันทึกข้อมูลสำเร็จ!</p>
-      <p class="mt-2">📅 วันเกิด: พ.ศ. <span id="resYearBE"></span> (ค.ศ. <span id="resYearCE"></span>) เวลา <span id="resTime"></span> น.</p>
-      <p>📍 สถานที่เกิด: อ. <span id="resAmphoe"></span> จ. <span id="resProvince"></span></p>
-      <p>🌐 พิกัด GPS: Lat <span id="resLat"></span>, Long <span id="resLng"></span></p>
-      <p class="mt-3 text-amber-200">🔮 (ระบบพร้อมส่งข้อมูลพิกัดและวันเวลาเกิดนี้ไปประมวลผลดวงชะตาต่อไป)</p>
+      <p>✅ ตรวจสอบข้อมูลพิกัดและวันเกิดเรียบร้อยแล้ว</p>
+      <div class="mt-3 bg-slate-950/60 p-3 rounded-xl border border-purple-500/10 space-y-1 text-xs text-slate-300">
+        <p>📅 <strong>วันเกิด:</strong> พ.ศ. <span id="resYearBE" class="text-amber-200"></span> (ค.ศ. <span id="resYearCE" class="text-amber-200"></span>) เวลา <span id="resTime" class="text-amber-200"></span> น.</p>
+        <p>📍 <strong>สถานที่เกิด:</strong> อ. <span id="resAmphoe" class="text-amber-200"></span> จ. <span id="resProvince" class="text-amber-200"></span></p>
+        <p>🌐 <strong>พิกัด GPS:</strong> Lat <span id="resLat" class="text-amber-200"></span>, Long <span id="resLng" class="text-amber-200"></span></p>
+      </div>
+
+      <!-- ปุ่มกดประมวลผลดวงชะตา -->
+      <div class="mt-4 flex flex-col sm:flex-row gap-2">
+        <button onclick="calculateAstrology()" class="flex-1 bg-gradient-to-r from-purple-600 to-amber-500 hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+          <span>🔮</span> เริ่มคำนวณและทำนายดวงชะตา
+        </button>
+        <button onclick="resetBirthInfo()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2.5 px-3 rounded-xl text-xs transition cursor-pointer border border-slate-700 flex items-center justify-center gap-1">
+          <span>✏️</span> แก้ไขข้อมูล
+        </button>
+      </div>
+      
+      <!-- พื้นที่แสดงผลลัพธ์การคำนวณ -->
+      <div id="astroCalculationArea" class="mt-4 hidden pt-4 border-t border-purple-500/20">
+        <div id="astroLoading" class="flex items-center gap-2 text-xs text-amber-300">
+          <div class="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+          กำลังคำนวณตำแหน่งดาวและสมโณฤกษ์...
+        </div>
+        <div id="astroOutput" class="text-xs leading-relaxed text-slate-200"></div>
+      </div>
+
     </div>
   </div>
 </div>
