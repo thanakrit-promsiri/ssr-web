@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ลงทะเบียนเข้าสู่ระบบ - บูมบามเอไอ พยากรณ์</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Prompt', sans-serif; }</style>
+</head>
+<body class="h-full bg-slate-950 text-slate-100 flex items-center justify-center relative overflow-hidden">
+
+    <!-- Background Glow Effects -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-purple-600/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Registration Card Container -->
+    <div class="relative z-10 max-w-md w-full mx-4 p-8 bg-slate-900/80 backdrop-blur-xl border border-purple-500/20 rounded-3xl shadow-[0_0_50px_rgba(168,85,247,0.15)] text-center">
+        
+        <!-- Logo / Icon -->
+        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-tr from-purple-600 to-amber-400 flex items-center justify-center text-4xl shadow-lg shadow-purple-500/30">
+            🔮
+        </div>
+
+        <!-- Title & Subtitle -->
+        <h1 class="text-2xl font-bold text-amber-200 mb-2">เปิดดวง ระบบทดสอบ บูมบามเอไอ</h1>
+        <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+            กรอกชื่อผู้ใช้และรหัสซีเรียลเชิญเข้าใช้งาน (Access Key) <br>เพื่อสร้างบัญชีทดสอบของคุณ
+        </p>
+
+        <!-- Form -->
+        <form onsubmit="handleRegister(event)" class="space-y-4 text-left">
+            <!-- ช่องกรอก Username -->
+            <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1.5 ml-1">ชื่อผู้ใช้ (Username / ชื่อเล่นของคุณ)</label>
+                <input type="text" id="username" placeholder="เช่น Somchai_Amulet" required
+                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500 transition placeholder-slate-600">
+            </div>
+
+            <!-- ช่องกรอก Serial Key -->
+            <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1.5 ml-1">รหัสซีเรียลทดสอบ (Serial Key)</label>
+                <input type="text" id="serialKey" placeholder="MALIN-VIP-XXXX" required
+                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-center tracking-widest uppercase text-amber-300 font-mono text-sm focus:outline-none focus:border-purple-500 transition placeholder-slate-600">
+            </div>
+            
+            <button type="submit" class="w-full mt-2 bg-gradient-to-r from-purple-600 to-amber-500 hover:opacity-90 text-white font-medium py-3.5 px-4 rounded-xl transition duration-200 shadow-lg shadow-purple-600/30 cursor-pointer text-sm text-center">
+                ยืนยันและเข้าสู่ระบบ
+            </button>
+        </form>
+
+        <!-- Error Message Box -->
+        <div id="errorMsg" class="mt-4 text-xs text-red-400 hidden"></div>
+
+        <!-- Footer Note -->
+        <p class="text-xs text-slate-500 mt-6">
+            ระบบทดสอบ Closed Beta สำหรับผู้มีรหัสเชิญเท่านั้น
+        </p>
+    </div>
+
+<!-- Script สำหรับส่ง Username และ Serial Key ไปที่ Backend Golang -->
+    <script>
+        function handleRegister(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const key = document.getElementById('serialKey').value.trim();
+            const errorBox = document.getElementById('errorMsg');
+            
+            errorBox.classList.add('hidden');
+
+            fetch('/api/v1/auth/register-serial', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // สำคัญ: เพื่อให้เบราว์เซอร์รับ HttpOnly Cookie ที่เซิร์ฟเวอร์ส่งกลับมา
+                body: JSON.stringify({ 
+                    username: username,
+                    serial_key: key 
+                })
+            })
+            .then(async res => {
+                const data = await res.json();
+                if (!res.ok) {
+                    throw new Error(data.message || 'เกิดข้อผิดพลาด กรุณาตรวจสอบรหัสซีเรียลอีกครั้ง');
+                }
+                return data;
+            })
+            .then(data => {
+                // สำเร็จ: Token ถูกเก็บใน HttpOnly Cookie อัตโนมัติแล้ว พาไปหน้าแชทได้ทันที
+                window.location.href = '/chat.html';
+            })
+            .catch(error => {
+                errorBox.textContent = error.message;
+                errorBox.classList.remove('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

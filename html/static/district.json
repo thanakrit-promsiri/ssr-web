@@ -1,0 +1,7037 @@
+[
+  {
+    "CH_ID": "81",
+    "CHANGWAT_T": "กระบี่",
+    "CHANGWAT_E": "Krabi",
+    "AMPHOES": [
+      {
+        "AM_ID": "8104",
+        "AMPHOE_T": "คลองท่อม",
+        "AMPHOE_E": "Khlong Thom",
+        "LAT_AVG": 7.9047,
+        "LONG_AVG": 99.1903
+      },
+      {
+        "AM_ID": "8101",
+        "AMPHOE_T": "เมืองกระบี่",
+        "AMPHOE_E": "Mueang Krabi",
+        "LAT_AVG": 8.0539,
+        "LONG_AVG": 98.7687
+      },
+      {
+        "AM_ID": "8105",
+        "AMPHOE_T": "อ่าวลึก",
+        "AMPHOE_E": "Ao Luek",
+        "LAT_AVG": 8.3085,
+        "LONG_AVG": 98.7148
+      },
+      {
+        "AM_ID": "8107",
+        "AMPHOE_T": "ลำทับ",
+        "AMPHOE_E": "Lam Thap",
+        "LAT_AVG": 8.0188,
+        "LONG_AVG": 99.3475
+      },
+      {
+        "AM_ID": "8103",
+        "AMPHOE_T": "เกาะลันตา",
+        "AMPHOE_E": "Ko Lanta",
+        "LAT_AVG": 7.614,
+        "LONG_AVG": 99.1051
+      },
+      {
+        "AM_ID": "8106",
+        "AMPHOE_T": "ปลายพระยา",
+        "AMPHOE_E": "Plai Phraya",
+        "LAT_AVG": 8.5453,
+        "LONG_AVG": 98.8143
+      },
+      {
+        "AM_ID": "8108",
+        "AMPHOE_T": "เหนือคลอง",
+        "AMPHOE_E": "Nuea Khlong",
+        "LAT_AVG": 7.9279,
+        "LONG_AVG": 99.0186
+      },
+      {
+        "AM_ID": "8102",
+        "AMPHOE_T": "เขาพนม",
+        "AMPHOE_E": "Khao Phanom",
+        "LAT_AVG": 8.2725,
+        "LONG_AVG": 99.1422
+      }
+    ]
+  },
+  {
+    "CH_ID": "10",
+    "CHANGWAT_T": "กรุงเทพมหานคร",
+    "CHANGWAT_E": "Bangkok",
+    "AMPHOES": [
+      {
+        "AM_ID": "1026",
+        "AMPHOE_T": "ดินแดง",
+        "AMPHOE_E": "Din Daeng",
+        "LAT_AVG": 13.778,
+        "LONG_AVG": 100.567
+      },
+      {
+        "AM_ID": "1032",
+        "AMPHOE_T": "ประเวศ",
+        "AMPHOE_E": "Prawet",
+        "LAT_AVG": 13.6953,
+        "LONG_AVG": 100.6697
+      },
+      {
+        "AM_ID": "1012",
+        "AMPHOE_T": "ยานนาวา",
+        "AMPHOE_E": "Yannawa",
+        "LAT_AVG": 13.6895,
+        "LONG_AVG": 100.5385
+      },
+      {
+        "AM_ID": "1024",
+        "AMPHOE_T": "ราษฎร์บูรณะ",
+        "AMPHOE_E": "Rat Burana",
+        "LAT_AVG": 13.6725,
+        "LONG_AVG": 100.5005
+      },
+      {
+        "AM_ID": "1003",
+        "AMPHOE_T": "หนองจอก",
+        "AMPHOE_E": "Nong Chok",
+        "LAT_AVG": 13.8512,
+        "LONG_AVG": 100.8561
+      },
+      {
+        "AM_ID": "1016",
+        "AMPHOE_T": "บางกอกใหญ่",
+        "AMPHOE_E": "Bangkok Yai",
+        "LAT_AVG": 13.738,
+        "LONG_AVG": 100.4805
+      },
+      {
+        "AM_ID": "1020",
+        "AMPHOE_T": "บางกอกน้อย",
+        "AMPHOE_E": "Bangkok Noi",
+        "LAT_AVG": 13.7634,
+        "LONG_AVG": 100.4728
+      },
+      {
+        "AM_ID": "1008",
+        "AMPHOE_T": "ป้อมปราบศัตรูพ่าย",
+        "AMPHOE_E": "Pom Prap Sattruphai",
+        "LAT_AVG": 13.7512,
+        "LONG_AVG": 100.5114
+      },
+      {
+        "AM_ID": "1036",
+        "AMPHOE_T": "ดอนเมือง",
+        "AMPHOE_E": "Don Mueang",
+        "LAT_AVG": 13.925,
+        "LONG_AVG": 100.593
+      },
+      {
+        "AM_ID": "1050",
+        "AMPHOE_T": "บางบอน",
+        "AMPHOE_E": "Bang Bon",
+        "LAT_AVG": 13.646,
+        "LONG_AVG": 100.37
+      },
+      {
+        "AM_ID": "1041",
+        "AMPHOE_T": "หลักสี่",
+        "AMPHOE_E": "Lak Si",
+        "LAT_AVG": 13.877,
+        "LONG_AVG": 100.572
+      },
+      {
+        "AM_ID": "1006",
+        "AMPHOE_T": "บางกะปิ",
+        "AMPHOE_E": "Bang Kapi",
+        "LAT_AVG": 13.771,
+        "LONG_AVG": 100.6475
+      },
+      {
+        "AM_ID": "1043",
+        "AMPHOE_T": "คันนายาว",
+        "AMPHOE_E": "Khanna Yao",
+        "LAT_AVG": 13.821,
+        "LONG_AVG": 100.677
+      },
+      {
+        "AM_ID": "1015",
+        "AMPHOE_T": "ธนบุรี",
+        "AMPHOE_E": "Thon Buri",
+        "LAT_AVG": 13.722,
+        "LONG_AVG": 100.4848
+      },
+      {
+        "AM_ID": "1019",
+        "AMPHOE_T": "ตลิ่งชัน",
+        "AMPHOE_E": "Taling Chan",
+        "LAT_AVG": 13.7675,
+        "LONG_AVG": 100.4398
+      },
+      {
+        "AM_ID": "1007",
+        "AMPHOE_T": "ปทุมวัน",
+        "AMPHOE_E": "Pathum Wan",
+        "LAT_AVG": 13.7405,
+        "LONG_AVG": 100.5318
+      },
+      {
+        "AM_ID": "1045",
+        "AMPHOE_T": "วังทองหลาง",
+        "AMPHOE_E": "Wang Thong Lang",
+        "LAT_AVG": 13.779,
+        "LONG_AVG": 100.609
+      },
+      {
+        "AM_ID": "1004",
+        "AMPHOE_T": "บางรัก",
+        "AMPHOE_E": "Bang Rak",
+        "LAT_AVG": 13.728,
+        "LONG_AVG": 100.5232
+      },
+      {
+        "AM_ID": "1047",
+        "AMPHOE_T": "บางนา",
+        "AMPHOE_E": "Bang Na",
+        "LAT_AVG": 13.672,
+        "LONG_AVG": 100.616
+      },
+      {
+        "AM_ID": "1037",
+        "AMPHOE_T": "ราชเทวี",
+        "AMPHOE_E": "Rat Thewi",
+        "LAT_AVG": 13.756,
+        "LONG_AVG": 100.5387
+      },
+      {
+        "AM_ID": "1001",
+        "AMPHOE_T": "พระนคร",
+        "AMPHOE_E": "Phra Nakhon",
+        "LAT_AVG": 13.7564,
+        "LONG_AVG": 100.4993
+      },
+      {
+        "AM_ID": "1044",
+        "AMPHOE_T": "สะพานสูง",
+        "AMPHOE_E": "Saphan Sung",
+        "LAT_AVG": 13.761,
+        "LONG_AVG": 100.688
+      },
+      {
+        "AM_ID": "1046",
+        "AMPHOE_T": "คลองสามวา",
+        "AMPHOE_E": "Khlong Sam Wa",
+        "LAT_AVG": 13.8678,
+        "LONG_AVG": 100.7398
+      },
+      {
+        "AM_ID": "1038",
+        "AMPHOE_T": "ลาดพร้าว",
+        "AMPHOE_E": "Lat Phrao",
+        "LAT_AVG": 13.8255,
+        "LONG_AVG": 100.606
+      },
+      {
+        "AM_ID": "1028",
+        "AMPHOE_T": "สาทร",
+        "AMPHOE_E": "Sa Thon",
+        "LAT_AVG": 13.714,
+        "LONG_AVG": 100.529
+      },
+      {
+        "AM_ID": "1021",
+        "AMPHOE_T": "บางขุนเทียน",
+        "AMPHOE_E": "Bang Khun Thian",
+        "LAT_AVG": 13.58,
+        "LONG_AVG": 100.4145
+      },
+      {
+        "AM_ID": "1023",
+        "AMPHOE_T": "หนองแขม",
+        "AMPHOE_E": "Nong Khaem",
+        "LAT_AVG": 13.697,
+        "LONG_AVG": 100.3545
+      },
+      {
+        "AM_ID": "1010",
+        "AMPHOE_T": "มีนบุรี",
+        "AMPHOE_E": "Min Buri",
+        "LAT_AVG": 13.808,
+        "LONG_AVG": 100.7485
+      },
+      {
+        "AM_ID": "1011",
+        "AMPHOE_T": "ลาดกระบัง",
+        "AMPHOE_E": "Lat Krabang",
+        "LAT_AVG": 13.743,
+        "LONG_AVG": 100.7892
+      },
+      {
+        "AM_ID": "1002",
+        "AMPHOE_T": "ดุสิต",
+        "AMPHOE_E": "Dusit",
+        "LAT_AVG": 13.7728,
+        "LONG_AVG": 100.5154
+      },
+      {
+        "AM_ID": "1018",
+        "AMPHOE_T": "คลองสาน",
+        "AMPHOE_E": "Khlong San",
+        "LAT_AVG": 13.7265,
+        "LONG_AVG": 100.5025
+      },
+      {
+        "AM_ID": "1017",
+        "AMPHOE_T": "ห้วยขวาง",
+        "AMPHOE_E": "Huai Khwang",
+        "LAT_AVG": 13.7723,
+        "LONG_AVG": 100.5807
+      },
+      {
+        "AM_ID": "1014",
+        "AMPHOE_T": "พญาไท",
+        "AMPHOE_E": "Phaya Thai",
+        "LAT_AVG": 13.782,
+        "LONG_AVG": 100.545
+      },
+      {
+        "AM_ID": "1030",
+        "AMPHOE_T": "จตุจักร",
+        "AMPHOE_E": "Chatuchak",
+        "LAT_AVG": 13.826,
+        "LONG_AVG": 100.565
+      },
+      {
+        "AM_ID": "1031",
+        "AMPHOE_T": "บางคอแหลม",
+        "AMPHOE_E": "Bang Kho Laem",
+        "LAT_AVG": 13.6987,
+        "LONG_AVG": 100.506
+      },
+      {
+        "AM_ID": "1005",
+        "AMPHOE_T": "บางเขน",
+        "AMPHOE_E": "Bang Khen",
+        "LAT_AVG": 13.867,
+        "LONG_AVG": 100.628
+      },
+      {
+        "AM_ID": "1009",
+        "AMPHOE_T": "พระโขนง",
+        "AMPHOE_E": "Phra Khanong",
+        "LAT_AVG": 13.692,
+        "LONG_AVG": 100.626
+      },
+      {
+        "AM_ID": "1035",
+        "AMPHOE_T": "จอมทอง",
+        "AMPHOE_E": "Chom Thong",
+        "LAT_AVG": 13.6903,
+        "LONG_AVG": 100.4655
+      },
+      {
+        "AM_ID": "1034",
+        "AMPHOE_T": "สวนหลวง",
+        "AMPHOE_E": "Suan Luang",
+        "LAT_AVG": 13.726,
+        "LONG_AVG": 100.628
+      },
+      {
+        "AM_ID": "1022",
+        "AMPHOE_T": "ภาษีเจริญ",
+        "AMPHOE_E": "Phasi Charoen",
+        "LAT_AVG": 13.7267,
+        "LONG_AVG": 100.4456
+      },
+      {
+        "AM_ID": "1013",
+        "AMPHOE_T": "สัมพันธวงศ์",
+        "AMPHOE_E": "Samphanthawong",
+        "LAT_AVG": 13.738,
+        "LONG_AVG": 100.5093
+      },
+      {
+        "AM_ID": "1039",
+        "AMPHOE_T": "วัฒนา",
+        "AMPHOE_E": "Watthana",
+        "LAT_AVG": 13.7327,
+        "LONG_AVG": 100.5773
+      },
+      {
+        "AM_ID": "1042",
+        "AMPHOE_T": "สายไหม",
+        "AMPHOE_E": "Sai Mai",
+        "LAT_AVG": 13.905,
+        "LONG_AVG": 100.652
+      },
+      {
+        "AM_ID": "1027",
+        "AMPHOE_T": "บึงกุ่ม",
+        "AMPHOE_E": "Bung Kum",
+        "LAT_AVG": 13.808,
+        "LONG_AVG": 100.65
+      },
+      {
+        "AM_ID": "1048",
+        "AMPHOE_T": "ทวีวัฒนา",
+        "AMPHOE_E": "Thawi Watthana",
+        "LAT_AVG": 13.7705,
+        "LONG_AVG": 100.369
+      },
+      {
+        "AM_ID": "1029",
+        "AMPHOE_T": "บางซื่อ",
+        "AMPHOE_E": "Bang Su",
+        "LAT_AVG": 13.82,
+        "LONG_AVG": 100.529
+      },
+      {
+        "AM_ID": "1025",
+        "AMPHOE_T": "บางพลัด",
+        "AMPHOE_E": "Bang Phlat",
+        "LAT_AVG": 13.787,
+        "LONG_AVG": 100.4932
+      },
+      {
+        "AM_ID": "1033",
+        "AMPHOE_T": "คลองเตย",
+        "AMPHOE_E": "Khlong Toei",
+        "LAT_AVG": 13.7133,
+        "LONG_AVG": 100.5787
+      },
+      {
+        "AM_ID": "1040",
+        "AMPHOE_T": "บางแค",
+        "AMPHOE_E": "Bang Khae",
+        "LAT_AVG": 13.7105,
+        "LONG_AVG": 100.3975
+      },
+      {
+        "AM_ID": "1049",
+        "AMPHOE_T": "ทุ่งครุ",
+        "AMPHOE_E": "Thung Khu",
+        "LAT_AVG": 13.6325,
+        "LONG_AVG": 100.5035
+      }
+    ]
+  },
+  {
+    "CH_ID": "71",
+    "CHANGWAT_T": "กาญจนบุรี",
+    "CHANGWAT_E": "Kanchanaburi",
+    "AMPHOES": [
+      {
+        "AM_ID": "7105",
+        "AMPHOE_T": "ท่ามะกา",
+        "AMPHOE_E": "Tha Maka",
+        "LAT_AVG": 13.9334,
+        "LONG_AVG": 99.7837
+      },
+      {
+        "AM_ID": "7107",
+        "AMPHOE_T": "ทองผาภูมิ",
+        "AMPHOE_E": "Thong Pha Phum",
+        "LAT_AVG": 14.7284,
+        "LONG_AVG": 98.6827
+      },
+      {
+        "AM_ID": "7102",
+        "AMPHOE_T": "ไทรโยค",
+        "AMPHOE_E": "Sai Yok",
+        "LAT_AVG": 14.1784,
+        "LONG_AVG": 99.0234
+      },
+      {
+        "AM_ID": "7104",
+        "AMPHOE_T": "ศรีสวัสดิ์",
+        "AMPHOE_E": "Si Sawat",
+        "LAT_AVG": 14.638,
+        "LONG_AVG": 99.099
+      },
+      {
+        "AM_ID": "7108",
+        "AMPHOE_T": "สังขละบุรี",
+        "AMPHOE_E": "Sangkhla Buri",
+        "LAT_AVG": 15.152,
+        "LONG_AVG": 98.5167
+      },
+      {
+        "AM_ID": "7106",
+        "AMPHOE_T": "ท่าม่วง",
+        "AMPHOE_E": "Tha Muang",
+        "LAT_AVG": 13.9323,
+        "LONG_AVG": 99.6227
+      },
+      {
+        "AM_ID": "7113",
+        "AMPHOE_T": "ห้วยกระเจา",
+        "AMPHOE_E": "Huai Krachao",
+        "LAT_AVG": 14.3488,
+        "LONG_AVG": 99.67
+      },
+      {
+        "AM_ID": "7103",
+        "AMPHOE_T": "บ่อพลอย",
+        "AMPHOE_E": "Bo Phloi",
+        "LAT_AVG": 14.3894,
+        "LONG_AVG": 99.4404
+      },
+      {
+        "AM_ID": "7101",
+        "AMPHOE_T": "เมืองกาญจนบุรี",
+        "AMPHOE_E": "Mueang Kanchanaburi",
+        "LAT_AVG": 14.0555,
+        "LONG_AVG": 99.4145
+      },
+      {
+        "AM_ID": "7111",
+        "AMPHOE_T": "ด่านมะขามเตี้ย",
+        "AMPHOE_E": "Dan Makham Tia",
+        "LAT_AVG": 13.8338,
+        "LONG_AVG": 99.3695
+      },
+      {
+        "AM_ID": "7112",
+        "AMPHOE_T": "หนองปรือ",
+        "AMPHOE_E": "Nong Prue",
+        "LAT_AVG": 14.6673,
+        "LONG_AVG": 99.4397
+      },
+      {
+        "AM_ID": "7110",
+        "AMPHOE_T": "เลาขวัญ",
+        "AMPHOE_E": "Lao Khwan",
+        "LAT_AVG": 14.6019,
+        "LONG_AVG": 99.6964
+      },
+      {
+        "AM_ID": "7109",
+        "AMPHOE_T": "พนมทวน",
+        "AMPHOE_E": "Phanom Thuan",
+        "LAT_AVG": 14.1285,
+        "LONG_AVG": 99.6984
+      }
+    ]
+  },
+  {
+    "CH_ID": "46",
+    "CHANGWAT_T": "กาฬสินธุ์",
+    "CHANGWAT_E": "Kalasin",
+    "AMPHOES": [
+      {
+        "AM_ID": "4616",
+        "AMPHOE_T": "นาคู",
+        "AMPHOE_E": "Na Khu",
+        "LAT_AVG": 16.7562,
+        "LONG_AVG": 104.0172
+      },
+      {
+        "AM_ID": "4611",
+        "AMPHOE_T": "ท่าคันโท",
+        "AMPHOE_E": "Tha Khantho",
+        "LAT_AVG": 16.8667,
+        "LONG_AVG": 103.2453
+      },
+      {
+        "AM_ID": "4618",
+        "AMPHOE_T": "ฆ้องชัย",
+        "AMPHOE_E": "Khong Chai",
+        "LAT_AVG": 16.2646,
+        "LONG_AVG": 103.4748
+      },
+      {
+        "AM_ID": "4615",
+        "AMPHOE_T": "สามชัย",
+        "AMPHOE_E": "Sam Chai",
+        "LAT_AVG": 16.8738,
+        "LONG_AVG": 103.5298
+      },
+      {
+        "AM_ID": "4609",
+        "AMPHOE_T": "สหัสขันธ์",
+        "AMPHOE_E": "Sahatsakhan",
+        "LAT_AVG": 16.7176,
+        "LONG_AVG": 103.5619
+      },
+      {
+        "AM_ID": "4602",
+        "AMPHOE_T": "นามน",
+        "AMPHOE_E": "Na Mon",
+        "LAT_AVG": 16.5784,
+        "LONG_AVG": 103.7958
+      },
+      {
+        "AM_ID": "4606",
+        "AMPHOE_T": "เขาวง",
+        "AMPHOE_E": "Khao Wong",
+        "LAT_AVG": 16.6943,
+        "LONG_AVG": 104.094
+      },
+      {
+        "AM_ID": "4605",
+        "AMPHOE_T": "กุฉินารายณ์",
+        "AMPHOE_E": "Kuchinarai",
+        "LAT_AVG": 16.5225,
+        "LONG_AVG": 104.0499
+      },
+      {
+        "AM_ID": "4613",
+        "AMPHOE_T": "สมเด็จ",
+        "AMPHOE_E": "Somdet",
+        "LAT_AVG": 16.7541,
+        "LONG_AVG": 103.7488
+      },
+      {
+        "AM_ID": "4610",
+        "AMPHOE_T": "คำม่วง",
+        "AMPHOE_E": "Kham Muang",
+        "LAT_AVG": 16.9082,
+        "LONG_AVG": 103.6627
+      },
+      {
+        "AM_ID": "4617",
+        "AMPHOE_T": "ดอนจาน",
+        "AMPHOE_E": "Don Chan",
+        "LAT_AVG": 16.4764,
+        "LONG_AVG": 103.7024
+      },
+      {
+        "AM_ID": "4604",
+        "AMPHOE_T": "ร่องคำ",
+        "AMPHOE_E": "Rong Kham",
+        "LAT_AVG": 16.2793,
+        "LONG_AVG": 103.7193
+      },
+      {
+        "AM_ID": "4608",
+        "AMPHOE_T": "ห้วยเม็ก",
+        "AMPHOE_E": "Huai Mek",
+        "LAT_AVG": 16.6122,
+        "LONG_AVG": 103.2418
+      },
+      {
+        "AM_ID": "4614",
+        "AMPHOE_T": "ห้วยผึ้ง",
+        "AMPHOE_E": "Huai Phueng",
+        "LAT_AVG": 16.6605,
+        "LONG_AVG": 103.9068
+      },
+      {
+        "AM_ID": "4607",
+        "AMPHOE_T": "ยางตลาด",
+        "AMPHOE_E": "Yang Talat",
+        "LAT_AVG": 16.4312,
+        "LONG_AVG": 103.3677
+      },
+      {
+        "AM_ID": "4612",
+        "AMPHOE_T": "หนองกุงศรี",
+        "AMPHOE_E": "Nong Kung Si",
+        "LAT_AVG": 16.7289,
+        "LONG_AVG": 103.3269
+      },
+      {
+        "AM_ID": "4603",
+        "AMPHOE_T": "กมลาไสย",
+        "AMPHOE_E": "Kamalasai",
+        "LAT_AVG": 16.2926,
+        "LONG_AVG": 103.6001
+      },
+      {
+        "AM_ID": "4601",
+        "AMPHOE_T": "เมืองกาฬสินธุ์",
+        "AMPHOE_E": "Mueang Kalasin",
+        "LAT_AVG": 16.5105,
+        "LONG_AVG": 103.5513
+      }
+    ]
+  },
+  {
+    "CH_ID": "62",
+    "CHANGWAT_T": "กำแพงเพชร",
+    "CHANGWAT_E": "Kamphaeng Phet",
+    "AMPHOES": [
+      {
+        "AM_ID": "6201",
+        "AMPHOE_T": "เมืองกำแพงเพชร",
+        "AMPHOE_E": "Mueang Kamphaeng Phet",
+        "LAT_AVG": 16.4358,
+        "LONG_AVG": 99.5127
+      },
+      {
+        "AM_ID": "6211",
+        "AMPHOE_T": "โกสัมพีนคร",
+        "AMPHOE_E": "Kosamphi Nakhon",
+        "LAT_AVG": 16.554,
+        "LONG_AVG": 99.335
+      },
+      {
+        "AM_ID": "6204",
+        "AMPHOE_T": "ขาณุวรลักษบุรี",
+        "AMPHOE_E": "Khanu Woralaksaburi",
+        "LAT_AVG": 16.0445,
+        "LONG_AVG": 99.7314
+      },
+      {
+        "AM_ID": "6209",
+        "AMPHOE_T": "ปางศิลาทอง",
+        "AMPHOE_E": "Pang Sila Thong",
+        "LAT_AVG": 16.0597,
+        "LONG_AVG": 99.3723
+      },
+      {
+        "AM_ID": "6202",
+        "AMPHOE_T": "ไทรงาม",
+        "AMPHOE_E": "Sai Ngam",
+        "LAT_AVG": 16.4443,
+        "LONG_AVG": 99.8561
+      },
+      {
+        "AM_ID": "6203",
+        "AMPHOE_T": "คลองลาน",
+        "AMPHOE_E": "Khlong Lan",
+        "LAT_AVG": 16.2415,
+        "LONG_AVG": 99.2505
+      },
+      {
+        "AM_ID": "6210",
+        "AMPHOE_T": "บึงสามัคคี",
+        "AMPHOE_E": "Bueng Samakkhi",
+        "LAT_AVG": 16.2145,
+        "LONG_AVG": 99.9415
+      },
+      {
+        "AM_ID": "6205",
+        "AMPHOE_T": "คลองขลุง",
+        "AMPHOE_E": "Khlong Khlung",
+        "LAT_AVG": 16.2296,
+        "LONG_AVG": 99.7059
+      },
+      {
+        "AM_ID": "6206",
+        "AMPHOE_T": "พรานกระต่าย",
+        "AMPHOE_E": "Phran Kratai",
+        "LAT_AVG": 16.7041,
+        "LONG_AVG": 99.5807
+      },
+      {
+        "AM_ID": "6208",
+        "AMPHOE_T": "ทรายทองวัฒนา",
+        "AMPHOE_E": "Sai Thong Watthana",
+        "LAT_AVG": 16.311,
+        "LONG_AVG": 99.892
+      },
+      {
+        "AM_ID": "6207",
+        "AMPHOE_T": "ลานกระบือ",
+        "AMPHOE_E": "Lan Krabue",
+        "LAT_AVG": 16.5961,
+        "LONG_AVG": 99.8616
+      }
+    ]
+  },
+  {
+    "CH_ID": "40",
+    "CHANGWAT_T": "ขอนแก่น",
+    "CHANGWAT_E": "Khon Kaen",
+    "AMPHOES": [
+      {
+        "AM_ID": "4017",
+        "AMPHOE_T": "มัญจาคีรี",
+        "AMPHOE_E": "Mancha Khiri",
+        "LAT_AVG": 16.2081,
+        "LONG_AVG": 102.5283
+      },
+      {
+        "AM_ID": "4021",
+        "AMPHOE_T": "ซำสูง",
+        "AMPHOE_E": "Sam Sung",
+        "LAT_AVG": 16.56,
+        "LONG_AVG": 103.0642
+      },
+      {
+        "AM_ID": "4026",
+        "AMPHOE_T": "เวียงเก่า",
+        "AMPHOE_E": "Wiang Kao",
+        "LAT_AVG": 16.6967,
+        "LONG_AVG": 102.265
+      },
+      {
+        "AM_ID": "4013",
+        "AMPHOE_T": "แวงใหญ่",
+        "AMPHOE_E": "Waeng Yai",
+        "LAT_AVG": 15.933,
+        "LONG_AVG": 102.4624
+      },
+      {
+        "AM_ID": "4019",
+        "AMPHOE_T": "เขาสวนกวาง",
+        "AMPHOE_E": "Khao Suan Kwang",
+        "LAT_AVG": 16.8998,
+        "LONG_AVG": 102.7934
+      },
+      {
+        "AM_ID": "4003",
+        "AMPHOE_T": "พระยืน",
+        "AMPHOE_E": "Phra Yuen",
+        "LAT_AVG": 16.2962,
+        "LONG_AVG": 102.691
+      },
+      {
+        "AM_ID": "4008",
+        "AMPHOE_T": "อุบลรัตน์",
+        "AMPHOE_E": "Ubolratana",
+        "LAT_AVG": 16.7835,
+        "LONG_AVG": 102.6693
+      },
+      {
+        "AM_ID": "4004",
+        "AMPHOE_T": "หนองเรือ",
+        "AMPHOE_E": "Nong Ruea",
+        "LAT_AVG": 16.4904,
+        "LONG_AVG": 102.4477
+      },
+      {
+        "AM_ID": "4010",
+        "AMPHOE_T": "บ้านไผ่",
+        "AMPHOE_E": "Ban Phai",
+        "LAT_AVG": 16.0473,
+        "LONG_AVG": 102.7597
+      },
+      {
+        "AM_ID": "4022",
+        "AMPHOE_T": "โคกโพธิ์ไชย",
+        "AMPHOE_E": "Khok Pho Chai",
+        "LAT_AVG": 16.0728,
+        "LONG_AVG": 102.3945
+      },
+      {
+        "AM_ID": "4009",
+        "AMPHOE_T": "กระนวน",
+        "AMPHOE_E": "Kranuan",
+        "LAT_AVG": 16.7439,
+        "LONG_AVG": 103.0821
+      },
+      {
+        "AM_ID": "4007",
+        "AMPHOE_T": "น้ำพอง",
+        "AMPHOE_E": "Nam Phong",
+        "LAT_AVG": 16.6998,
+        "LONG_AVG": 102.8781
+      },
+      {
+        "AM_ID": "4002",
+        "AMPHOE_T": "บ้านฝาง",
+        "AMPHOE_E": "Ban Fang",
+        "LAT_AVG": 16.4733,
+        "LONG_AVG": 102.616
+      },
+      {
+        "AM_ID": "4023",
+        "AMPHOE_T": "หนองนาคำ",
+        "AMPHOE_E": "Nong Na Kham",
+        "LAT_AVG": 16.7997,
+        "LONG_AVG": 102.3433
+      },
+      {
+        "AM_ID": "4024",
+        "AMPHOE_T": "บ้านแฮด",
+        "AMPHOE_E": "Ban Haet",
+        "LAT_AVG": 16.2087,
+        "LONG_AVG": 102.7713
+      },
+      {
+        "AM_ID": "4016",
+        "AMPHOE_T": "ภูเวียง",
+        "AMPHOE_E": "Phu Wiang",
+        "LAT_AVG": 16.6719,
+        "LONG_AVG": 102.4458
+      },
+      {
+        "AM_ID": "4015",
+        "AMPHOE_T": "หนองสองห้อง",
+        "AMPHOE_E": "Nong Song Hong",
+        "LAT_AVG": 15.7663,
+        "LONG_AVG": 102.7781
+      },
+      {
+        "AM_ID": "4014",
+        "AMPHOE_T": "แวงน้อย",
+        "AMPHOE_E": "Waeng Noi",
+        "LAT_AVG": 15.8048,
+        "LONG_AVG": 102.4087
+      },
+      {
+        "AM_ID": "4006",
+        "AMPHOE_T": "สีชมพู",
+        "AMPHOE_E": "Si Chomphu",
+        "LAT_AVG": 16.7609,
+        "LONG_AVG": 102.1198
+      },
+      {
+        "AM_ID": "4012",
+        "AMPHOE_T": "พล",
+        "AMPHOE_E": "Phon",
+        "LAT_AVG": 15.8106,
+        "LONG_AVG": 102.5873
+      },
+      {
+        "AM_ID": "4020",
+        "AMPHOE_T": "ภูผาม่าน",
+        "AMPHOE_E": "Phu Phaman",
+        "LAT_AVG": 16.6968,
+        "LONG_AVG": 101.8884
+      },
+      {
+        "AM_ID": "4011",
+        "AMPHOE_T": "เปือยน้อย",
+        "AMPHOE_E": "Pueai Noi",
+        "LAT_AVG": 15.8878,
+        "LONG_AVG": 102.8755
+      },
+      {
+        "AM_ID": "4025",
+        "AMPHOE_T": "โนนศิลา",
+        "AMPHOE_E": "Non Sila",
+        "LAT_AVG": 15.9802,
+        "LONG_AVG": 102.6714
+      },
+      {
+        "AM_ID": "4001",
+        "AMPHOE_T": "เมืองขอนแก่น",
+        "AMPHOE_E": "Mueang Khon Kaen",
+        "LAT_AVG": 16.453,
+        "LONG_AVG": 102.8181
+      },
+      {
+        "AM_ID": "4005",
+        "AMPHOE_T": "ชุมแพ",
+        "AMPHOE_E": "Chum Phae",
+        "LAT_AVG": 16.5813,
+        "LONG_AVG": 102.1232
+      },
+      {
+        "AM_ID": "4018",
+        "AMPHOE_T": "ชนบท",
+        "AMPHOE_E": "Chonnabot",
+        "LAT_AVG": 16.0238,
+        "LONG_AVG": 102.5762
+      }
+    ]
+  },
+  {
+    "CH_ID": "22",
+    "CHANGWAT_T": "จันทบุรี",
+    "CHANGWAT_E": "Chanthaburi",
+    "AMPHOES": [
+      {
+        "AM_ID": "2207",
+        "AMPHOE_T": "สอยดาว",
+        "AMPHOE_E": "Soi Dao",
+        "LAT_AVG": 13.1854,
+        "LONG_AVG": 102.2484
+      },
+      {
+        "AM_ID": "2210",
+        "AMPHOE_T": "เขาคิชฌกูฏ",
+        "AMPHOE_E": "Khao Khitchakut",
+        "LAT_AVG": 12.8984,
+        "LONG_AVG": 102.0886
+      },
+      {
+        "AM_ID": "2205",
+        "AMPHOE_T": "มะขาม",
+        "AMPHOE_E": "Makham",
+        "LAT_AVG": 12.7228,
+        "LONG_AVG": 102.202
+      },
+      {
+        "AM_ID": "2203",
+        "AMPHOE_T": "ท่าใหม่",
+        "AMPHOE_E": "Tha Mai",
+        "LAT_AVG": 12.647,
+        "LONG_AVG": 101.9915
+      },
+      {
+        "AM_ID": "2202",
+        "AMPHOE_T": "ขลุง",
+        "AMPHOE_E": "Khlung",
+        "LAT_AVG": 12.4797,
+        "LONG_AVG": 102.2659
+      },
+      {
+        "AM_ID": "2208",
+        "AMPHOE_T": "แก่งหางแมว",
+        "AMPHOE_E": "Kaeng Hang Maeo",
+        "LAT_AVG": 13.0228,
+        "LONG_AVG": 101.8692
+      },
+      {
+        "AM_ID": "2206",
+        "AMPHOE_T": "แหลมสิงห์",
+        "AMPHOE_E": "Laem Sing",
+        "LAT_AVG": 12.458,
+        "LONG_AVG": 102.1095
+      },
+      {
+        "AM_ID": "2209",
+        "AMPHOE_T": "นายายอาม",
+        "AMPHOE_E": "Na Yai Am",
+        "LAT_AVG": 12.7113,
+        "LONG_AVG": 101.873
+      },
+      {
+        "AM_ID": "2201",
+        "AMPHOE_T": "เมืองจันทบุรี",
+        "AMPHOE_E": "Mueang Chanthaburi",
+        "LAT_AVG": 12.5936,
+        "LONG_AVG": 102.1158
+      },
+      {
+        "AM_ID": "2204",
+        "AMPHOE_T": "โป่งน้ำร้อน",
+        "AMPHOE_E": "Pong Nam Ron",
+        "LAT_AVG": 12.9648,
+        "LONG_AVG": 102.3878
+      }
+    ]
+  },
+  {
+    "CH_ID": "24",
+    "CHANGWAT_T": "ฉะเชิงเทรา",
+    "CHANGWAT_E": "Chachoengsao",
+    "AMPHOES": [
+      {
+        "AM_ID": "2404",
+        "AMPHOE_T": "บางปะกง",
+        "AMPHOE_E": "Bang Pakong",
+        "LAT_AVG": 13.5402,
+        "LONG_AVG": 100.9652
+      },
+      {
+        "AM_ID": "2406",
+        "AMPHOE_T": "พนมสารคาม",
+        "AMPHOE_E": "Phanom Sarakham",
+        "LAT_AVG": 13.748,
+        "LONG_AVG": 101.376
+      },
+      {
+        "AM_ID": "2407",
+        "AMPHOE_T": "ราชสาส์น",
+        "AMPHOE_E": "Ratchasan",
+        "LAT_AVG": 13.7797,
+        "LONG_AVG": 101.2823
+      },
+      {
+        "AM_ID": "2405",
+        "AMPHOE_T": "บ้านโพธิ์",
+        "AMPHOE_E": "Ban Pho",
+        "LAT_AVG": 13.6084,
+        "LONG_AVG": 101.0768
+      },
+      {
+        "AM_ID": "2403",
+        "AMPHOE_T": "บางน้ำเปรี้ยว",
+        "AMPHOE_E": "Bang Nam Priao",
+        "LAT_AVG": 13.8822,
+        "LONG_AVG": 101.0257
+      },
+      {
+        "AM_ID": "2409",
+        "AMPHOE_T": "แปลงยาว",
+        "AMPHOE_E": "Pleang Yao",
+        "LAT_AVG": 13.5658,
+        "LONG_AVG": 101.3365
+      },
+      {
+        "AM_ID": "2402",
+        "AMPHOE_T": "บางคล้า",
+        "AMPHOE_E": "Bang Khla",
+        "LAT_AVG": 13.725,
+        "LONG_AVG": 101.1969
+      },
+      {
+        "AM_ID": "2408",
+        "AMPHOE_T": "สนามชัยเขต",
+        "AMPHOE_E": "Sanam Chai Khet",
+        "LAT_AVG": 13.6213,
+        "LONG_AVG": 101.5977
+      },
+      {
+        "AM_ID": "2410",
+        "AMPHOE_T": "ท่าตะเกียบ",
+        "AMPHOE_E": "Tha Takiap",
+        "LAT_AVG": 13.4035,
+        "LONG_AVG": 101.689
+      },
+      {
+        "AM_ID": "2411",
+        "AMPHOE_T": "คลองเขื่อน",
+        "AMPHOE_E": "Khlong Khuean",
+        "LAT_AVG": 13.7636,
+        "LONG_AVG": 101.1546
+      },
+      {
+        "AM_ID": "2401",
+        "AMPHOE_T": "เมืองฉะเชิงเทรา",
+        "AMPHOE_E": "Mueang Chachoengsao",
+        "LAT_AVG": 13.7113,
+        "LONG_AVG": 101.0346
+      }
+    ]
+  },
+  {
+    "CH_ID": "20",
+    "CHANGWAT_T": "ชลบุรี",
+    "CHANGWAT_E": "Chon Buri",
+    "AMPHOES": [
+      {
+        "AM_ID": "2005",
+        "AMPHOE_T": "พานทอง",
+        "AMPHOE_E": "Phan Thong",
+        "LAT_AVG": 13.4703,
+        "LONG_AVG": 101.089
+      },
+      {
+        "AM_ID": "2003",
+        "AMPHOE_T": "หนองใหญ่",
+        "AMPHOE_E": "Nong Yai",
+        "LAT_AVG": 13.1396,
+        "LONG_AVG": 101.3802
+      },
+      {
+        "AM_ID": "2009",
+        "AMPHOE_T": "สัตหีบ",
+        "AMPHOE_E": "Sattahip",
+        "LAT_AVG": 12.6386,
+        "LONG_AVG": 100.9036
+      },
+      {
+        "AM_ID": "2008",
+        "AMPHOE_T": "เกาะสีชัง",
+        "AMPHOE_E": "Ko Sichang",
+        "LAT_AVG": 13.151,
+        "LONG_AVG": 100.809
+      },
+      {
+        "AM_ID": "2004",
+        "AMPHOE_T": "บางละมุง",
+        "AMPHOE_E": "Bang Lamung",
+        "LAT_AVG": 12.9435,
+        "LONG_AVG": 100.9179
+      },
+      {
+        "AM_ID": "2006",
+        "AMPHOE_T": "พนัสนิคม",
+        "AMPHOE_E": "Phanat Nikhom",
+        "LAT_AVG": 13.4671,
+        "LONG_AVG": 101.2007
+      },
+      {
+        "AM_ID": "2002",
+        "AMPHOE_T": "บ้านบึง",
+        "AMPHOE_E": "Ban Bueng",
+        "LAT_AVG": 13.2944,
+        "LONG_AVG": 101.1504
+      },
+      {
+        "AM_ID": "2001",
+        "AMPHOE_T": "เมืองชลบุรี",
+        "AMPHOE_E": "Mueang Chon Buri",
+        "LAT_AVG": 13.3488,
+        "LONG_AVG": 100.9878
+      },
+      {
+        "AM_ID": "2011",
+        "AMPHOE_T": "เกาะจันทร์",
+        "AMPHOE_E": "Ko Chan",
+        "LAT_AVG": 13.396,
+        "LONG_AVG": 101.3545
+      },
+      {
+        "AM_ID": "2010",
+        "AMPHOE_T": "บ่อทอง",
+        "AMPHOE_E": "Bo Thong",
+        "LAT_AVG": 13.2742,
+        "LONG_AVG": 101.462
+      },
+      {
+        "AM_ID": "2007",
+        "AMPHOE_T": "ศรีราชา",
+        "AMPHOE_E": "Si Racha",
+        "LAT_AVG": 13.1338,
+        "LONG_AVG": 101.0006
+      }
+    ]
+  },
+  {
+    "CH_ID": "18",
+    "CHANGWAT_T": "ชัยนาท",
+    "CHANGWAT_E": "Chai Nat",
+    "AMPHOES": [
+      {
+        "AM_ID": "1801",
+        "AMPHOE_T": "เมืองชัยนาท",
+        "AMPHOE_E": "Mueang Chai Nat",
+        "LAT_AVG": 15.1886,
+        "LONG_AVG": 100.1329
+      },
+      {
+        "AM_ID": "1804",
+        "AMPHOE_T": "สรรพยา",
+        "AMPHOE_E": "Sapphaya",
+        "LAT_AVG": 15.1396,
+        "LONG_AVG": 100.2516
+      },
+      {
+        "AM_ID": "1806",
+        "AMPHOE_T": "หันคา",
+        "AMPHOE_E": "Hankha",
+        "LAT_AVG": 15.038,
+        "LONG_AVG": 99.9879
+      },
+      {
+        "AM_ID": "1805",
+        "AMPHOE_T": "สรรคบุรี",
+        "AMPHOE_E": "Sankhaburi",
+        "LAT_AVG": 15.0311,
+        "LONG_AVG": 100.1891
+      },
+      {
+        "AM_ID": "1803",
+        "AMPHOE_T": "วัดสิงห์",
+        "AMPHOE_E": "Wat Sing",
+        "LAT_AVG": 15.2341,
+        "LONG_AVG": 99.9933
+      },
+      {
+        "AM_ID": "1802",
+        "AMPHOE_T": "มโนรมย์",
+        "AMPHOE_E": "Manorom",
+        "LAT_AVG": 15.3213,
+        "LONG_AVG": 100.1497
+      },
+      {
+        "AM_ID": "1808",
+        "AMPHOE_T": "เนินขาม",
+        "AMPHOE_E": "Noen Kham",
+        "LAT_AVG": 14.987,
+        "LONG_AVG": 99.8483
+      },
+      {
+        "AM_ID": "1807",
+        "AMPHOE_T": "หนองมะโมง",
+        "AMPHOE_E": "Nong Mamong",
+        "LAT_AVG": 15.233,
+        "LONG_AVG": 99.8238
+      }
+    ]
+  },
+  {
+    "CH_ID": "36",
+    "CHANGWAT_T": "ชัยภูมิ",
+    "CHANGWAT_E": "Chaiyaphum",
+    "AMPHOES": [
+      {
+        "AM_ID": "3602",
+        "AMPHOE_T": "บ้านเขว้า",
+        "AMPHOE_E": "Ban Khwao",
+        "LAT_AVG": 15.7957,
+        "LONG_AVG": 101.8722
+      },
+      {
+        "AM_ID": "3606",
+        "AMPHOE_T": "จัตุรัส",
+        "AMPHOE_E": "Chatturat",
+        "LAT_AVG": 15.5672,
+        "LONG_AVG": 101.8361
+      },
+      {
+        "AM_ID": "3605",
+        "AMPHOE_T": "หนองบัวแดง",
+        "AMPHOE_E": "Nong Bua Daeng",
+        "LAT_AVG": 16.1425,
+        "LONG_AVG": 101.645
+      },
+      {
+        "AM_ID": "3616",
+        "AMPHOE_T": "ซับใหญ่",
+        "AMPHOE_E": "Sap Yai",
+        "LAT_AVG": 15.5967,
+        "LONG_AVG": 101.6503
+      },
+      {
+        "AM_ID": "3603",
+        "AMPHOE_T": "คอนสวรรค์",
+        "AMPHOE_E": "Khon Sawan",
+        "LAT_AVG": 15.9294,
+        "LONG_AVG": 102.2829
+      },
+      {
+        "AM_ID": "3613",
+        "AMPHOE_T": "คอนสาร",
+        "AMPHOE_E": "Khon San",
+        "LAT_AVG": 16.564,
+        "LONG_AVG": 101.8595
+      },
+      {
+        "AM_ID": "3607",
+        "AMPHOE_T": "บำเหน็จณรงค์",
+        "AMPHOE_E": "Bamnet Narong",
+        "LAT_AVG": 15.4609,
+        "LONG_AVG": 101.661
+      },
+      {
+        "AM_ID": "3615",
+        "AMPHOE_T": "เนินสง่า",
+        "AMPHOE_E": "Noen Sa-nga",
+        "LAT_AVG": 15.5513,
+        "LONG_AVG": 101.9935
+      },
+      {
+        "AM_ID": "3608",
+        "AMPHOE_T": "หนองบัวระเหว",
+        "AMPHOE_E": "Nong Bua Rawe",
+        "LAT_AVG": 15.8008,
+        "LONG_AVG": 101.6806
+      },
+      {
+        "AM_ID": "3614",
+        "AMPHOE_T": "ภักดีชุมพล",
+        "AMPHOE_E": "Phakdi Chumphon",
+        "LAT_AVG": 15.9565,
+        "LONG_AVG": 101.3808
+      },
+      {
+        "AM_ID": "3612",
+        "AMPHOE_T": "แก้งคร้อ",
+        "AMPHOE_E": "Kaeng Khro",
+        "LAT_AVG": 16.1371,
+        "LONG_AVG": 102.2158
+      },
+      {
+        "AM_ID": "3604",
+        "AMPHOE_T": "เกษตรสมบูรณ์",
+        "AMPHOE_E": "Kaset Sombun",
+        "LAT_AVG": 16.2731,
+        "LONG_AVG": 101.9135
+      },
+      {
+        "AM_ID": "3609",
+        "AMPHOE_T": "เทพสถิต",
+        "AMPHOE_E": "Thep Sathit",
+        "LAT_AVG": 15.5874,
+        "LONG_AVG": 101.485
+      },
+      {
+        "AM_ID": "3611",
+        "AMPHOE_T": "บ้านแท่น",
+        "AMPHOE_E": "Ban Thaen",
+        "LAT_AVG": 16.3736,
+        "LONG_AVG": 102.3644
+      },
+      {
+        "AM_ID": "3601",
+        "AMPHOE_T": "เมืองชัยภูมิ",
+        "AMPHOE_E": "Mueang Chaiyaphum",
+        "LAT_AVG": 15.8351,
+        "LONG_AVG": 102.0529
+      },
+      {
+        "AM_ID": "3610",
+        "AMPHOE_T": "ภูเขียว",
+        "AMPHOE_E": "Phu Khiao",
+        "LAT_AVG": 16.3606,
+        "LONG_AVG": 102.1746
+      }
+    ]
+  },
+  {
+    "CH_ID": "86",
+    "CHANGWAT_T": "ชุมพร",
+    "CHANGWAT_E": "Chumphon",
+    "AMPHOES": [
+      {
+        "AM_ID": "8607",
+        "AMPHOE_T": "สวี",
+        "AMPHOE_E": "Sawi",
+        "LAT_AVG": 10.2414,
+        "LONG_AVG": 99.1441
+      },
+      {
+        "AM_ID": "8605",
+        "AMPHOE_T": "ละแม",
+        "AMPHOE_E": "Lamae",
+        "LAT_AVG": 9.7558,
+        "LONG_AVG": 99.0295
+      },
+      {
+        "AM_ID": "8601",
+        "AMPHOE_T": "เมืองชุมพร",
+        "AMPHOE_E": "Mueang Chumphon",
+        "LAT_AVG": 10.4466,
+        "LONG_AVG": 99.2431
+      },
+      {
+        "AM_ID": "8603",
+        "AMPHOE_T": "ปะทิว",
+        "AMPHOE_E": "Pathio",
+        "LAT_AVG": 10.7999,
+        "LONG_AVG": 99.4141
+      },
+      {
+        "AM_ID": "8604",
+        "AMPHOE_T": "หลังสวน",
+        "AMPHOE_E": "Lang Suan",
+        "LAT_AVG": 9.9517,
+        "LONG_AVG": 99.0874
+      },
+      {
+        "AM_ID": "8606",
+        "AMPHOE_T": "พะโต๊ะ",
+        "AMPHOE_E": "Phato",
+        "LAT_AVG": 9.84,
+        "LONG_AVG": 98.823
+      },
+      {
+        "AM_ID": "8608",
+        "AMPHOE_T": "ทุ่งตะโก",
+        "AMPHOE_E": "Thung Tako",
+        "LAT_AVG": 10.1204,
+        "LONG_AVG": 99.1448
+      },
+      {
+        "AM_ID": "8602",
+        "AMPHOE_T": "ท่าแซะ",
+        "AMPHOE_E": "Tha Sae",
+        "LAT_AVG": 10.7368,
+        "LONG_AVG": 99.1334
+      }
+    ]
+  },
+  {
+    "CH_ID": "92",
+    "CHANGWAT_T": "ตรัง",
+    "CHANGWAT_E": "Trang",
+    "AMPHOES": [
+      {
+        "AM_ID": "9207",
+        "AMPHOE_T": "วังวิเศษ",
+        "AMPHOE_E": "Wang Wiset",
+        "LAT_AVG": 7.721,
+        "LONG_AVG": 99.4254
+      },
+      {
+        "AM_ID": "9206",
+        "AMPHOE_T": "ห้วยยอด",
+        "AMPHOE_E": "Huai Yot",
+        "LAT_AVG": 7.7928,
+        "LONG_AVG": 99.5902
+      },
+      {
+        "AM_ID": "9201",
+        "AMPHOE_T": "เมืองตรัง",
+        "AMPHOE_E": "Mueang Trang",
+        "LAT_AVG": 7.58,
+        "LONG_AVG": 99.6132
+      },
+      {
+        "AM_ID": "9209",
+        "AMPHOE_T": "รัษฎา",
+        "AMPHOE_E": "Ratsada",
+        "LAT_AVG": 7.9526,
+        "LONG_AVG": 99.6604
+      },
+      {
+        "AM_ID": "9204",
+        "AMPHOE_T": "ปะเหลียน",
+        "AMPHOE_E": "Palian",
+        "LAT_AVG": 7.2328,
+        "LONG_AVG": 99.7128
+      },
+      {
+        "AM_ID": "9202",
+        "AMPHOE_T": "กันตัง",
+        "AMPHOE_E": "Kantang",
+        "LAT_AVG": 7.3797,
+        "LONG_AVG": 99.4538
+      },
+      {
+        "AM_ID": "9210",
+        "AMPHOE_T": "หาดสำราญ",
+        "AMPHOE_E": "Hat Samran",
+        "LAT_AVG": 7.1026,
+        "LONG_AVG": 99.5007
+      },
+      {
+        "AM_ID": "9203",
+        "AMPHOE_T": "ย่านตาขาว",
+        "AMPHOE_E": "Yan Ta Khao",
+        "LAT_AVG": 7.4266,
+        "LONG_AVG": 99.7234
+      },
+      {
+        "AM_ID": "9205",
+        "AMPHOE_T": "สิเกา",
+        "AMPHOE_E": "Sikao",
+        "LAT_AVG": 7.5665,
+        "LONG_AVG": 99.3283
+      },
+      {
+        "AM_ID": "9208",
+        "AMPHOE_T": "นาโยง",
+        "AMPHOE_E": "Na Yong",
+        "LAT_AVG": 7.5567,
+        "LONG_AVG": 99.728
+      }
+    ]
+  },
+  {
+    "CH_ID": "23",
+    "CHANGWAT_T": "ตราด",
+    "CHANGWAT_E": "Trat",
+    "AMPHOES": [
+      {
+        "AM_ID": "2305",
+        "AMPHOE_T": "แหลมงอบ",
+        "AMPHOE_E": "Laem Ngop",
+        "LAT_AVG": 12.2155,
+        "LONG_AVG": 102.3795
+      },
+      {
+        "AM_ID": "2306",
+        "AMPHOE_T": "เกาะกูด",
+        "AMPHOE_E": "Ko Kut",
+        "LAT_AVG": 11.8038,
+        "LONG_AVG": 102.4441
+      },
+      {
+        "AM_ID": "2307",
+        "AMPHOE_T": "เกาะช้าง",
+        "AMPHOE_E": "Ko Chang",
+        "LAT_AVG": 12.0757,
+        "LONG_AVG": 102.2997
+      },
+      {
+        "AM_ID": "2304",
+        "AMPHOE_T": "บ่อไร่",
+        "AMPHOE_E": "Bo Rai",
+        "LAT_AVG": 12.5754,
+        "LONG_AVG": 102.5478
+      },
+      {
+        "AM_ID": "2301",
+        "AMPHOE_T": "เมืองตราด",
+        "AMPHOE_E": "Mueang Trat",
+        "LAT_AVG": 12.2235,
+        "LONG_AVG": 102.5772
+      },
+      {
+        "AM_ID": "2302",
+        "AMPHOE_T": "คลองใหญ่",
+        "AMPHOE_E": "Khlong Yai",
+        "LAT_AVG": 11.7943,
+        "LONG_AVG": 102.8677
+      },
+      {
+        "AM_ID": "2303",
+        "AMPHOE_T": "เขาสมิง",
+        "AMPHOE_E": "Khao Saming",
+        "LAT_AVG": 12.433,
+        "LONG_AVG": 102.4281
+      }
+    ]
+  },
+  {
+    "CH_ID": "63",
+    "CHANGWAT_T": "ตาก",
+    "CHANGWAT_E": "Tak",
+    "AMPHOES": [
+      {
+        "AM_ID": "6304",
+        "AMPHOE_T": "แม่ระมาด",
+        "AMPHOE_E": "Mae Ramat",
+        "LAT_AVG": 17.0438,
+        "LONG_AVG": 98.5982
+      },
+      {
+        "AM_ID": "6309",
+        "AMPHOE_T": "วังเจ้า",
+        "AMPHOE_E": "Wang Chao",
+        "LAT_AVG": 16.6747,
+        "LONG_AVG": 99.154
+      },
+      {
+        "AM_ID": "6301",
+        "AMPHOE_T": "เมืองตาก",
+        "AMPHOE_E": "Mueang Tak",
+        "LAT_AVG": 16.8816,
+        "LONG_AVG": 99.1655
+      },
+      {
+        "AM_ID": "6306",
+        "AMPHOE_T": "แม่สอด",
+        "AMPHOE_E": "Mae Sot",
+        "LAT_AVG": 16.7043,
+        "LONG_AVG": 98.6535
+      },
+      {
+        "AM_ID": "6302",
+        "AMPHOE_T": "บ้านตาก",
+        "AMPHOE_E": "Ban Tak",
+        "LAT_AVG": 17.0824,
+        "LONG_AVG": 99.0727
+      },
+      {
+        "AM_ID": "6305",
+        "AMPHOE_T": "ท่าสองยาง",
+        "AMPHOE_E": "Tha Song Yang",
+        "LAT_AVG": 17.4633,
+        "LONG_AVG": 98.1232
+      },
+      {
+        "AM_ID": "6307",
+        "AMPHOE_T": "พบพระ",
+        "AMPHOE_E": "Phop Phra",
+        "LAT_AVG": 16.4518,
+        "LONG_AVG": 98.769
+      },
+      {
+        "AM_ID": "6303",
+        "AMPHOE_T": "สามเงา",
+        "AMPHOE_E": "Sam Ngao",
+        "LAT_AVG": 17.2637,
+        "LONG_AVG": 99.0363
+      },
+      {
+        "AM_ID": "6308",
+        "AMPHOE_T": "อุ้มผาง",
+        "AMPHOE_E": "Um Phang",
+        "LAT_AVG": 15.951,
+        "LONG_AVG": 98.8623
+      }
+    ]
+  },
+  {
+    "CH_ID": "26",
+    "CHANGWAT_T": "นครนายก",
+    "CHANGWAT_E": "Nakhon Nayok",
+    "AMPHOES": [
+      {
+        "AM_ID": "2602",
+        "AMPHOE_T": "ปากพลี",
+        "AMPHOE_E": "Pak Phli",
+        "LAT_AVG": 14.1794,
+        "LONG_AVG": 101.2957
+      },
+      {
+        "AM_ID": "2601",
+        "AMPHOE_T": "เมืองนครนายก",
+        "AMPHOE_E": "Mueang Nakhon Nayok",
+        "LAT_AVG": 14.2173,
+        "LONG_AVG": 101.2029
+      },
+      {
+        "AM_ID": "2604",
+        "AMPHOE_T": "องครักษ์",
+        "AMPHOE_E": "Ongkharak",
+        "LAT_AVG": 14.0797,
+        "LONG_AVG": 101.003
+      },
+      {
+        "AM_ID": "2603",
+        "AMPHOE_T": "บ้านนา",
+        "AMPHOE_E": "Ban Na",
+        "LAT_AVG": 14.2556,
+        "LONG_AVG": 101.0556
+      }
+    ]
+  },
+  {
+    "CH_ID": "73",
+    "CHANGWAT_T": "นครปฐม",
+    "CHANGWAT_E": "Nakhon Pathom",
+    "AMPHOES": [
+      {
+        "AM_ID": "7307",
+        "AMPHOE_T": "พุทธมณฑล",
+        "AMPHOE_E": "Phutthamonthon",
+        "LAT_AVG": 13.83,
+        "LONG_AVG": 100.2827
+      },
+      {
+        "AM_ID": "7303",
+        "AMPHOE_T": "นครชัยศรี",
+        "AMPHOE_E": "Nakhon Chai Si",
+        "LAT_AVG": 13.8162,
+        "LONG_AVG": 100.1841
+      },
+      {
+        "AM_ID": "7302",
+        "AMPHOE_T": "กำแพงแสน",
+        "AMPHOE_E": "Kamphaeng Saen",
+        "LAT_AVG": 14.0259,
+        "LONG_AVG": 99.9721
+      },
+      {
+        "AM_ID": "7305",
+        "AMPHOE_T": "บางเลน",
+        "AMPHOE_E": "Bang Len",
+        "LAT_AVG": 14.0353,
+        "LONG_AVG": 100.1839
+      },
+      {
+        "AM_ID": "7301",
+        "AMPHOE_T": "เมืองนครปฐม",
+        "AMPHOE_E": "mueang Nakhon Pathom",
+        "LAT_AVG": 13.8219,
+        "LONG_AVG": 100.0325
+      },
+      {
+        "AM_ID": "7306",
+        "AMPHOE_T": "สามพราน",
+        "AMPHOE_E": "Sam Phran",
+        "LAT_AVG": 13.7317,
+        "LONG_AVG": 100.2351
+      },
+      {
+        "AM_ID": "7304",
+        "AMPHOE_T": "ดอนตูม",
+        "AMPHOE_E": "Don Tum",
+        "LAT_AVG": 13.941,
+        "LONG_AVG": 100.097
+      }
+    ]
+  },
+  {
+    "CH_ID": "48",
+    "CHANGWAT_T": "นครพนม",
+    "CHANGWAT_E": "Nakhon Phanom",
+    "AMPHOES": [
+      {
+        "AM_ID": "4807",
+        "AMPHOE_T": "นาแก",
+        "AMPHOE_E": "Na Kae",
+        "LAT_AVG": 16.9475,
+        "LONG_AVG": 104.4883
+      },
+      {
+        "AM_ID": "4804",
+        "AMPHOE_T": "บ้านแพง",
+        "AMPHOE_E": "Ban Phaeng",
+        "LAT_AVG": 17.912,
+        "LONG_AVG": 104.2002
+      },
+      {
+        "AM_ID": "4812",
+        "AMPHOE_T": "วังยาง",
+        "AMPHOE_E": "Wang Yang",
+        "LAT_AVG": 17.075,
+        "LONG_AVG": 104.4505
+      },
+      {
+        "AM_ID": "4805",
+        "AMPHOE_T": "ธาตุพนม",
+        "AMPHOE_E": "That Phanom",
+        "LAT_AVG": 16.9956,
+        "LONG_AVG": 104.7054
+      },
+      {
+        "AM_ID": "4811",
+        "AMPHOE_T": "นาทม",
+        "AMPHOE_E": "Na Thom",
+        "LAT_AVG": 17.8363,
+        "LONG_AVG": 104.0973
+      },
+      {
+        "AM_ID": "4809",
+        "AMPHOE_T": "นาหว้า",
+        "AMPHOE_E": "Na Wa",
+        "LAT_AVG": 17.5127,
+        "LONG_AVG": 104.08
+      },
+      {
+        "AM_ID": "4810",
+        "AMPHOE_T": "โพนสวรรค์",
+        "AMPHOE_E": "Phon Sawan",
+        "LAT_AVG": 17.4662,
+        "LONG_AVG": 104.4146
+      },
+      {
+        "AM_ID": "4808",
+        "AMPHOE_T": "ศรีสงคราม",
+        "AMPHOE_E": "Si Songkhram",
+        "LAT_AVG": 17.6273,
+        "LONG_AVG": 104.2396
+      },
+      {
+        "AM_ID": "4806",
+        "AMPHOE_T": "เรณูนคร",
+        "AMPHOE_E": "Renu Nakhon",
+        "LAT_AVG": 17.0413,
+        "LONG_AVG": 104.6523
+      },
+      {
+        "AM_ID": "4803",
+        "AMPHOE_T": "ท่าอุเทน",
+        "AMPHOE_E": "Tha Uthen",
+        "LAT_AVG": 17.6168,
+        "LONG_AVG": 104.4987
+      },
+      {
+        "AM_ID": "4801",
+        "AMPHOE_T": "เมืองนครพนม",
+        "AMPHOE_E": "Mueang Nakhon Phanom",
+        "LAT_AVG": 17.3223,
+        "LONG_AVG": 104.6956
+      },
+      {
+        "AM_ID": "4802",
+        "AMPHOE_T": "ปลาปาก",
+        "AMPHOE_E": "Pla Pak",
+        "LAT_AVG": 17.1883,
+        "LONG_AVG": 104.5321
+      }
+    ]
+  },
+  {
+    "CH_ID": "30",
+    "CHANGWAT_T": "นครราชสีมา",
+    "CHANGWAT_E": "Nakhon Ratchasima",
+    "AMPHOES": [
+      {
+        "AM_ID": "3007",
+        "AMPHOE_T": "โชคชัย",
+        "AMPHOE_E": "Chok Chai",
+        "LAT_AVG": 14.7617,
+        "LONG_AVG": 102.1921
+      },
+      {
+        "AM_ID": "3027",
+        "AMPHOE_T": "เมืองยาง",
+        "AMPHOE_E": "Mueang Yang",
+        "LAT_AVG": 15.4428,
+        "LONG_AVG": 102.886
+      },
+      {
+        "AM_ID": "3009",
+        "AMPHOE_T": "โนนไทย",
+        "AMPHOE_E": "Non Thai",
+        "LAT_AVG": 15.191,
+        "LONG_AVG": 102.0287
+      },
+      {
+        "AM_ID": "3022",
+        "AMPHOE_T": "หนองบุญมาก",
+        "AMPHOE_E": "Nong Bunmak",
+        "LAT_AVG": 14.7248,
+        "LONG_AVG": 102.373
+      },
+      {
+        "AM_ID": "3005",
+        "AMPHOE_T": "บ้านเหลื่อม",
+        "AMPHOE_E": "Ban Lueam",
+        "LAT_AVG": 15.5768,
+        "LONG_AVG": 102.1208
+      },
+      {
+        "AM_ID": "3030",
+        "AMPHOE_T": "บัวลาย",
+        "AMPHOE_E": "Bua Lai",
+        "LAT_AVG": 15.669,
+        "LONG_AVG": 102.5113
+      },
+      {
+        "AM_ID": "3013",
+        "AMPHOE_T": "ประทาย",
+        "AMPHOE_E": "Prathai",
+        "LAT_AVG": 15.5624,
+        "LONG_AVG": 102.7062
+      },
+      {
+        "AM_ID": "3018",
+        "AMPHOE_T": "สูงเนิน",
+        "AMPHOE_E": "Sung Noen",
+        "LAT_AVG": 14.8882,
+        "LONG_AVG": 101.8422
+      },
+      {
+        "AM_ID": "3029",
+        "AMPHOE_T": "ลำทะเมนชัย",
+        "AMPHOE_E": "Lamtaman Chai",
+        "LAT_AVG": 15.3098,
+        "LONG_AVG": 102.9138
+      },
+      {
+        "AM_ID": "3003",
+        "AMPHOE_T": "เสิงสาง",
+        "AMPHOE_E": "Soeng Sang",
+        "LAT_AVG": 14.3765,
+        "LONG_AVG": 102.4735
+      },
+      {
+        "AM_ID": "3023",
+        "AMPHOE_T": "แก้งสนามนาง",
+        "AMPHOE_E": "Kaeng Sanam Nang",
+        "LAT_AVG": 15.6986,
+        "LONG_AVG": 102.2422
+      },
+      {
+        "AM_ID": "3006",
+        "AMPHOE_T": "จักราช",
+        "AMPHOE_E": "Chakkarat",
+        "LAT_AVG": 14.9696,
+        "LONG_AVG": 102.4409
+      },
+      {
+        "AM_ID": "3002",
+        "AMPHOE_T": "ครบุรี",
+        "AMPHOE_E": "Khon Buri",
+        "LAT_AVG": 14.4739,
+        "LONG_AVG": 102.2428
+      },
+      {
+        "AM_ID": "3016",
+        "AMPHOE_T": "ห้วยแถลง",
+        "AMPHOE_E": "Huai Thalaeng",
+        "LAT_AVG": 15.0354,
+        "LONG_AVG": 102.6551
+      },
+      {
+        "AM_ID": "3019",
+        "AMPHOE_T": "ขามทะเลสอ",
+        "AMPHOE_E": "Kham Thale So",
+        "LAT_AVG": 15.0254,
+        "LONG_AVG": 101.9306
+      },
+      {
+        "AM_ID": "3017",
+        "AMPHOE_T": "ชุมพวง",
+        "AMPHOE_E": "Chum Phuang",
+        "LAT_AVG": 15.2663,
+        "LONG_AVG": 102.7558
+      },
+      {
+        "AM_ID": "3004",
+        "AMPHOE_T": "คง",
+        "AMPHOE_E": "Khong",
+        "LAT_AVG": 15.4265,
+        "LONG_AVG": 102.3128
+      },
+      {
+        "AM_ID": "3010",
+        "AMPHOE_T": "โนนสูง",
+        "AMPHOE_E": "Non Sung",
+        "LAT_AVG": 15.1923,
+        "LONG_AVG": 102.2747
+      },
+      {
+        "AM_ID": "3014",
+        "AMPHOE_T": "ปักธงชัย",
+        "AMPHOE_E": "Pak Thong Chai",
+        "LAT_AVG": 14.6757,
+        "LONG_AVG": 101.991
+      },
+      {
+        "AM_ID": "3028",
+        "AMPHOE_T": "พระทองคำ",
+        "AMPHOE_E": "Phra Thong Kham",
+        "LAT_AVG": 15.339,
+        "LONG_AVG": 101.9824
+      },
+      {
+        "AM_ID": "3011",
+        "AMPHOE_T": "ขามสะแกแสง",
+        "AMPHOE_E": "Kham Sakaesaeng",
+        "LAT_AVG": 15.3863,
+        "LONG_AVG": 102.1719
+      },
+      {
+        "AM_ID": "3024",
+        "AMPHOE_T": "โนนแดง",
+        "AMPHOE_E": "Non Daeng",
+        "LAT_AVG": 15.4505,
+        "LONG_AVG": 102.5398
+      },
+      {
+        "AM_ID": "3025",
+        "AMPHOE_T": "วังน้ำเขียว",
+        "AMPHOE_E": "Wang Nam Khiao",
+        "LAT_AVG": 14.458,
+        "LONG_AVG": 101.8504
+      },
+      {
+        "AM_ID": "3015",
+        "AMPHOE_T": "พิมาย",
+        "AMPHOE_E": "Phimai",
+        "LAT_AVG": 15.2423,
+        "LONG_AVG": 102.5196
+      },
+      {
+        "AM_ID": "3008",
+        "AMPHOE_T": "ด่านขุนทด",
+        "AMPHOE_E": "Dan Khun Thot",
+        "LAT_AVG": 15.2352,
+        "LONG_AVG": 101.7614
+      },
+      {
+        "AM_ID": "3012",
+        "AMPHOE_T": "บัวใหญ่",
+        "AMPHOE_E": "Bua Yai",
+        "LAT_AVG": 15.5789,
+        "LONG_AVG": 102.4015
+      },
+      {
+        "AM_ID": "3001",
+        "AMPHOE_T": "เมืองนครราชสีมา",
+        "AMPHOE_E": "Mueang Nakhon Ratchasima",
+        "LAT_AVG": 14.9814,
+        "LONG_AVG": 102.1029
+      },
+      {
+        "AM_ID": "3020",
+        "AMPHOE_T": "สีคิ้ว",
+        "AMPHOE_E": "Si Khio",
+        "LAT_AVG": 14.9478,
+        "LONG_AVG": 101.6258
+      },
+      {
+        "AM_ID": "3021",
+        "AMPHOE_T": "ปากช่อง",
+        "AMPHOE_E": "Pak Chong",
+        "LAT_AVG": 14.6237,
+        "LONG_AVG": 101.4694
+      },
+      {
+        "AM_ID": "3032",
+        "AMPHOE_T": "เฉลิมพระเกียรติ",
+        "AMPHOE_E": "Chaloem Phra Kiet",
+        "LAT_AVG": 14.9936,
+        "LONG_AVG": 102.2772
+      },
+      {
+        "AM_ID": "3026",
+        "AMPHOE_T": "เทพารักษ์",
+        "AMPHOE_E": "Thepharak",
+        "LAT_AVG": 15.3013,
+        "LONG_AVG": 101.4822
+      },
+      {
+        "AM_ID": "3031",
+        "AMPHOE_T": "สีดา",
+        "AMPHOE_E": "Sida",
+        "LAT_AVG": 15.5666,
+        "LONG_AVG": 102.557
+      }
+    ]
+  },
+  {
+    "CH_ID": "80",
+    "CHANGWAT_T": "นครศรีธรรมราช",
+    "CHANGWAT_E": "Nakhon Si Thammarat",
+    "AMPHOES": [
+      {
+        "AM_ID": "8020",
+        "AMPHOE_T": "พระพรหม",
+        "AMPHOE_E": "Phra Phrom",
+        "LAT_AVG": 8.3285,
+        "LONG_AVG": 99.9255
+      },
+      {
+        "AM_ID": "8009",
+        "AMPHOE_T": "ทุ่งสง",
+        "AMPHOE_E": "Thung Song",
+        "LAT_AVG": 8.1316,
+        "LONG_AVG": 99.6497
+      },
+      {
+        "AM_ID": "8011",
+        "AMPHOE_T": "ทุ่งใหญ่",
+        "AMPHOE_E": "Thung Yai",
+        "LAT_AVG": 8.3006,
+        "LONG_AVG": 99.3669
+      },
+      {
+        "AM_ID": "8012",
+        "AMPHOE_T": "ปากพนัง",
+        "AMPHOE_E": "Pak Phanang",
+        "LAT_AVG": 8.3007,
+        "LONG_AVG": 100.1722
+      },
+      {
+        "AM_ID": "8007",
+        "AMPHOE_T": "ชะอวด",
+        "AMPHOE_E": "Cha-uat",
+        "LAT_AVG": 7.9575,
+        "LONG_AVG": 99.978
+      },
+      {
+        "AM_ID": "8008",
+        "AMPHOE_T": "ท่าศาลา",
+        "AMPHOE_E": "Tha Sala",
+        "LAT_AVG": 8.6785,
+        "LONG_AVG": 99.8882
+      },
+      {
+        "AM_ID": "8005",
+        "AMPHOE_T": "พิปูน",
+        "AMPHOE_E": "Phipun",
+        "LAT_AVG": 8.5762,
+        "LONG_AVG": 99.6104
+      },
+      {
+        "AM_ID": "8017",
+        "AMPHOE_T": "บางขัน",
+        "AMPHOE_E": "Bang Khan",
+        "LAT_AVG": 7.9885,
+        "LONG_AVG": 99.475
+      },
+      {
+        "AM_ID": "8004",
+        "AMPHOE_T": "ฉวาง",
+        "AMPHOE_E": "Chawang",
+        "LAT_AVG": 8.4673,
+        "LONG_AVG": 99.511
+      },
+      {
+        "AM_ID": "8022",
+        "AMPHOE_T": "ช้างกลาง",
+        "AMPHOE_E": "Chang Klang",
+        "LAT_AVG": 8.3687,
+        "LONG_AVG": 99.6053
+      },
+      {
+        "AM_ID": "8018",
+        "AMPHOE_T": "ถ้ำพรรณรา",
+        "AMPHOE_E": "Tham Phannara",
+        "LAT_AVG": 8.457,
+        "LONG_AVG": 99.3797
+      },
+      {
+        "AM_ID": "8023",
+        "AMPHOE_T": "เฉลิมพระเกียรติ",
+        "AMPHOE_E": "Chaloem Phra Kiet",
+        "LAT_AVG": 8.1938,
+        "LONG_AVG": 100.0338
+      },
+      {
+        "AM_ID": "8002",
+        "AMPHOE_T": "พรหมคีรี",
+        "AMPHOE_E": "Phrom Khiri",
+        "LAT_AVG": 8.5326,
+        "LONG_AVG": 99.8246
+      },
+      {
+        "AM_ID": "8006",
+        "AMPHOE_T": "เชียรใหญ่",
+        "AMPHOE_E": "Chian Yai",
+        "LAT_AVG": 8.1435,
+        "LONG_AVG": 100.1609
+      },
+      {
+        "AM_ID": "8013",
+        "AMPHOE_T": "ร่อนพิบูลย์",
+        "AMPHOE_E": "Ron Phibun",
+        "LAT_AVG": 8.1933,
+        "LONG_AVG": 99.9053
+      },
+      {
+        "AM_ID": "8001",
+        "AMPHOE_T": "เมืองนครศรีธรรมราช",
+        "AMPHOE_E": "Mueang Nakhon Si Thammarat",
+        "LAT_AVG": 8.4305,
+        "LONG_AVG": 99.9612
+      },
+      {
+        "AM_ID": "8003",
+        "AMPHOE_T": "ลานสกา",
+        "AMPHOE_E": "Lan Saka",
+        "LAT_AVG": 8.3816,
+        "LONG_AVG": 99.7844
+      },
+      {
+        "AM_ID": "8010",
+        "AMPHOE_T": "นาบอน",
+        "AMPHOE_E": "Na Bon",
+        "LAT_AVG": 8.26,
+        "LONG_AVG": 99.5383
+      },
+      {
+        "AM_ID": "8014",
+        "AMPHOE_T": "สิชล",
+        "AMPHOE_E": "Sichon",
+        "LAT_AVG": 8.9387,
+        "LONG_AVG": 99.8359
+      },
+      {
+        "AM_ID": "8021",
+        "AMPHOE_T": "นบพิตำ",
+        "AMPHOE_E": "Nopphitam",
+        "LAT_AVG": 8.7185,
+        "LONG_AVG": 99.7448
+      },
+      {
+        "AM_ID": "8019",
+        "AMPHOE_T": "จุฬาภรณ์",
+        "AMPHOE_E": "Chulabhorn",
+        "LAT_AVG": 8.0647,
+        "LONG_AVG": 99.8733
+      },
+      {
+        "AM_ID": "8015",
+        "AMPHOE_T": "ขนอม",
+        "AMPHOE_E": "Khanom",
+        "LAT_AVG": 9.2378,
+        "LONG_AVG": 99.8023
+      },
+      {
+        "AM_ID": "8016",
+        "AMPHOE_T": "หัวไทร",
+        "AMPHOE_E": "Hua Sai",
+        "LAT_AVG": 8.0249,
+        "LONG_AVG": 100.2577
+      }
+    ]
+  },
+  {
+    "CH_ID": "60",
+    "CHANGWAT_T": "นครสวรรค์",
+    "CHANGWAT_E": "Nakhon Sawan",
+    "AMPHOES": [
+      {
+        "AM_ID": "6013",
+        "AMPHOE_T": "แม่วงก์",
+        "AMPHOE_E": "Mae Wong",
+        "LAT_AVG": 15.8413,
+        "LONG_AVG": 99.507
+      },
+      {
+        "AM_ID": "6006",
+        "AMPHOE_T": "เก้าเลี้ยว",
+        "AMPHOE_E": "Kao Liao",
+        "LAT_AVG": 15.8616,
+        "LONG_AVG": 100.0892
+      },
+      {
+        "AM_ID": "6002",
+        "AMPHOE_T": "โกรกพระ",
+        "AMPHOE_E": "Krok Phra",
+        "LAT_AVG": 15.576,
+        "LONG_AVG": 100.021
+      },
+      {
+        "AM_ID": "6007",
+        "AMPHOE_T": "ตาคลี",
+        "AMPHOE_E": "Takhli",
+        "LAT_AVG": 15.2307,
+        "LONG_AVG": 100.3998
+      },
+      {
+        "AM_ID": "6011",
+        "AMPHOE_T": "ลาดยาว",
+        "AMPHOE_E": "Lat Yao",
+        "LAT_AVG": 15.751,
+        "LONG_AVG": 99.8043
+      },
+      {
+        "AM_ID": "6012",
+        "AMPHOE_T": "ตากฟ้า",
+        "AMPHOE_E": "Tak Fa",
+        "LAT_AVG": 15.3537,
+        "LONG_AVG": 100.4763
+      },
+      {
+        "AM_ID": "6004",
+        "AMPHOE_T": "หนองบัว",
+        "AMPHOE_E": "Nong Bua",
+        "LAT_AVG": 15.8606,
+        "LONG_AVG": 100.5633
+      },
+      {
+        "AM_ID": "6003",
+        "AMPHOE_T": "ชุมแสง",
+        "AMPHOE_E": "Chum Saeng",
+        "LAT_AVG": 15.8536,
+        "LONG_AVG": 100.2898
+      },
+      {
+        "AM_ID": "6005",
+        "AMPHOE_T": "บรรพตพิสัย",
+        "AMPHOE_E": "Banphot Phisai",
+        "LAT_AVG": 15.9828,
+        "LONG_AVG": 99.9847
+      },
+      {
+        "AM_ID": "6010",
+        "AMPHOE_T": "พยุหะคีรี",
+        "AMPHOE_E": "Phayuha Hkiri",
+        "LAT_AVG": 15.4822,
+        "LONG_AVG": 100.1655
+      },
+      {
+        "AM_ID": "6009",
+        "AMPHOE_T": "ไพศาลี",
+        "AMPHOE_E": "Phaisali",
+        "LAT_AVG": 15.5909,
+        "LONG_AVG": 100.6806
+      },
+      {
+        "AM_ID": "6001",
+        "AMPHOE_T": "เมืองนครสวรรค์",
+        "AMPHOE_E": "Mueang Nakhon Sawan",
+        "LAT_AVG": 15.7154,
+        "LONG_AVG": 100.1173
+      },
+      {
+        "AM_ID": "6008",
+        "AMPHOE_T": "ท่าตะโก",
+        "AMPHOE_E": "Tha Tako",
+        "LAT_AVG": 15.6621,
+        "LONG_AVG": 100.4538
+      },
+      {
+        "AM_ID": "6015",
+        "AMPHOE_T": "ชุมตาบง",
+        "AMPHOE_E": "Chum Ta Bong",
+        "LAT_AVG": 15.6575,
+        "LONG_AVG": 99.566
+      },
+      {
+        "AM_ID": "6014",
+        "AMPHOE_T": "แม่เปิน",
+        "AMPHOE_E": "Mae Pern",
+        "LAT_AVG": 15.738,
+        "LONG_AVG": 99.294
+      }
+    ]
+  },
+  {
+    "CH_ID": "12",
+    "CHANGWAT_T": "นนทบุรี",
+    "CHANGWAT_E": "Nonthaburi",
+    "AMPHOES": [
+      {
+        "AM_ID": "1204",
+        "AMPHOE_T": "บางบัวทอง",
+        "AMPHOE_E": "Bang Bua Thong",
+        "LAT_AVG": 13.9256,
+        "LONG_AVG": 100.3993
+      },
+      {
+        "AM_ID": "1206",
+        "AMPHOE_T": "ปากเกร็ด",
+        "AMPHOE_E": "Pak Kret",
+        "LAT_AVG": 13.9191,
+        "LONG_AVG": 100.4936
+      },
+      {
+        "AM_ID": "1201",
+        "AMPHOE_T": "เมืองนนทบุรี",
+        "AMPHOE_E": "Mueang Nonthaburi",
+        "LAT_AVG": 13.8508,
+        "LONG_AVG": 100.4852
+      },
+      {
+        "AM_ID": "1205",
+        "AMPHOE_T": "ไทรน้อย",
+        "AMPHOE_E": "Sai Noi",
+        "LAT_AVG": 14.0009,
+        "LONG_AVG": 100.3131
+      },
+      {
+        "AM_ID": "1202",
+        "AMPHOE_T": "บางกรวย",
+        "AMPHOE_E": "Bang Kruai",
+        "LAT_AVG": 13.8126,
+        "LONG_AVG": 100.4402
+      },
+      {
+        "AM_ID": "1203",
+        "AMPHOE_T": "บางใหญ่",
+        "AMPHOE_E": "Bang Yai",
+        "LAT_AVG": 13.8555,
+        "LONG_AVG": 100.3888
+      }
+    ]
+  },
+  {
+    "CH_ID": "96",
+    "CHANGWAT_T": "นราธิวาส",
+    "CHANGWAT_E": "Narathiwat",
+    "AMPHOES": [
+      {
+        "AM_ID": "9611",
+        "AMPHOE_T": "สุไหงปาดี",
+        "AMPHOE_E": "Su-ngai Padi",
+        "LAT_AVG": 6.0725,
+        "LONG_AVG": 101.878
+      },
+      {
+        "AM_ID": "9604",
+        "AMPHOE_T": "ยี่งอ",
+        "AMPHOE_E": "Yi-ngo",
+        "LAT_AVG": 6.4115,
+        "LONG_AVG": 101.6932
+      },
+      {
+        "AM_ID": "9602",
+        "AMPHOE_T": "ตากใบ",
+        "AMPHOE_E": "Tak Bai",
+        "LAT_AVG": 6.2265,
+        "LONG_AVG": 102.0224
+      },
+      {
+        "AM_ID": "9608",
+        "AMPHOE_T": "แว้ง",
+        "AMPHOE_E": "Waeng",
+        "LAT_AVG": 5.9187,
+        "LONG_AVG": 101.859
+      },
+      {
+        "AM_ID": "9607",
+        "AMPHOE_T": "ศรีสาคร",
+        "AMPHOE_E": "Si Sakhon",
+        "LAT_AVG": 6.2165,
+        "LONG_AVG": 101.5145
+      },
+      {
+        "AM_ID": "9601",
+        "AMPHOE_T": "เมืองนราธิวาส",
+        "AMPHOE_E": "Mueang Narathiwat",
+        "LAT_AVG": 6.3879,
+        "LONG_AVG": 101.8146
+      },
+      {
+        "AM_ID": "9613",
+        "AMPHOE_T": "เจาะไอร้อง",
+        "AMPHOE_E": "Cho-airong",
+        "LAT_AVG": 6.229,
+        "LONG_AVG": 101.84
+      },
+      {
+        "AM_ID": "9612",
+        "AMPHOE_T": "จะแนะ",
+        "AMPHOE_E": "Chanae",
+        "LAT_AVG": 6.0823,
+        "LONG_AVG": 101.6592
+      },
+      {
+        "AM_ID": "9606",
+        "AMPHOE_T": "รือเสาะ",
+        "AMPHOE_E": "Rueso",
+        "LAT_AVG": 6.3819,
+        "LONG_AVG": 101.5218
+      },
+      {
+        "AM_ID": "9603",
+        "AMPHOE_T": "บาเจาะ",
+        "AMPHOE_E": "Tak Bai",
+        "LAT_AVG": 6.5438,
+        "LONG_AVG": 101.6405
+      },
+      {
+        "AM_ID": "9605",
+        "AMPHOE_T": "ระแงะ",
+        "AMPHOE_E": "Ra-ngae",
+        "LAT_AVG": 6.2709,
+        "LONG_AVG": 101.7007
+      },
+      {
+        "AM_ID": "9610",
+        "AMPHOE_T": "สุไหงโก-ลก",
+        "AMPHOE_E": "Su-ngai Kolok",
+        "LAT_AVG": 6.0698,
+        "LONG_AVG": 101.9923
+      },
+      {
+        "AM_ID": "9609",
+        "AMPHOE_T": "สุคิริน",
+        "AMPHOE_E": "Sukhirin",
+        "LAT_AVG": 5.931,
+        "LONG_AVG": 101.739
+      }
+    ]
+  },
+  {
+    "CH_ID": "55",
+    "CHANGWAT_T": "น่าน",
+    "CHANGWAT_E": "Nan",
+    "AMPHOES": [
+      {
+        "AM_ID": "5509",
+        "AMPHOE_T": "เชียงกลาง",
+        "AMPHOE_E": "Chiang Klang",
+        "LAT_AVG": 19.2927,
+        "LONG_AVG": 100.886
+      },
+      {
+        "AM_ID": "5501",
+        "AMPHOE_T": "เมืองน่าน",
+        "AMPHOE_E": "Mueang Nan",
+        "LAT_AVG": 18.7953,
+        "LONG_AVG": 100.6985
+      },
+      {
+        "AM_ID": "5511",
+        "AMPHOE_T": "สันติสุข",
+        "AMPHOE_E": "Santi Suk",
+        "LAT_AVG": 18.918,
+        "LONG_AVG": 100.945
+      },
+      {
+        "AM_ID": "5503",
+        "AMPHOE_T": "บ้านหลวง",
+        "AMPHOE_E": "Ban Luang",
+        "LAT_AVG": 18.849,
+        "LONG_AVG": 100.4358
+      },
+      {
+        "AM_ID": "5506",
+        "AMPHOE_T": "ท่าวังผา",
+        "AMPHOE_E": "Tha Wang Pha",
+        "LAT_AVG": 19.1198,
+        "LONG_AVG": 100.7849
+      },
+      {
+        "AM_ID": "5513",
+        "AMPHOE_T": "สองแคว",
+        "AMPHOE_E": "Song Khwae",
+        "LAT_AVG": 19.395,
+        "LONG_AVG": 100.654
+      },
+      {
+        "AM_ID": "5502",
+        "AMPHOE_T": "แม่จริม",
+        "AMPHOE_E": "Mae Charim",
+        "LAT_AVG": 18.6998,
+        "LONG_AVG": 101.0126
+      },
+      {
+        "AM_ID": "5515",
+        "AMPHOE_T": "เฉลิมพระเกียรติ",
+        "AMPHOE_E": "Chaloem Phra Kiet",
+        "LAT_AVG": 19.5045,
+        "LONG_AVG": 101.087
+      },
+      {
+        "AM_ID": "5512",
+        "AMPHOE_T": "บ่อเกลือ",
+        "AMPHOE_E": "Bo Kluea",
+        "LAT_AVG": 19.1542,
+        "LONG_AVG": 101.1763
+      },
+      {
+        "AM_ID": "5510",
+        "AMPHOE_T": "นาหมื่น",
+        "AMPHOE_E": "Na Muen",
+        "LAT_AVG": 18.1493,
+        "LONG_AVG": 100.6095
+      },
+      {
+        "AM_ID": "5505",
+        "AMPHOE_T": "ปัว",
+        "AMPHOE_E": "Pua",
+        "LAT_AVG": 19.1731,
+        "LONG_AVG": 100.9439
+      },
+      {
+        "AM_ID": "5514",
+        "AMPHOE_T": "ภูเพียง",
+        "AMPHOE_E": "Phu Phiang",
+        "LAT_AVG": 18.757,
+        "LONG_AVG": 100.8417
+      },
+      {
+        "AM_ID": "5508",
+        "AMPHOE_T": "ทุ่งช้าง",
+        "AMPHOE_E": "Thung Chang",
+        "LAT_AVG": 19.4715,
+        "LONG_AVG": 100.8673
+      },
+      {
+        "AM_ID": "5507",
+        "AMPHOE_T": "เวียงสา",
+        "AMPHOE_E": "Wiang Sa",
+        "LAT_AVG": 18.5806,
+        "LONG_AVG": 100.7419
+      },
+      {
+        "AM_ID": "5504",
+        "AMPHOE_T": "นาน้อย",
+        "AMPHOE_E": "Na Noi",
+        "LAT_AVG": 18.3159,
+        "LONG_AVG": 100.6924
+      }
+    ]
+  },
+  {
+    "CH_ID": "38",
+    "CHANGWAT_T": "บึงกาฬ",
+    "CHANGWAT_E": "Bueng Kan",
+    "AMPHOES": [
+      {
+        "AM_ID": "3808",
+        "AMPHOE_T": "บุ่งคล้า",
+        "AMPHOE_E": "Bung Khla",
+        "LAT_AVG": 18.2547,
+        "LONG_AVG": 103.9657
+      },
+      {
+        "AM_ID": "3803",
+        "AMPHOE_T": "โซ่พิสัย",
+        "AMPHOE_E": "So Phisai",
+        "LAT_AVG": 18.1366,
+        "LONG_AVG": 103.433
+      },
+      {
+        "AM_ID": "3802",
+        "AMPHOE_T": "พรเจริญ",
+        "AMPHOE_E": "Phon Charoen",
+        "LAT_AVG": 18.0634,
+        "LONG_AVG": 103.6594
+      },
+      {
+        "AM_ID": "3805",
+        "AMPHOE_T": "ปากคาด",
+        "AMPHOE_E": "Pak Khat",
+        "LAT_AVG": 18.2838,
+        "LONG_AVG": 103.3333
+      },
+      {
+        "AM_ID": "3807",
+        "AMPHOE_T": "ศรีวิไล",
+        "AMPHOE_E": "Si Wilai",
+        "LAT_AVG": 18.161,
+        "LONG_AVG": 103.7784
+      },
+      {
+        "AM_ID": "3801",
+        "AMPHOE_T": "บึงกาฬ",
+        "AMPHOE_E": "Bueng Kan",
+        "LAT_AVG": 18.3184,
+        "LONG_AVG": 103.5812
+      },
+      {
+        "AM_ID": "3804",
+        "AMPHOE_T": "เซกา",
+        "AMPHOE_E": "Seka",
+        "LAT_AVG": 17.9796,
+        "LONG_AVG": 103.898
+      },
+      {
+        "AM_ID": "3806",
+        "AMPHOE_T": "บึงโขงหลง",
+        "AMPHOE_E": "Bueng Khong Long",
+        "LAT_AVG": 18.0248,
+        "LONG_AVG": 104.0778
+      }
+    ]
+  },
+  {
+    "CH_ID": "31",
+    "CHANGWAT_T": "บุรีรัมย์",
+    "CHANGWAT_E": "Buri Ram",
+    "AMPHOES": [
+      {
+        "AM_ID": "3119",
+        "AMPHOE_T": "บ้านใหม่ไชยพจน์",
+        "AMPHOE_E": "Ban Mai Chaiyaphot",
+        "LAT_AVG": 15.571,
+        "LONG_AVG": 102.848
+      },
+      {
+        "AM_ID": "3116",
+        "AMPHOE_T": "ห้วยราช",
+        "AMPHOE_E": "Huai Rat",
+        "LAT_AVG": 15.0013,
+        "LONG_AVG": 103.222
+      },
+      {
+        "AM_ID": "3102",
+        "AMPHOE_T": "คูเมือง",
+        "AMPHOE_E": "Khu Mueang",
+        "LAT_AVG": 15.2606,
+        "LONG_AVG": 103.0407
+      },
+      {
+        "AM_ID": "3123",
+        "AMPHOE_T": "เฉลิมพระเกียรติ",
+        "AMPHOE_E": "Chaloem Phra Kiet",
+        "LAT_AVG": 14.5612,
+        "LONG_AVG": 102.9016
+      },
+      {
+        "AM_ID": "3108",
+        "AMPHOE_T": "บ้านกรวด",
+        "AMPHOE_E": "Ban Kruat",
+        "LAT_AVG": 14.4127,
+        "LONG_AVG": 103.1251
+      },
+      {
+        "AM_ID": "3110",
+        "AMPHOE_T": "ลำปลายมาศ",
+        "AMPHOE_E": "Lam Plai Mat",
+        "LAT_AVG": 15.0207,
+        "LONG_AVG": 102.8689
+      },
+      {
+        "AM_ID": "3120",
+        "AMPHOE_T": "โนนดินแดง",
+        "AMPHOE_E": "Non Din Daeng",
+        "LAT_AVG": 14.2917,
+        "LONG_AVG": 102.7277
+      },
+      {
+        "AM_ID": "3121",
+        "AMPHOE_T": "บ้านด่าน",
+        "AMPHOE_E": "Ban Dan",
+        "LAT_AVG": 15.1305,
+        "LONG_AVG": 103.1888
+      },
+      {
+        "AM_ID": "3118",
+        "AMPHOE_T": "ชำนิ",
+        "AMPHOE_E": "Chamni",
+        "LAT_AVG": 14.7777,
+        "LONG_AVG": 102.83
+      },
+      {
+        "AM_ID": "3111",
+        "AMPHOE_T": "สตึก",
+        "AMPHOE_E": "Satuek",
+        "LAT_AVG": 15.2221,
+        "LONG_AVG": 103.3227
+      },
+      {
+        "AM_ID": "3107",
+        "AMPHOE_T": "ประโคนชัย",
+        "AMPHOE_E": "Prakhon Chai",
+        "LAT_AVG": 14.6156,
+        "LONG_AVG": 103.0567
+      },
+      {
+        "AM_ID": "3105",
+        "AMPHOE_T": "หนองกี่",
+        "AMPHOE_E": "Nong Ki",
+        "LAT_AVG": 14.7239,
+        "LONG_AVG": 102.5599
+      },
+      {
+        "AM_ID": "3101",
+        "AMPHOE_T": "เมืองบุรีรัมย์",
+        "AMPHOE_E": "Mueang Buri Ram",
+        "LAT_AVG": 14.9597,
+        "LONG_AVG": 103.0642
+      },
+      {
+        "AM_ID": "3103",
+        "AMPHOE_T": "กระสัง",
+        "AMPHOE_E": "Krasang",
+        "LAT_AVG": 14.9533,
+        "LONG_AVG": 103.3215
+      },
+      {
+        "AM_ID": "3122",
+        "AMPHOE_T": "แคนดง",
+        "AMPHOE_E": "Khaen Dong",
+        "LAT_AVG": 15.3063,
+        "LONG_AVG": 103.138
+      },
+      {
+        "AM_ID": "3112",
+        "AMPHOE_T": "ปะคำ",
+        "AMPHOE_E": "Pakham",
+        "LAT_AVG": 14.4226,
+        "LONG_AVG": 102.6738
+      },
+      {
+        "AM_ID": "3106",
+        "AMPHOE_T": "ละหานทราย",
+        "AMPHOE_E": "Lahan Sai",
+        "LAT_AVG": 14.3752,
+        "LONG_AVG": 102.855
+      },
+      {
+        "AM_ID": "3117",
+        "AMPHOE_T": "โนนสุวรรณ",
+        "AMPHOE_E": "Non Din Daeng",
+        "LAT_AVG": 14.5678,
+        "LONG_AVG": 102.579
+      },
+      {
+        "AM_ID": "3109",
+        "AMPHOE_T": "พุทไธสง",
+        "AMPHOE_E": "Phutthaisong",
+        "LAT_AVG": 15.5403,
+        "LONG_AVG": 102.9877
+      },
+      {
+        "AM_ID": "3113",
+        "AMPHOE_T": "นาโพธิ์",
+        "AMPHOE_E": "Na Pho",
+        "LAT_AVG": 15.6992,
+        "LONG_AVG": 102.9366
+      },
+      {
+        "AM_ID": "3115",
+        "AMPHOE_T": "พลับพลาชัย",
+        "AMPHOE_E": "Phlapphla Chai",
+        "LAT_AVG": 14.7324,
+        "LONG_AVG": 103.1662
+      },
+      {
+        "AM_ID": "3114",
+        "AMPHOE_T": "หนองหงส์",
+        "AMPHOE_E": "Nong Hong",
+        "LAT_AVG": 14.8643,
+        "LONG_AVG": 102.6719
+      },
+      {
+        "AM_ID": "3104",
+        "AMPHOE_T": "นางรอง",
+        "AMPHOE_E": "Nang Rong",
+        "LAT_AVG": 14.6351,
+        "LONG_AVG": 102.7644
+      }
+    ]
+  },
+  {
+    "CH_ID": "13",
+    "CHANGWAT_T": "ปทุมธานี",
+    "CHANGWAT_E": "Pathum Thani",
+    "AMPHOES": [
+      {
+        "AM_ID": "1302",
+        "AMPHOE_T": "คลองหลวง",
+        "AMPHOE_E": "khlong Luang",
+        "LAT_AVG": 14.0967,
+        "LONG_AVG": 100.6847
+      },
+      {
+        "AM_ID": "1301",
+        "AMPHOE_T": "เมืองปทุมธานี",
+        "AMPHOE_E": "Mueang Pathum Thani",
+        "LAT_AVG": 13.9964,
+        "LONG_AVG": 100.5409
+      },
+      {
+        "AM_ID": "1307",
+        "AMPHOE_T": "สามโคก",
+        "AMPHOE_E": "Sam Khok",
+        "LAT_AVG": 14.0743,
+        "LONG_AVG": 100.53
+      },
+      {
+        "AM_ID": "1305",
+        "AMPHOE_T": "ลาดหลุมแก้ว",
+        "AMPHOE_E": "Lat Lum Kaeo",
+        "LAT_AVG": 14.0437,
+        "LONG_AVG": 100.4144
+      },
+      {
+        "AM_ID": "1304",
+        "AMPHOE_T": "หนองเสือ",
+        "AMPHOE_E": "Nong Suea",
+        "LAT_AVG": 14.1669,
+        "LONG_AVG": 100.8399
+      },
+      {
+        "AM_ID": "1303",
+        "AMPHOE_T": "ธัญบุรี",
+        "AMPHOE_E": "Thanyaburi",
+        "LAT_AVG": 14.0272,
+        "LONG_AVG": 100.7555
+      },
+      {
+        "AM_ID": "1306",
+        "AMPHOE_T": "ลำลูกกา",
+        "AMPHOE_E": "Lam Luk Ka",
+        "LAT_AVG": 13.9759,
+        "LONG_AVG": 100.7838
+      }
+    ]
+  },
+  {
+    "CH_ID": "77",
+    "CHANGWAT_T": "ประจวบคีรีขันธ์",
+    "CHANGWAT_E": "Prachuap Khiri Khan",
+    "AMPHOES": [
+      {
+        "AM_ID": "7703",
+        "AMPHOE_T": "ทับสะแก",
+        "AMPHOE_E": "Thap Sakae",
+        "LAT_AVG": 11.5538,
+        "LONG_AVG": 99.5673
+      },
+      {
+        "AM_ID": "7701",
+        "AMPHOE_T": "เมืองประจวบคีรีขันธ์",
+        "AMPHOE_E": "Mueang Prachuap Khiri Khan",
+        "LAT_AVG": 11.8297,
+        "LONG_AVG": 99.7303
+      },
+      {
+        "AM_ID": "7704",
+        "AMPHOE_T": "บางสะพาน",
+        "AMPHOE_E": "Bang Saphan",
+        "LAT_AVG": 11.2656,
+        "LONG_AVG": 99.4694
+      },
+      {
+        "AM_ID": "7708",
+        "AMPHOE_T": "สามร้อยยอด",
+        "AMPHOE_E": "Sam Roi Yot",
+        "LAT_AVG": 12.2624,
+        "LONG_AVG": 99.7102
+      },
+      {
+        "AM_ID": "7707",
+        "AMPHOE_T": "หัวหิน",
+        "AMPHOE_E": "Hua Hin",
+        "LAT_AVG": 12.521,
+        "LONG_AVG": 99.7869
+      },
+      {
+        "AM_ID": "7702",
+        "AMPHOE_T": "กุยบุรี",
+        "AMPHOE_E": "Kui Buri",
+        "LAT_AVG": 12.1148,
+        "LONG_AVG": 99.847
+      },
+      {
+        "AM_ID": "7706",
+        "AMPHOE_T": "ปราณบุรี",
+        "AMPHOE_E": "Pran Buri",
+        "LAT_AVG": 12.3938,
+        "LONG_AVG": 99.8427
+      },
+      {
+        "AM_ID": "7705",
+        "AMPHOE_T": "บางสะพานน้อย",
+        "AMPHOE_E": "Bang Saphan Noi",
+        "LAT_AVG": 11.0592,
+        "LONG_AVG": 99.373
+      }
+    ]
+  },
+  {
+    "CH_ID": "25",
+    "CHANGWAT_T": "ปราจีนบุรี",
+    "CHANGWAT_E": "Prachin Buri",
+    "AMPHOES": [
+      {
+        "AM_ID": "2509",
+        "AMPHOE_T": "ศรีมโหสถ",
+        "AMPHOE_E": "Si Mahosot",
+        "LAT_AVG": 13.8925,
+        "LONG_AVG": 101.4105
+      },
+      {
+        "AM_ID": "2501",
+        "AMPHOE_T": "เมืองปราจีนบุรี",
+        "AMPHOE_E": "Mueang Prachin Buri",
+        "LAT_AVG": 14.0783,
+        "LONG_AVG": 101.3763
+      },
+      {
+        "AM_ID": "2506",
+        "AMPHOE_T": "บ้านสร้าง",
+        "AMPHOE_E": "Ban Sang",
+        "LAT_AVG": 13.9424,
+        "LONG_AVG": 101.2447
+      },
+      {
+        "AM_ID": "2502",
+        "AMPHOE_T": "กบินทร์บุรี",
+        "AMPHOE_E": "Kabin Buri",
+        "LAT_AVG": 13.9373,
+        "LONG_AVG": 101.7667
+      },
+      {
+        "AM_ID": "2507",
+        "AMPHOE_T": "ประจันตคาม",
+        "AMPHOE_E": "Prachantakham",
+        "LAT_AVG": 14.0977,
+        "LONG_AVG": 101.5481
+      },
+      {
+        "AM_ID": "2508",
+        "AMPHOE_T": "ศรีมหาโพธิ",
+        "AMPHOE_E": "Si Maha Phot",
+        "LAT_AVG": 13.9126,
+        "LONG_AVG": 101.5213
+      },
+      {
+        "AM_ID": "2503",
+        "AMPHOE_T": "นาดี",
+        "AMPHOE_E": "Na Di",
+        "LAT_AVG": 14.1543,
+        "LONG_AVG": 101.828
+      }
+    ]
+  },
+  {
+    "CH_ID": "94",
+    "CHANGWAT_T": "ปัตตานี",
+    "CHANGWAT_E": "Pattani",
+    "AMPHOES": [
+      {
+        "AM_ID": "9409",
+        "AMPHOE_T": "ยะหริ่ง",
+        "AMPHOE_E": "Yaring",
+        "LAT_AVG": 6.8261,
+        "LONG_AVG": 101.3941
+      },
+      {
+        "AM_ID": "9402",
+        "AMPHOE_T": "โคกโพธิ์",
+        "AMPHOE_E": "Khok Pho",
+        "LAT_AVG": 6.7051,
+        "LONG_AVG": 101.1208
+      },
+      {
+        "AM_ID": "9408",
+        "AMPHOE_T": "ไม้แก่น",
+        "AMPHOE_E": "Mai Kaen",
+        "LAT_AVG": 6.6188,
+        "LONG_AVG": 101.6708
+      },
+      {
+        "AM_ID": "9404",
+        "AMPHOE_T": "ปะนาเระ",
+        "AMPHOE_E": "Panare",
+        "LAT_AVG": 6.8071,
+        "LONG_AVG": 101.5088
+      },
+      {
+        "AM_ID": "9407",
+        "AMPHOE_T": "สายบุรี",
+        "AMPHOE_E": "Sai Buri",
+        "LAT_AVG": 6.6981,
+        "LONG_AVG": 101.5827
+      },
+      {
+        "AM_ID": "9410",
+        "AMPHOE_T": "ยะรัง",
+        "AMPHOE_E": "Yarang",
+        "LAT_AVG": 6.7339,
+        "LONG_AVG": 101.3038
+      },
+      {
+        "AM_ID": "9412",
+        "AMPHOE_T": "แม่ลาน",
+        "AMPHOE_E": "Mae Lan",
+        "LAT_AVG": 6.6697,
+        "LONG_AVG": 101.237
+      },
+      {
+        "AM_ID": "9405",
+        "AMPHOE_T": "มายอ",
+        "AMPHOE_E": "Mayo",
+        "LAT_AVG": 6.7208,
+        "LONG_AVG": 101.3998
+      },
+      {
+        "AM_ID": "9411",
+        "AMPHOE_T": "กะพ้อ",
+        "AMPHOE_E": "Kapho",
+        "LAT_AVG": 6.6037,
+        "LONG_AVG": 101.5397
+      },
+      {
+        "AM_ID": "9406",
+        "AMPHOE_T": "ทุ่งยางแดง",
+        "AMPHOE_E": "Thung Yang Daeng",
+        "LAT_AVG": 6.628,
+        "LONG_AVG": 101.4475
+      },
+      {
+        "AM_ID": "9401",
+        "AMPHOE_T": "เมืองปัตตานี",
+        "AMPHOE_E": "Mueang Pattani",
+        "LAT_AVG": 6.8545,
+        "LONG_AVG": 101.2708
+      },
+      {
+        "AM_ID": "9403",
+        "AMPHOE_T": "หนองจิก",
+        "AMPHOE_E": "Nong Chik",
+        "LAT_AVG": 6.802,
+        "LONG_AVG": 101.1859
+      }
+    ]
+  },
+  {
+    "CH_ID": "14",
+    "CHANGWAT_T": "พระนครศรีอยุธยา",
+    "CHANGWAT_E": "Phra Nakhon Si Ayutthaya",
+    "AMPHOES": [
+      {
+        "AM_ID": "1409",
+        "AMPHOE_T": "ภาชี",
+        "AMPHOE_E": "Phachi",
+        "LAT_AVG": 14.4411,
+        "LONG_AVG": 100.7241
+      },
+      {
+        "AM_ID": "1411",
+        "AMPHOE_T": "วังน้อย",
+        "AMPHOE_E": "Wang Noi",
+        "LAT_AVG": 14.242,
+        "LONG_AVG": 100.7253
+      },
+      {
+        "AM_ID": "1414",
+        "AMPHOE_T": "อุทัย",
+        "AMPHOE_E": "Uthai",
+        "LAT_AVG": 14.355,
+        "LONG_AVG": 100.6899
+      },
+      {
+        "AM_ID": "1406",
+        "AMPHOE_T": "บางปะอิน",
+        "AMPHOE_E": "Bang Pa-in",
+        "LAT_AVG": 14.2499,
+        "LONG_AVG": 100.5907
+      },
+      {
+        "AM_ID": "1413",
+        "AMPHOE_T": "บางซ้าย",
+        "AMPHOE_E": "Bang Sai",
+        "LAT_AVG": 14.3095,
+        "LONG_AVG": 100.3
+      },
+      {
+        "AM_ID": "1408",
+        "AMPHOE_T": "ผักไห่",
+        "AMPHOE_E": "Phak Hai",
+        "LAT_AVG": 14.4562,
+        "LONG_AVG": 100.358
+      },
+      {
+        "AM_ID": "1405",
+        "AMPHOE_T": "บางบาล",
+        "AMPHOE_E": "Bang Ban",
+        "LAT_AVG": 14.3863,
+        "LONG_AVG": 100.4632
+      },
+      {
+        "AM_ID": "1407",
+        "AMPHOE_T": "บางปะหัน",
+        "AMPHOE_E": "Bang Pahan",
+        "LAT_AVG": 14.4729,
+        "LONG_AVG": 100.5438
+      },
+      {
+        "AM_ID": "1401",
+        "AMPHOE_T": "พระนครศรีอยุธยา",
+        "AMPHOE_E": "Phra Nakhon Si Ayutthaya",
+        "LAT_AVG": 14.3554,
+        "LONG_AVG": 100.5619
+      },
+      {
+        "AM_ID": "1415",
+        "AMPHOE_T": "มหาราช",
+        "AMPHOE_E": "Maha Rat",
+        "LAT_AVG": 14.5696,
+        "LONG_AVG": 100.5347
+      },
+      {
+        "AM_ID": "1402",
+        "AMPHOE_T": "ท่าเรือ",
+        "AMPHOE_E": "Tha Ruea",
+        "LAT_AVG": 14.5382,
+        "LONG_AVG": 100.7109
+      },
+      {
+        "AM_ID": "1410",
+        "AMPHOE_T": "ลาดบัวหลวง",
+        "AMPHOE_E": "Lat Bua Luang",
+        "LAT_AVG": 14.1663,
+        "LONG_AVG": 100.3497
+      },
+      {
+        "AM_ID": "1412",
+        "AMPHOE_T": "เสนา",
+        "AMPHOE_E": "Sena",
+        "LAT_AVG": 14.3117,
+        "LONG_AVG": 100.3805
+      },
+      {
+        "AM_ID": "1404",
+        "AMPHOE_T": "บางไทร",
+        "AMPHOE_E": "Bang Sai",
+        "LAT_AVG": 14.2266,
+        "LONG_AVG": 100.4842
+      },
+      {
+        "AM_ID": "1416",
+        "AMPHOE_T": "บ้านแพรก",
+        "AMPHOE_E": "Ban Phraek",
+        "LAT_AVG": 14.6412,
+        "LONG_AVG": 100.562
+      },
+      {
+        "AM_ID": "1403",
+        "AMPHOE_T": "นครหลวง",
+        "AMPHOE_E": "Nakhon Luang",
+        "LAT_AVG": 14.4631,
+        "LONG_AVG": 100.6285
+      }
+    ]
+  },
+  {
+    "CH_ID": "56",
+    "CHANGWAT_T": "พะเยา",
+    "CHANGWAT_E": "Phayao",
+    "AMPHOES": [
+      {
+        "AM_ID": "5608",
+        "AMPHOE_T": "ภูซาง",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 19.617,
+        "LONG_AVG": 100.3542
+      },
+      {
+        "AM_ID": "5609",
+        "AMPHOE_T": "ภูกามยาว",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 19.264,
+        "LONG_AVG": 99.98
+      },
+      {
+        "AM_ID": "5606",
+        "AMPHOE_T": "ปง",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 19.1987,
+        "LONG_AVG": 100.3589
+      },
+      {
+        "AM_ID": "5603",
+        "AMPHOE_T": "เชียงคำ",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 19.5009,
+        "LONG_AVG": 100.3211
+      },
+      {
+        "AM_ID": "5605",
+        "AMPHOE_T": "ดอกคำใต้",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 19.1526,
+        "LONG_AVG": 100.0325
+      },
+      {
+        "AM_ID": "5607",
+        "AMPHOE_T": "แม่ใจ",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 19.3702,
+        "LONG_AVG": 99.7908
+      },
+      {
+        "AM_ID": "5601",
+        "AMPHOE_T": "เมืองพะเยา",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 19.1759,
+        "LONG_AVG": 99.8451
+      },
+      {
+        "AM_ID": "5604",
+        "AMPHOE_T": "เชียงม่วน",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 18.9163,
+        "LONG_AVG": 100.3193
+      },
+      {
+        "AM_ID": "5602",
+        "AMPHOE_T": "จุน",
+        "AMPHOE_E": "Mueang Phayao",
+        "LAT_AVG": 19.3774,
+        "LONG_AVG": 100.1376
+      }
+    ]
+  },
+  {
+    "CH_ID": "82",
+    "CHANGWAT_T": "พังงา",
+    "CHANGWAT_E": "Phang-nga",
+    "AMPHOES": [
+      {
+        "AM_ID": "8207",
+        "AMPHOE_T": "ทับปุด",
+        "AMPHOE_E": "Thap Put",
+        "LAT_AVG": 8.5215,
+        "LONG_AVG": 98.632
+      },
+      {
+        "AM_ID": "8203",
+        "AMPHOE_T": "กะปง",
+        "AMPHOE_E": "Kapong",
+        "LAT_AVG": 8.7238,
+        "LONG_AVG": 98.4514
+      },
+      {
+        "AM_ID": "8205",
+        "AMPHOE_T": "ตะกั่วป่า",
+        "AMPHOE_E": "Takua Pa",
+        "LAT_AVG": 8.8288,
+        "LONG_AVG": 98.327
+      },
+      {
+        "AM_ID": "8201",
+        "AMPHOE_T": "เมืองพังงา",
+        "AMPHOE_E": "Mueang Phang-nga",
+        "LAT_AVG": 8.4692,
+        "LONG_AVG": 98.514
+      },
+      {
+        "AM_ID": "8204",
+        "AMPHOE_T": "ตะกั่วทุ่ง",
+        "AMPHOE_E": "Takua Thung",
+        "LAT_AVG": 8.2736,
+        "LONG_AVG": 98.4127
+      },
+      {
+        "AM_ID": "8206",
+        "AMPHOE_T": "คุระบุรี",
+        "AMPHOE_E": "Khura Buri",
+        "LAT_AVG": 9.0242,
+        "LONG_AVG": 97.8745
+      },
+      {
+        "AM_ID": "8202",
+        "AMPHOE_T": "เกาะยาว",
+        "AMPHOE_E": "Ko Yao",
+        "LAT_AVG": 8.015,
+        "LONG_AVG": 98.5904
+      },
+      {
+        "AM_ID": "8208",
+        "AMPHOE_T": "ท้ายเหมือง",
+        "AMPHOE_E": "Thai Mueang",
+        "LAT_AVG": 8.4847,
+        "LONG_AVG": 98.3045
+      }
+    ]
+  },
+  {
+    "CH_ID": "93",
+    "CHANGWAT_T": "พัทลุง",
+    "CHANGWAT_E": "Phatthalung",
+    "AMPHOES": [
+      {
+        "AM_ID": "9305",
+        "AMPHOE_T": "ควนขนุน",
+        "AMPHOE_E": "Khuan Khanun",
+        "LAT_AVG": 7.7432,
+        "LONG_AVG": 100.0325
+      },
+      {
+        "AM_ID": "9306",
+        "AMPHOE_T": "ปากพะยูน",
+        "AMPHOE_E": "Pak Phayun",
+        "LAT_AVG": 7.3271,
+        "LONG_AVG": 100.3173
+      },
+      {
+        "AM_ID": "9309",
+        "AMPHOE_T": "บางแก้ว",
+        "AMPHOE_E": "Bang Kaeo",
+        "LAT_AVG": 7.4253,
+        "LONG_AVG": 100.1663
+      },
+      {
+        "AM_ID": "9302",
+        "AMPHOE_T": "กงหรา",
+        "AMPHOE_E": "Kong Ra",
+        "LAT_AVG": 7.4434,
+        "LONG_AVG": 99.947
+      },
+      {
+        "AM_ID": "9308",
+        "AMPHOE_T": "ป่าบอน",
+        "AMPHOE_E": "Pa Bon",
+        "LAT_AVG": 7.2474,
+        "LONG_AVG": 100.1536
+      },
+      {
+        "AM_ID": "9304",
+        "AMPHOE_T": "ตะโหมด",
+        "AMPHOE_E": "Tamot",
+        "LAT_AVG": 7.292,
+        "LONG_AVG": 100.0593
+      },
+      {
+        "AM_ID": "9311",
+        "AMPHOE_T": "ศรีนครินทร์",
+        "AMPHOE_E": "Srinagarindra",
+        "LAT_AVG": 7.554,
+        "LONG_AVG": 99.9155
+      },
+      {
+        "AM_ID": "9307",
+        "AMPHOE_T": "ศรีบรรพต",
+        "AMPHOE_E": "Si Banphot",
+        "LAT_AVG": 7.6973,
+        "LONG_AVG": 99.8583
+      },
+      {
+        "AM_ID": "9310",
+        "AMPHOE_T": "ป่าพยอม",
+        "AMPHOE_E": "Pa Phayom",
+        "LAT_AVG": 7.823,
+        "LONG_AVG": 99.8685
+      },
+      {
+        "AM_ID": "9301",
+        "AMPHOE_T": "เมืองพัทลุง",
+        "AMPHOE_E": "Mueang Phatthalung",
+        "LAT_AVG": 7.6067,
+        "LONG_AVG": 100.0735
+      },
+      {
+        "AM_ID": "9303",
+        "AMPHOE_T": "เขาชัยสน",
+        "AMPHOE_E": "Khao Chaison",
+        "LAT_AVG": 7.478,
+        "LONG_AVG": 100.1345
+      }
+    ]
+  },
+  {
+    "CH_ID": "66",
+    "CHANGWAT_T": "พิจิตร",
+    "CHANGWAT_E": "Phichit",
+    "AMPHOES": [
+      {
+        "AM_ID": "6604",
+        "AMPHOE_T": "ตะพานหิน",
+        "AMPHOE_E": "Taphan Hin",
+        "LAT_AVG": 16.1992,
+        "LONG_AVG": 100.4078
+      },
+      {
+        "AM_ID": "6607",
+        "AMPHOE_T": "สามง่าม",
+        "AMPHOE_E": "Sam Ngam",
+        "LAT_AVG": 16.4624,
+        "LONG_AVG": 100.1648
+      },
+      {
+        "AM_ID": "6610",
+        "AMPHOE_T": "บึงนาราง",
+        "AMPHOE_E": "Bueng Na Rang",
+        "LAT_AVG": 16.1842,
+        "LONG_AVG": 100.145
+      },
+      {
+        "AM_ID": "6611",
+        "AMPHOE_T": "ดงเจริญ",
+        "AMPHOE_E": "Dong Charoen",
+        "LAT_AVG": 16.0092,
+        "LONG_AVG": 100.6204
+      },
+      {
+        "AM_ID": "6608",
+        "AMPHOE_T": "ทับคล้อ",
+        "AMPHOE_E": "Tap Khlo",
+        "LAT_AVG": 16.1855,
+        "LONG_AVG": 100.598
+      },
+      {
+        "AM_ID": "6606",
+        "AMPHOE_T": "โพทะเล",
+        "AMPHOE_E": "Pho Thale",
+        "LAT_AVG": 16.0602,
+        "LONG_AVG": 100.2567
+      },
+      {
+        "AM_ID": "6602",
+        "AMPHOE_T": "วังทรายพูน",
+        "AMPHOE_E": "Wang Sai Phun",
+        "LAT_AVG": 16.3767,
+        "LONG_AVG": 100.5525
+      },
+      {
+        "AM_ID": "6603",
+        "AMPHOE_T": "โพธิ์ประทับช้าง",
+        "AMPHOE_E": "Pho Prathap Chang",
+        "LAT_AVG": 16.3123,
+        "LONG_AVG": 100.1917
+      },
+      {
+        "AM_ID": "6601",
+        "AMPHOE_T": "เมืองพิจิตร",
+        "AMPHOE_E": "Mueang Phichit",
+        "LAT_AVG": 16.4214,
+        "LONG_AVG": 100.3562
+      },
+      {
+        "AM_ID": "6612",
+        "AMPHOE_T": "วชิรบารมี",
+        "AMPHOE_E": "Wachirabarami",
+        "LAT_AVG": 16.5348,
+        "LONG_AVG": 100.0965
+      },
+      {
+        "AM_ID": "6605",
+        "AMPHOE_T": "บางมูลนาก",
+        "AMPHOE_E": "Bang Mun Nak",
+        "LAT_AVG": 16.0387,
+        "LONG_AVG": 100.4384
+      },
+      {
+        "AM_ID": "6609",
+        "AMPHOE_T": "สากเหล็ก",
+        "AMPHOE_E": "Sak Lek",
+        "LAT_AVG": 16.5186,
+        "LONG_AVG": 100.5316
+      }
+    ]
+  },
+  {
+    "CH_ID": "65",
+    "CHANGWAT_T": "พิษณุโลก",
+    "CHANGWAT_E": "Phitsanulok",
+    "AMPHOES": [
+      {
+        "AM_ID": "6501",
+        "AMPHOE_T": "เมืองพิษณุโลก",
+        "AMPHOE_E": "Mueang Phitsanulok",
+        "LAT_AVG": 16.8216,
+        "LONG_AVG": 100.254
+      },
+      {
+        "AM_ID": "6509",
+        "AMPHOE_T": "เนินมะปราง",
+        "AMPHOE_E": "Noen Maprang",
+        "LAT_AVG": 16.527,
+        "LONG_AVG": 100.6649
+      },
+      {
+        "AM_ID": "6507",
+        "AMPHOE_T": "วัดโบสถ์",
+        "AMPHOE_E": "Wat Bot",
+        "LAT_AVG": 17.0872,
+        "LONG_AVG": 100.3372
+      },
+      {
+        "AM_ID": "6505",
+        "AMPHOE_T": "บางกระทุ่ม",
+        "AMPHOE_E": "Bang Krathum",
+        "LAT_AVG": 16.5887,
+        "LONG_AVG": 100.3313
+      },
+      {
+        "AM_ID": "6506",
+        "AMPHOE_T": "พรหมพิราม",
+        "AMPHOE_E": "Phrom Phiram",
+        "LAT_AVG": 17.0603,
+        "LONG_AVG": 100.1512
+      },
+      {
+        "AM_ID": "6503",
+        "AMPHOE_T": "ชาติตระการ",
+        "AMPHOE_E": "Chat Trakan",
+        "LAT_AVG": 17.3235,
+        "LONG_AVG": 100.6378
+      },
+      {
+        "AM_ID": "6504",
+        "AMPHOE_T": "บางระกำ",
+        "AMPHOE_E": "Bang Rakam",
+        "LAT_AVG": 16.7105,
+        "LONG_AVG": 100.0464
+      },
+      {
+        "AM_ID": "6508",
+        "AMPHOE_T": "วังทอง",
+        "AMPHOE_E": "Wang Thong",
+        "LAT_AVG": 16.7848,
+        "LONG_AVG": 100.479
+      },
+      {
+        "AM_ID": "6502",
+        "AMPHOE_T": "นครไทย",
+        "AMPHOE_E": "Nakhon Thai",
+        "LAT_AVG": 17.1337,
+        "LONG_AVG": 100.8493
+      }
+    ]
+  },
+  {
+    "CH_ID": "83",
+    "CHANGWAT_T": "ภูเก็ต",
+    "CHANGWAT_E": "Phuket",
+    "AMPHOES": [
+      {
+        "AM_ID": "8303",
+        "AMPHOE_T": "ถลาง",
+        "AMPHOE_E": "Thalang",
+        "LAT_AVG": 8.0653,
+        "LONG_AVG": 98.3828
+      },
+      {
+        "AM_ID": "8302",
+        "AMPHOE_T": "กะทู้",
+        "AMPHOE_E": "Kathu",
+        "LAT_AVG": 7.921,
+        "LONG_AVG": 98.3117
+      },
+      {
+        "AM_ID": "8301",
+        "AMPHOE_T": "เมืองภูเก็ต",
+        "AMPHOE_E": "Mueang Phuket",
+        "LAT_AVG": 7.8008,
+        "LONG_AVG": 98.3649
+      }
+    ]
+  },
+  {
+    "CH_ID": "44",
+    "CHANGWAT_T": "มหาสารคาม",
+    "CHANGWAT_E": "Maha Sarakham",
+    "AMPHOES": [
+      {
+        "AM_ID": "4401",
+        "AMPHOE_T": "เมืองมหาสารคาม",
+        "AMPHOE_E": "Mueang Maha Sarakham",
+        "LAT_AVG": 16.1199,
+        "LONG_AVG": 103.3267
+      },
+      {
+        "AM_ID": "4404",
+        "AMPHOE_T": "กันทรวิชัย",
+        "AMPHOE_E": "Kantharawichai",
+        "LAT_AVG": 16.2846,
+        "LONG_AVG": 103.2811
+      },
+      {
+        "AM_ID": "4403",
+        "AMPHOE_T": "โกสุมพิสัย",
+        "AMPHOE_E": "Kosum Phisai",
+        "LAT_AVG": 16.2496,
+        "LONG_AVG": 103.0159
+      },
+      {
+        "AM_ID": "4406",
+        "AMPHOE_T": "บรบือ",
+        "AMPHOE_E": "Borabue",
+        "LAT_AVG": 15.9759,
+        "LONG_AVG": 103.1381
+      },
+      {
+        "AM_ID": "4402",
+        "AMPHOE_T": "แกดำ",
+        "AMPHOE_E": "Kae Dam",
+        "LAT_AVG": 16.0514,
+        "LONG_AVG": 103.405
+      },
+      {
+        "AM_ID": "4408",
+        "AMPHOE_T": "พยัคฆภูมิพิสัย",
+        "AMPHOE_E": "Phayakkhaphum Phisai",
+        "LAT_AVG": 15.5334,
+        "LONG_AVG": 103.2325
+      },
+      {
+        "AM_ID": "4411",
+        "AMPHOE_T": "ยางสีสุราช",
+        "AMPHOE_E": "Yang Sisurat",
+        "LAT_AVG": 15.6566,
+        "LONG_AVG": 103.1046
+      },
+      {
+        "AM_ID": "4412",
+        "AMPHOE_T": "กุดรัง",
+        "AMPHOE_E": "Kut Rang",
+        "LAT_AVG": 16.0492,
+        "LONG_AVG": 102.9702
+      },
+      {
+        "AM_ID": "4407",
+        "AMPHOE_T": "นาเชือก",
+        "AMPHOE_E": "Na Chueak",
+        "LAT_AVG": 15.8015,
+        "LONG_AVG": 103.0386
+      },
+      {
+        "AM_ID": "4413",
+        "AMPHOE_T": "ชื่นชม",
+        "AMPHOE_E": "Chuen Chom",
+        "LAT_AVG": 16.5265,
+        "LONG_AVG": 103.1378
+      },
+      {
+        "AM_ID": "4409",
+        "AMPHOE_T": "วาปีปทุม",
+        "AMPHOE_E": "Wapi Pathum",
+        "LAT_AVG": 15.8651,
+        "LONG_AVG": 103.3557
+      },
+      {
+        "AM_ID": "4405",
+        "AMPHOE_T": "เชียงยืน",
+        "AMPHOE_E": "Chiang Yuen",
+        "LAT_AVG": 16.4016,
+        "LONG_AVG": 103.0839
+      },
+      {
+        "AM_ID": "4410",
+        "AMPHOE_T": "นาดูน",
+        "AMPHOE_E": "Na Dun",
+        "LAT_AVG": 15.7227,
+        "LONG_AVG": 103.2437
+      }
+    ]
+  },
+  {
+    "CH_ID": "49",
+    "CHANGWAT_T": "มุกดาหาร",
+    "CHANGWAT_E": "Mukdahan",
+    "AMPHOES": [
+      {
+        "AM_ID": "4902",
+        "AMPHOE_T": "นิคมคำสร้อย",
+        "AMPHOE_E": "Nikhom Kham Soi",
+        "LAT_AVG": 16.3553,
+        "LONG_AVG": 104.551
+      },
+      {
+        "AM_ID": "4901",
+        "AMPHOE_T": "เมืองมุกดาหาร",
+        "AMPHOE_E": "Mueang Mukdahan",
+        "LAT_AVG": 16.5614,
+        "LONG_AVG": 104.6188
+      },
+      {
+        "AM_ID": "4907",
+        "AMPHOE_T": "หนองสูง",
+        "AMPHOE_E": "Nong Sung",
+        "LAT_AVG": 16.4488,
+        "LONG_AVG": 104.3608
+      },
+      {
+        "AM_ID": "4903",
+        "AMPHOE_T": "ดอนตาล",
+        "AMPHOE_E": "Don Tan",
+        "LAT_AVG": 16.3149,
+        "LONG_AVG": 104.8217
+      },
+      {
+        "AM_ID": "4904",
+        "AMPHOE_T": "ดงหลวง",
+        "AMPHOE_E": "Don Tan",
+        "LAT_AVG": 16.7972,
+        "LONG_AVG": 104.4617
+      },
+      {
+        "AM_ID": "4905",
+        "AMPHOE_T": "คำชะอี",
+        "AMPHOE_E": "Khamcha-i",
+        "LAT_AVG": 16.6072,
+        "LONG_AVG": 104.3948
+      },
+      {
+        "AM_ID": "4906",
+        "AMPHOE_T": "ว่านใหญ่",
+        "AMPHOE_E": "Wan Yai",
+        "LAT_AVG": 16.7266,
+        "LONG_AVG": 104.721
+      }
+    ]
+  },
+  {
+    "CH_ID": "95",
+    "CHANGWAT_T": "ยะลา",
+    "CHANGWAT_E": "Yala",
+    "AMPHOES": [
+      {
+        "AM_ID": "9507",
+        "AMPHOE_T": "กาบัง",
+        "AMPHOE_E": "Kabang",
+        "LAT_AVG": 6.3895,
+        "LONG_AVG": 101.0115
+      },
+      {
+        "AM_ID": "9505",
+        "AMPHOE_T": "ยะหา",
+        "AMPHOE_E": "Yaha",
+        "LAT_AVG": 6.4804,
+        "LONG_AVG": 101.1306
+      },
+      {
+        "AM_ID": "9501",
+        "AMPHOE_T": "เมืองยะลา",
+        "AMPHOE_E": "Mueang Yala",
+        "LAT_AVG": 6.5472,
+        "LONG_AVG": 101.2362
+      },
+      {
+        "AM_ID": "9503",
+        "AMPHOE_T": "บันนังสตา",
+        "AMPHOE_E": "Bannang Sata",
+        "LAT_AVG": 6.2447,
+        "LONG_AVG": 101.2765
+      },
+      {
+        "AM_ID": "9506",
+        "AMPHOE_T": "รามัน",
+        "AMPHOE_E": "Raman",
+        "LAT_AVG": 6.4798,
+        "LONG_AVG": 101.4168
+      },
+      {
+        "AM_ID": "9502",
+        "AMPHOE_T": "เบตง",
+        "AMPHOE_E": "Betong",
+        "LAT_AVG": 5.8152,
+        "LONG_AVG": 101.17
+      },
+      {
+        "AM_ID": "9504",
+        "AMPHOE_T": "ธารโต",
+        "AMPHOE_E": "Than To",
+        "LAT_AVG": 6.1318,
+        "LONG_AVG": 101.2228
+      },
+      {
+        "AM_ID": "9508",
+        "AMPHOE_T": "กรงปีนัง",
+        "AMPHOE_E": "Krong Pinang",
+        "LAT_AVG": 6.4053,
+        "LONG_AVG": 101.2418
+      }
+    ]
+  },
+  {
+    "CH_ID": "35",
+    "CHANGWAT_T": "ยโสธร",
+    "CHANGWAT_E": "Yasothon",
+    "AMPHOES": [
+      {
+        "AM_ID": "3504",
+        "AMPHOE_T": "คำเขื่อนแก้ว",
+        "AMPHOE_E": "Kham Khuean Kaeo",
+        "LAT_AVG": 15.6546,
+        "LONG_AVG": 104.3256
+      },
+      {
+        "AM_ID": "3506",
+        "AMPHOE_T": "มหาชนะชัย",
+        "AMPHOE_E": "Maha Chana Chai",
+        "LAT_AVG": 15.5144,
+        "LONG_AVG": 104.2584
+      },
+      {
+        "AM_ID": "3502",
+        "AMPHOE_T": "ทรายมูล",
+        "AMPHOE_E": "Sai Mun",
+        "LAT_AVG": 15.9892,
+        "LONG_AVG": 104.1976
+      },
+      {
+        "AM_ID": "3505",
+        "AMPHOE_T": "ป่าติ้ว",
+        "AMPHOE_E": "Pa Tio",
+        "LAT_AVG": 15.8214,
+        "LONG_AVG": 104.3758
+      },
+      {
+        "AM_ID": "3501",
+        "AMPHOE_T": "เมืองยโสธร",
+        "AMPHOE_E": "Mueang Yasothon",
+        "LAT_AVG": 15.8435,
+        "LONG_AVG": 104.1746
+      },
+      {
+        "AM_ID": "3507",
+        "AMPHOE_T": "ค้อวัง",
+        "AMPHOE_E": "Kho Wang",
+        "LAT_AVG": 15.3785,
+        "LONG_AVG": 104.337
+      },
+      {
+        "AM_ID": "3503",
+        "AMPHOE_T": "กุดชุม",
+        "AMPHOE_E": "Kut Chum",
+        "LAT_AVG": 16.036,
+        "LONG_AVG": 104.2956
+      },
+      {
+        "AM_ID": "3508",
+        "AMPHOE_T": "เลิงนกทา",
+        "AMPHOE_E": "Loeng Nok Tha",
+        "LAT_AVG": 16.2073,
+        "LONG_AVG": 104.4991
+      },
+      {
+        "AM_ID": "3509",
+        "AMPHOE_T": "ไทยเจริญ",
+        "AMPHOE_E": "Thai Charoen",
+        "LAT_AVG": 16.0796,
+        "LONG_AVG": 104.4518
+      }
+    ]
+  },
+  {
+    "CH_ID": "85",
+    "CHANGWAT_T": "ระนอง",
+    "CHANGWAT_E": "Ranong",
+    "AMPHOES": [
+      {
+        "AM_ID": "8505",
+        "AMPHOE_T": "สุขสำราญ",
+        "AMPHOE_E": "Suk Samran",
+        "LAT_AVG": 9.4739,
+        "LONG_AVG": 98.3942
+      },
+      {
+        "AM_ID": "8503",
+        "AMPHOE_T": "กะเปอร์",
+        "AMPHOE_E": "Papoe",
+        "LAT_AVG": 9.5773,
+        "LONG_AVG": 98.5618
+      },
+      {
+        "AM_ID": "8504",
+        "AMPHOE_T": "กระบุรี",
+        "AMPHOE_E": "Kra Buri",
+        "LAT_AVG": 10.4361,
+        "LONG_AVG": 98.8279
+      },
+      {
+        "AM_ID": "8502",
+        "AMPHOE_T": "ละอุ่น",
+        "AMPHOE_E": "La-un",
+        "LAT_AVG": 10.0753,
+        "LONG_AVG": 98.7917
+      },
+      {
+        "AM_ID": "8501",
+        "AMPHOE_T": "เมืองระนอง",
+        "AMPHOE_E": "Mueang Ranong",
+        "LAT_AVG": 9.8668,
+        "LONG_AVG": 98.5303
+      }
+    ]
+  },
+  {
+    "CH_ID": "21",
+    "CHANGWAT_T": "ระยอง",
+    "CHANGWAT_E": "Rayong",
+    "AMPHOES": [
+      {
+        "AM_ID": "2103",
+        "AMPHOE_T": "แกลง",
+        "AMPHOE_E": "Klaeng",
+        "LAT_AVG": 12.7168,
+        "LONG_AVG": 101.6495
+      },
+      {
+        "AM_ID": "2106",
+        "AMPHOE_T": "ปลวกแดง",
+        "AMPHOE_E": "Pluak Daeng",
+        "LAT_AVG": 12.9843,
+        "LONG_AVG": 101.2443
+      },
+      {
+        "AM_ID": "2102",
+        "AMPHOE_T": "บ้านฉาง",
+        "AMPHOE_E": "Ban Chang",
+        "LAT_AVG": 12.7413,
+        "LONG_AVG": 101.0557
+      },
+      {
+        "AM_ID": "2108",
+        "AMPHOE_T": "นิคมพัฒนา",
+        "AMPHOE_E": "Nikhom Phatthana",
+        "LAT_AVG": 12.8468,
+        "LONG_AVG": 101.1515
+      },
+      {
+        "AM_ID": "2104",
+        "AMPHOE_T": "วังจันทร์",
+        "AMPHOE_E": "Wang Chan",
+        "LAT_AVG": 12.9328,
+        "LONG_AVG": 101.5185
+      },
+      {
+        "AM_ID": "2107",
+        "AMPHOE_T": "เขาชะเมา",
+        "AMPHOE_E": "Khao Chamao",
+        "LAT_AVG": 12.9808,
+        "LONG_AVG": 101.6733
+      },
+      {
+        "AM_ID": "2101",
+        "AMPHOE_T": "เมืองระยอง",
+        "AMPHOE_E": "Mueang Rayong",
+        "LAT_AVG": 12.6796,
+        "LONG_AVG": 101.3023
+      },
+      {
+        "AM_ID": "2105",
+        "AMPHOE_T": "บ้านค่าย",
+        "AMPHOE_E": "Ban Khai",
+        "LAT_AVG": 12.8029,
+        "LONG_AVG": 101.3239
+      }
+    ]
+  },
+  {
+    "CH_ID": "70",
+    "CHANGWAT_T": "ราชบุรี",
+    "CHANGWAT_E": "Ratchaburi",
+    "AMPHOES": [
+      {
+        "AM_ID": "7004",
+        "AMPHOE_T": "ดำเนินสะดวก",
+        "AMPHOE_E": "Damnoen Saduak",
+        "LAT_AVG": 13.5553,
+        "LONG_AVG": 99.969
+      },
+      {
+        "AM_ID": "7005",
+        "AMPHOE_T": "บ้านโป่ง",
+        "AMPHOE_E": "Ban Pong",
+        "LAT_AVG": 13.8131,
+        "LONG_AVG": 99.8535
+      },
+      {
+        "AM_ID": "7007",
+        "AMPHOE_T": "โพธาราม",
+        "AMPHOE_E": "Photharam",
+        "LAT_AVG": 13.6967,
+        "LONG_AVG": 99.8151
+      },
+      {
+        "AM_ID": "7008",
+        "AMPHOE_T": "ปากท่อ",
+        "AMPHOE_E": "Pak Tho",
+        "LAT_AVG": 13.3831,
+        "LONG_AVG": 99.762
+      },
+      {
+        "AM_ID": "7001",
+        "AMPHOE_T": "เมืองราชบุรี",
+        "AMPHOE_E": "Mueang Ratchaburi",
+        "LAT_AVG": 13.5438,
+        "LONG_AVG": 99.8045
+      },
+      {
+        "AM_ID": "7010",
+        "AMPHOE_T": "บ้านคา",
+        "AMPHOE_E": "Ban Kha",
+        "LAT_AVG": 13.383,
+        "LONG_AVG": 99.4307
+      },
+      {
+        "AM_ID": "7009",
+        "AMPHOE_T": "วัดเพลง",
+        "AMPHOE_E": "Wat Phleng",
+        "LAT_AVG": 13.4487,
+        "LONG_AVG": 99.865
+      },
+      {
+        "AM_ID": "7006",
+        "AMPHOE_T": "บางแพ",
+        "AMPHOE_E": "Bang Phae",
+        "LAT_AVG": 13.6749,
+        "LONG_AVG": 99.9724
+      },
+      {
+        "AM_ID": "7002",
+        "AMPHOE_T": "จอมบึง",
+        "AMPHOE_E": "Chom Bueng",
+        "LAT_AVG": 13.6517,
+        "LONG_AVG": 99.5272
+      },
+      {
+        "AM_ID": "7003",
+        "AMPHOE_T": "สวนผึ้ง",
+        "AMPHOE_E": "Suan Phueng",
+        "LAT_AVG": 13.5325,
+        "LONG_AVG": 99.3413
+      }
+    ]
+  },
+  {
+    "CH_ID": "45",
+    "CHANGWAT_T": "ร้อยเอ็ด",
+    "CHANGWAT_E": "Roi Et",
+    "AMPHOES": [
+      {
+        "AM_ID": "4505",
+        "AMPHOE_T": "ธวัชบุรี",
+        "AMPHOE_E": "Thawat Buri",
+        "LAT_AVG": 16.0311,
+        "LONG_AVG": 103.7763
+      },
+      {
+        "AM_ID": "4514",
+        "AMPHOE_T": "อาจสามารถ",
+        "AMPHOE_E": "At Samat",
+        "LAT_AVG": 15.847,
+        "LONG_AVG": 103.8637
+      },
+      {
+        "AM_ID": "4515",
+        "AMPHOE_T": "เมยวดี",
+        "AMPHOE_E": "Moei Wadi",
+        "LAT_AVG": 16.3865,
+        "LONG_AVG": 104.1138
+      },
+      {
+        "AM_ID": "4507",
+        "AMPHOE_T": "โพนทอง",
+        "AMPHOE_E": "Phon Thong",
+        "LAT_AVG": 16.2743,
+        "LONG_AVG": 103.9569
+      },
+      {
+        "AM_ID": "4519",
+        "AMPHOE_T": "หนองฮี",
+        "AMPHOE_E": "Nong Hi",
+        "LAT_AVG": 15.578,
+        "LONG_AVG": 104.0108
+      },
+      {
+        "AM_ID": "4513",
+        "AMPHOE_T": "โพนทราย",
+        "AMPHOE_E": "Phon Sai",
+        "LAT_AVG": 15.488,
+        "LONG_AVG": 103.9396
+      },
+      {
+        "AM_ID": "4504",
+        "AMPHOE_T": "จตุรพักตรพิมาน",
+        "AMPHOE_E": "Chaturaphak Phiman",
+        "LAT_AVG": 15.8263,
+        "LONG_AVG": 103.5514
+      },
+      {
+        "AM_ID": "4508",
+        "AMPHOE_T": "โพธิ์ชัย",
+        "AMPHOE_E": "Pho Chai",
+        "LAT_AVG": 16.2978,
+        "LONG_AVG": 103.7926
+      },
+      {
+        "AM_ID": "4512",
+        "AMPHOE_T": "เมืองสรวง",
+        "AMPHOE_E": "Mueang Suang",
+        "LAT_AVG": 15.7878,
+        "LONG_AVG": 103.7492
+      },
+      {
+        "AM_ID": "4517",
+        "AMPHOE_T": "จังหาร",
+        "AMPHOE_E": "Changhan",
+        "LAT_AVG": 16.1655,
+        "LONG_AVG": 103.6108
+      },
+      {
+        "AM_ID": "4501",
+        "AMPHOE_T": "เมืองร้อยเอ็ด",
+        "AMPHOE_E": "Mueang Roi Et",
+        "LAT_AVG": 16.0111,
+        "LONG_AVG": 103.6138
+      },
+      {
+        "AM_ID": "4520",
+        "AMPHOE_T": "ทุ่งเขาหลวง",
+        "AMPHOE_E": "Thung Khao Luang",
+        "LAT_AVG": 15.997,
+        "LONG_AVG": 103.8658
+      },
+      {
+        "AM_ID": "4510",
+        "AMPHOE_T": "เสลภูมิ",
+        "AMPHOE_E": "Selaphum",
+        "LAT_AVG": 16.0662,
+        "LONG_AVG": 103.9904
+      },
+      {
+        "AM_ID": "4511",
+        "AMPHOE_T": "สุวรรณภูมิ",
+        "AMPHOE_E": "Suwannaphum",
+        "LAT_AVG": 15.6234,
+        "LONG_AVG": 103.8349
+      },
+      {
+        "AM_ID": "4509",
+        "AMPHOE_T": "หนองพอก",
+        "AMPHOE_E": "Nong Phok",
+        "LAT_AVG": 16.3018,
+        "LONG_AVG": 104.2147
+      },
+      {
+        "AM_ID": "4506",
+        "AMPHOE_T": "พนมไพร",
+        "AMPHOE_E": "Phanom Phrai",
+        "LAT_AVG": 15.6866,
+        "LONG_AVG": 104.0803
+      },
+      {
+        "AM_ID": "4502",
+        "AMPHOE_T": "เกษตรวิสัย",
+        "AMPHOE_E": "Kaset Wisai",
+        "LAT_AVG": 15.6232,
+        "LONG_AVG": 103.5598
+      },
+      {
+        "AM_ID": "4516",
+        "AMPHOE_T": "ศรีสมเด็จ",
+        "AMPHOE_E": "Si Somdet",
+        "LAT_AVG": 16.0094,
+        "LONG_AVG": 103.5115
+      },
+      {
+        "AM_ID": "4518",
+        "AMPHOE_T": "เชียงขวัญ",
+        "AMPHOE_E": "Chiang Khwan",
+        "LAT_AVG": 16.1442,
+        "LONG_AVG": 103.7385
+      },
+      {
+        "AM_ID": "4503",
+        "AMPHOE_T": "ปทุมรัตต์",
+        "AMPHOE_E": "Pathum Rat",
+        "LAT_AVG": 15.6284,
+        "LONG_AVG": 103.389
+      }
+    ]
+  },
+  {
+    "CH_ID": "16",
+    "CHANGWAT_T": "ลพบุรี",
+    "CHANGWAT_E": "Lop Buri",
+    "AMPHOES": [
+      {
+        "AM_ID": "1609",
+        "AMPHOE_T": "โคกเจริญ",
+        "AMPHOE_E": "Khok Charoen",
+        "LAT_AVG": 15.4204,
+        "LONG_AVG": 100.8424
+      },
+      {
+        "AM_ID": "1601",
+        "AMPHOE_T": "เมืองลพบุรี",
+        "AMPHOE_E": "Mueang Lop Buri",
+        "LAT_AVG": 14.7802,
+        "LONG_AVG": 100.6245
+      },
+      {
+        "AM_ID": "1611",
+        "AMPHOE_T": "หนองม่วง",
+        "AMPHOE_E": "Nong Muang",
+        "LAT_AVG": 15.2732,
+        "LONG_AVG": 100.6948
+      },
+      {
+        "AM_ID": "1610",
+        "AMPHOE_T": "ลำสนธิ",
+        "AMPHOE_E": "Lam Sonthi",
+        "LAT_AVG": 15.3042,
+        "LONG_AVG": 101.3497
+      },
+      {
+        "AM_ID": "1607",
+        "AMPHOE_T": "ท่าหลวง",
+        "AMPHOE_E": "Tha Luang",
+        "LAT_AVG": 15.047,
+        "LONG_AVG": 101.187
+      },
+      {
+        "AM_ID": "1602",
+        "AMPHOE_T": "พัฒนานิคม",
+        "AMPHOE_E": "Phatthana Nikhom",
+        "LAT_AVG": 14.9034,
+        "LONG_AVG": 101.0199
+      },
+      {
+        "AM_ID": "1605",
+        "AMPHOE_T": "ท่าวุ้ง",
+        "AMPHOE_E": "Tha Wung",
+        "LAT_AVG": 14.828,
+        "LONG_AVG": 100.502
+      },
+      {
+        "AM_ID": "1603",
+        "AMPHOE_T": "โคกสำโรง",
+        "AMPHOE_E": "Khok Samrong",
+        "LAT_AVG": 15.0658,
+        "LONG_AVG": 100.7409
+      },
+      {
+        "AM_ID": "1604",
+        "AMPHOE_T": "ชัยบาดาล",
+        "AMPHOE_E": "Chai Badan",
+        "LAT_AVG": 15.1862,
+        "LONG_AVG": 101.1334
+      },
+      {
+        "AM_ID": "1606",
+        "AMPHOE_T": "บ้านหมี่",
+        "AMPHOE_E": "Ban Mi",
+        "LAT_AVG": 15.0459,
+        "LONG_AVG": 100.5536
+      },
+      {
+        "AM_ID": "1608",
+        "AMPHOE_T": "สระโบสถ์",
+        "AMPHOE_E": "Sa Bot",
+        "LAT_AVG": 15.2068,
+        "LONG_AVG": 100.8442
+      }
+    ]
+  },
+  {
+    "CH_ID": "52",
+    "CHANGWAT_T": "ลำปาง",
+    "CHANGWAT_E": "Lampang",
+    "AMPHOES": [
+      {
+        "AM_ID": "5202",
+        "AMPHOE_T": "แม่เมาะ",
+        "AMPHOE_E": "Mae Mo",
+        "LAT_AVG": 18.344,
+        "LONG_AVG": 99.7906
+      },
+      {
+        "AM_ID": "5203",
+        "AMPHOE_T": "เกาะคา",
+        "AMPHOE_E": "Ko kha",
+        "LAT_AVG": 18.1668,
+        "LONG_AVG": 99.3554
+      },
+      {
+        "AM_ID": "5201",
+        "AMPHOE_T": "เมืองลำปาง",
+        "AMPHOE_E": "Mueang Lampang",
+        "LAT_AVG": 18.3654,
+        "LONG_AVG": 99.5104
+      },
+      {
+        "AM_ID": "5207",
+        "AMPHOE_T": "วังเหนือ",
+        "AMPHOE_E": "Wang Nuea",
+        "LAT_AVG": 19.1376,
+        "LONG_AVG": 99.6296
+      },
+      {
+        "AM_ID": "5210",
+        "AMPHOE_T": "แม่ทะ",
+        "AMPHOE_E": "Mae Tha",
+        "LAT_AVG": 18.1057,
+        "LONG_AVG": 99.549
+      },
+      {
+        "AM_ID": "5205",
+        "AMPHOE_T": "งาว",
+        "AMPHOE_E": "Ngao",
+        "LAT_AVG": 18.7662,
+        "LONG_AVG": 99.9308
+      },
+      {
+        "AM_ID": "5212",
+        "AMPHOE_T": "ห้างฉัตร",
+        "AMPHOE_E": "Hang Chat",
+        "LAT_AVG": 18.337,
+        "LONG_AVG": 99.3134
+      },
+      {
+        "AM_ID": "5211",
+        "AMPHOE_T": "สบปราบ",
+        "AMPHOE_E": "Sop Prap",
+        "LAT_AVG": 17.8988,
+        "LONG_AVG": 99.346
+      },
+      {
+        "AM_ID": "5206",
+        "AMPHOE_T": "แจ้ห่ม",
+        "AMPHOE_E": "Chae Hom",
+        "LAT_AVG": 18.7423,
+        "LONG_AVG": 99.6336
+      },
+      {
+        "AM_ID": "5208",
+        "AMPHOE_T": "เถิน",
+        "AMPHOE_E": "Thoen",
+        "LAT_AVG": 17.5957,
+        "LONG_AVG": 99.2481
+      },
+      {
+        "AM_ID": "5204",
+        "AMPHOE_T": "เสริมงาม",
+        "AMPHOE_E": "Soem Ngam",
+        "LAT_AVG": 18.079,
+        "LONG_AVG": 99.173
+      },
+      {
+        "AM_ID": "5209",
+        "AMPHOE_T": "แม่พริก",
+        "AMPHOE_E": "Mae Phrik",
+        "LAT_AVG": 17.507,
+        "LONG_AVG": 99.098
+      },
+      {
+        "AM_ID": "5213",
+        "AMPHOE_T": "เมืองปาน",
+        "AMPHOE_E": "Mueang Pan",
+        "LAT_AVG": 18.7672,
+        "LONG_AVG": 99.4858
+      }
+    ]
+  },
+  {
+    "CH_ID": "51",
+    "CHANGWAT_T": "ลำพูน",
+    "CHANGWAT_E": "Lamphun",
+    "AMPHOES": [
+      {
+        "AM_ID": "5105",
+        "AMPHOE_T": "ทุ่งหัวช้าง",
+        "AMPHOE_E": "Thung Hua Chang",
+        "LAT_AVG": 17.9863,
+        "LONG_AVG": 99.054
+      },
+      {
+        "AM_ID": "5102",
+        "AMPHOE_T": "แม่ทา",
+        "AMPHOE_E": "Mae Tha",
+        "LAT_AVG": 18.3888,
+        "LONG_AVG": 99.0657
+      },
+      {
+        "AM_ID": "5104",
+        "AMPHOE_T": "ลี้",
+        "AMPHOE_E": "Li",
+        "LAT_AVG": 17.8093,
+        "LONG_AVG": 98.925
+      },
+      {
+        "AM_ID": "5101",
+        "AMPHOE_T": "เมืองลำพูน",
+        "AMPHOE_E": "Mueang Lamphun",
+        "LAT_AVG": 18.5691,
+        "LONG_AVG": 99.0196
+      },
+      {
+        "AM_ID": "5106",
+        "AMPHOE_T": "ป่าซาง",
+        "AMPHOE_E": "Pa Sang",
+        "LAT_AVG": 18.473,
+        "LONG_AVG": 98.9021
+      },
+      {
+        "AM_ID": "5108",
+        "AMPHOE_T": "เวียงหนองล่อง",
+        "AMPHOE_E": "Wiang Nong Long",
+        "LAT_AVG": 18.4137,
+        "LONG_AVG": 98.752
+      },
+      {
+        "AM_ID": "5107",
+        "AMPHOE_T": "บ้านธิ",
+        "AMPHOE_E": "Ban Thi",
+        "LAT_AVG": 18.6465,
+        "LONG_AVG": 99.1765
+      },
+      {
+        "AM_ID": "5103",
+        "AMPHOE_T": "บ้านโฮ่ง",
+        "AMPHOE_E": "Ban Hong",
+        "LAT_AVG": 18.3152,
+        "LONG_AVG": 98.7846
+      }
+    ]
+  },
+  {
+    "CH_ID": "33",
+    "CHANGWAT_T": "ศรีสะเกษ",
+    "CHANGWAT_E": "Si Sa Ket",
+    "AMPHOES": [
+      {
+        "AM_ID": "3322",
+        "AMPHOE_T": "ศิลาลาด",
+        "AMPHOE_E": "Sila Lat",
+        "LAT_AVG": 15.4835,
+        "LONG_AVG": 104.0945
+      },
+      {
+        "AM_ID": "3315",
+        "AMPHOE_T": "น้ำเกลี้ยง",
+        "AMPHOE_E": "Nam Kliang",
+        "LAT_AVG": 14.9183,
+        "LONG_AVG": 104.5257
+      },
+      {
+        "AM_ID": "3311",
+        "AMPHOE_T": "บึงบูรพ์",
+        "AMPHOE_E": "Bueng Bun",
+        "LAT_AVG": 15.3125,
+        "LONG_AVG": 104.0635
+      },
+      {
+        "AM_ID": "3313",
+        "AMPHOE_T": "โนนคูณ",
+        "AMPHOE_E": "Non Khun",
+        "LAT_AVG": 14.9078,
+        "LONG_AVG": 104.6752
+      },
+      {
+        "AM_ID": "3316",
+        "AMPHOE_T": "วังหิน",
+        "AMPHOE_E": "Wang Hin",
+        "LAT_AVG": 14.9569,
+        "LONG_AVG": 104.2199
+      },
+      {
+        "AM_ID": "3308",
+        "AMPHOE_T": "ขุนหาญ",
+        "AMPHOE_E": "Khun Han",
+        "LAT_AVG": 14.6088,
+        "LONG_AVG": 104.4198
+      },
+      {
+        "AM_ID": "3306",
+        "AMPHOE_T": "ไพรบึง",
+        "AMPHOE_E": "Phrai Bueng",
+        "LAT_AVG": 14.7948,
+        "LONG_AVG": 104.3415
+      },
+      {
+        "AM_ID": "3312",
+        "AMPHOE_T": "ห้วยทับทัน",
+        "AMPHOE_E": "Huai Thap Than",
+        "LAT_AVG": 15.015,
+        "LONG_AVG": 104.0365
+      },
+      {
+        "AM_ID": "3309",
+        "AMPHOE_T": "ราษีไศล",
+        "AMPHOE_E": "Rasi Salai",
+        "LAT_AVG": 15.3514,
+        "LONG_AVG": 104.1815
+      },
+      {
+        "AM_ID": "3314",
+        "AMPHOE_T": "ศรีรัตนะ",
+        "AMPHOE_E": "Si Rattana",
+        "LAT_AVG": 14.8011,
+        "LONG_AVG": 104.4829
+      },
+      {
+        "AM_ID": "3310",
+        "AMPHOE_T": "อุทุมพรพิสัย",
+        "AMPHOE_E": "Uthumphon Phisai",
+        "LAT_AVG": 15.1282,
+        "LONG_AVG": 104.1613
+      },
+      {
+        "AM_ID": "3319",
+        "AMPHOE_T": "เบญจลักษ์",
+        "AMPHOE_E": "Benchalak",
+        "LAT_AVG": 14.7856,
+        "LONG_AVG": 104.684
+      },
+      {
+        "AM_ID": "3321",
+        "AMPHOE_T": "โพธิ์ศรีสุวรรณ",
+        "AMPHOE_E": "Pho Si Suwan",
+        "LAT_AVG": 15.2422,
+        "LONG_AVG": 104.0648
+      },
+      {
+        "AM_ID": "3320",
+        "AMPHOE_T": "พยุห์",
+        "AMPHOE_E": "Phayu",
+        "LAT_AVG": 14.9072,
+        "LONG_AVG": 104.3794
+      },
+      {
+        "AM_ID": "3318",
+        "AMPHOE_T": "เมืองจันทร์",
+        "AMPHOE_E": "Mueang Chan",
+        "LAT_AVG": 15.186,
+        "LONG_AVG": 104.014
+      },
+      {
+        "AM_ID": "3303",
+        "AMPHOE_T": "กันทรารมย์",
+        "AMPHOE_E": "Kanthararom",
+        "LAT_AVG": 15.1237,
+        "LONG_AVG": 104.568
+      },
+      {
+        "AM_ID": "3304",
+        "AMPHOE_T": "กันทรลักษ์",
+        "AMPHOE_E": "Kantharalak",
+        "LAT_AVG": 14.6005,
+        "LONG_AVG": 104.6755
+      },
+      {
+        "AM_ID": "3305",
+        "AMPHOE_T": "ขุขันธ์",
+        "AMPHOE_E": "Khukhan",
+        "LAT_AVG": 14.735,
+        "LONG_AVG": 104.1908
+      },
+      {
+        "AM_ID": "3307",
+        "AMPHOE_T": "ปรางค์กู่",
+        "AMPHOE_E": "Prang Ku",
+        "LAT_AVG": 14.8559,
+        "LONG_AVG": 104.0387
+      },
+      {
+        "AM_ID": "3317",
+        "AMPHOE_T": "ภูสิงห์",
+        "AMPHOE_E": "Phu Sing",
+        "LAT_AVG": 14.5286,
+        "LONG_AVG": 104.1317
+      },
+      {
+        "AM_ID": "3302",
+        "AMPHOE_T": "ยางชุมน้อย",
+        "AMPHOE_E": "Yang Chum Noi",
+        "LAT_AVG": 15.2376,
+        "LONG_AVG": 104.3876
+      },
+      {
+        "AM_ID": "3301",
+        "AMPHOE_T": "เมืองศรีสะเกษ",
+        "AMPHOE_E": "Mueang Si Sa Ket",
+        "LAT_AVG": 15.0771,
+        "LONG_AVG": 104.3487
+      }
+    ]
+  },
+  {
+    "CH_ID": "47",
+    "CHANGWAT_T": "สกลนคร",
+    "CHANGWAT_E": "Sakon Nakhon",
+    "AMPHOES": [
+      {
+        "AM_ID": "4716",
+        "AMPHOE_T": "เจริญศิลป์",
+        "AMPHOE_E": "Charoen Sin",
+        "LAT_AVG": 17.6222,
+        "LONG_AVG": 103.5322
+      },
+      {
+        "AM_ID": "4712",
+        "AMPHOE_T": "สว่างแดนดิน",
+        "AMPHOE_E": "Sawang Daen Din",
+        "LAT_AVG": 17.443,
+        "LONG_AVG": 103.4572
+      },
+      {
+        "AM_ID": "4701",
+        "AMPHOE_T": "เมืองสกลนคร",
+        "AMPHOE_E": "Mueang Sakon Nakhon",
+        "LAT_AVG": 17.1665,
+        "LONG_AVG": 104.1448
+      },
+      {
+        "AM_ID": "4709",
+        "AMPHOE_T": "คำตากล้า",
+        "AMPHOE_E": "Kham Ta Kla",
+        "LAT_AVG": 17.829,
+        "LONG_AVG": 103.7885
+      },
+      {
+        "AM_ID": "4705",
+        "AMPHOE_T": "พังโคน",
+        "AMPHOE_E": "Phanh khon",
+        "LAT_AVG": 17.386,
+        "LONG_AVG": 103.7456
+      },
+      {
+        "AM_ID": "4711",
+        "AMPHOE_T": "อากาศอำนวย",
+        "AMPHOE_E": "Akat Amnuai",
+        "LAT_AVG": 17.6423,
+        "LONG_AVG": 103.9735
+      },
+      {
+        "AM_ID": "4713",
+        "AMPHOE_T": "ส่องดาว",
+        "AMPHOE_E": "Song Dao",
+        "LAT_AVG": 17.3235,
+        "LONG_AVG": 103.4645
+      },
+      {
+        "AM_ID": "4707",
+        "AMPHOE_T": "นิคมน้ำอูน",
+        "AMPHOE_E": "Nikhom Nam un",
+        "LAT_AVG": 17.1563,
+        "LONG_AVG": 103.7333
+      },
+      {
+        "AM_ID": "4704",
+        "AMPHOE_T": "พรรณานิคม",
+        "AMPHOE_E": "Phanna Nikhom",
+        "LAT_AVG": 17.3289,
+        "LONG_AVG": 103.8988
+      },
+      {
+        "AM_ID": "4706",
+        "AMPHOE_T": "วาริชภูมิ",
+        "AMPHOE_E": "Waritchaphum",
+        "LAT_AVG": 17.2758,
+        "LONG_AVG": 103.5868
+      },
+      {
+        "AM_ID": "4714",
+        "AMPHOE_T": "เต่างอย",
+        "AMPHOE_E": "Tao Ngoi",
+        "LAT_AVG": 16.969,
+        "LONG_AVG": 104.1675
+      },
+      {
+        "AM_ID": "4718",
+        "AMPHOE_T": "ภูพาน",
+        "AMPHOE_E": "Phu Phan",
+        "LAT_AVG": 16.9263,
+        "LONG_AVG": 103.9603
+      },
+      {
+        "AM_ID": "4703",
+        "AMPHOE_T": "กุดบาก",
+        "AMPHOE_E": "Kut Bak",
+        "LAT_AVG": 17.0813,
+        "LONG_AVG": 103.788
+      },
+      {
+        "AM_ID": "4715",
+        "AMPHOE_T": "โคกศรีสุพรรณ",
+        "AMPHOE_E": "Khok Si Suphan",
+        "LAT_AVG": 17.0378,
+        "LONG_AVG": 104.3138
+      },
+      {
+        "AM_ID": "4710",
+        "AMPHOE_T": "บ้านม่วง",
+        "AMPHOE_E": "Ban Muang",
+        "LAT_AVG": 17.8898,
+        "LONG_AVG": 103.5307
+      },
+      {
+        "AM_ID": "4702",
+        "AMPHOE_T": "กุสุมาลย์",
+        "AMPHOE_E": "Kusuman",
+        "LAT_AVG": 17.35,
+        "LONG_AVG": 104.2808
+      },
+      {
+        "AM_ID": "4717",
+        "AMPHOE_T": "โพนนาแก้ว",
+        "AMPHOE_E": "Phon Na Kaeo",
+        "LAT_AVG": 17.2124,
+        "LONG_AVG": 104.31
+      },
+      {
+        "AM_ID": "4708",
+        "AMPHOE_T": "วานรนิวาส",
+        "AMPHOE_E": "Wanon Niwat",
+        "LAT_AVG": 17.6517,
+        "LONG_AVG": 103.7293
+      }
+    ]
+  },
+  {
+    "CH_ID": "90",
+    "CHANGWAT_T": "สงขลา",
+    "CHANGWAT_E": "Songkhla",
+    "AMPHOES": [
+      {
+        "AM_ID": "9010",
+        "AMPHOE_T": "สะเดา",
+        "AMPHOE_E": "Sadao",
+        "LAT_AVG": 6.701,
+        "LONG_AVG": 100.4233
+      },
+      {
+        "AM_ID": "9003",
+        "AMPHOE_T": "จะนะ",
+        "AMPHOE_E": "Chana",
+        "LAT_AVG": 6.8962,
+        "LONG_AVG": 100.6984
+      },
+      {
+        "AM_ID": "9014",
+        "AMPHOE_T": "บางกล่ำ",
+        "AMPHOE_E": "Bang Klam",
+        "LAT_AVG": 7.0895,
+        "LONG_AVG": 100.4325
+      },
+      {
+        "AM_ID": "9005",
+        "AMPHOE_T": "เทพา",
+        "AMPHOE_E": "Thepha",
+        "LAT_AVG": 6.8021,
+        "LONG_AVG": 100.9203
+      },
+      {
+        "AM_ID": "9012",
+        "AMPHOE_T": "นาหม่อม",
+        "AMPHOE_E": "Na Mom",
+        "LAT_AVG": 6.949,
+        "LONG_AVG": 100.557
+      },
+      {
+        "AM_ID": "9016",
+        "AMPHOE_T": "คลองหอยโข่ง",
+        "AMPHOE_E": "Khlong Hoi Khong",
+        "LAT_AVG": 6.8683,
+        "LONG_AVG": 100.3678
+      },
+      {
+        "AM_ID": "9009",
+        "AMPHOE_T": "รัตภูมิ",
+        "AMPHOE_E": "Rattaphum",
+        "LAT_AVG": 7.1172,
+        "LONG_AVG": 100.222
+      },
+      {
+        "AM_ID": "9015",
+        "AMPHOE_T": "สิงหนคร",
+        "AMPHOE_E": "Singhanakhon",
+        "LAT_AVG": 7.2692,
+        "LONG_AVG": 100.4948
+      },
+      {
+        "AM_ID": "9007",
+        "AMPHOE_T": "ระโนด",
+        "AMPHOE_E": "Ranot",
+        "LAT_AVG": 7.7778,
+        "LONG_AVG": 100.3099
+      },
+      {
+        "AM_ID": "9001",
+        "AMPHOE_T": "เมืองสงขลา",
+        "AMPHOE_E": "Muaeng Songkhla",
+        "LAT_AVG": 7.1389,
+        "LONG_AVG": 100.5929
+      },
+      {
+        "AM_ID": "9004",
+        "AMPHOE_T": "นาทวี",
+        "AMPHOE_E": "Na Thawi",
+        "LAT_AVG": 6.6661,
+        "LONG_AVG": 100.6773
+      },
+      {
+        "AM_ID": "9013",
+        "AMPHOE_T": "ควนเนียง",
+        "AMPHOE_E": "Khuan Niang",
+        "LAT_AVG": 7.1975,
+        "LONG_AVG": 100.3755
+      },
+      {
+        "AM_ID": "9002",
+        "AMPHOE_T": "สทิงพระ",
+        "AMPHOE_E": "Sathing Phra",
+        "LAT_AVG": 7.4842,
+        "LONG_AVG": 100.4225
+      },
+      {
+        "AM_ID": "9006",
+        "AMPHOE_T": "สะบ้าย้อย",
+        "AMPHOE_E": "Saba Yoi",
+        "LAT_AVG": 6.5589,
+        "LONG_AVG": 100.9377
+      },
+      {
+        "AM_ID": "9011",
+        "AMPHOE_T": "หาดใหญ่",
+        "AMPHOE_E": "Hat Yai",
+        "LAT_AVG": 7.0057,
+        "LONG_AVG": 100.4642
+      },
+      {
+        "AM_ID": "9008",
+        "AMPHOE_T": "กระแสสินธุ์",
+        "AMPHOE_E": "Krasae Sin",
+        "LAT_AVG": 7.6056,
+        "LONG_AVG": 100.3151
+      }
+    ]
+  },
+  {
+    "CH_ID": "91",
+    "CHANGWAT_T": "สตูล",
+    "CHANGWAT_E": "Satun",
+    "AMPHOES": [
+      {
+        "AM_ID": "9106",
+        "AMPHOE_T": "ทุ่งหว้า",
+        "AMPHOE_E": "Thung  Wa",
+        "LAT_AVG": 7.0466,
+        "LONG_AVG": 99.75
+      },
+      {
+        "AM_ID": "9105",
+        "AMPHOE_T": "ละงู",
+        "AMPHOE_E": "La-ngu",
+        "LAT_AVG": 6.9033,
+        "LONG_AVG": 99.7766
+      },
+      {
+        "AM_ID": "9101",
+        "AMPHOE_T": "เมืองสตูล",
+        "AMPHOE_E": "Mueang Satun",
+        "LAT_AVG": 6.6174,
+        "LONG_AVG": 99.6699
+      },
+      {
+        "AM_ID": "9103",
+        "AMPHOE_T": "ควนกาหลง",
+        "AMPHOE_E": "Khuan Kalong",
+        "LAT_AVG": 6.909,
+        "LONG_AVG": 100.0353
+      },
+      {
+        "AM_ID": "9104",
+        "AMPHOE_T": "ท่าแพ",
+        "AMPHOE_E": "Tha Phae",
+        "LAT_AVG": 6.809,
+        "LONG_AVG": 99.9183
+      },
+      {
+        "AM_ID": "9107",
+        "AMPHOE_T": "มะนัง",
+        "AMPHOE_E": "Manang",
+        "LAT_AVG": 6.994,
+        "LONG_AVG": 99.9325
+      },
+      {
+        "AM_ID": "9102",
+        "AMPHOE_T": "ควนโดน",
+        "AMPHOE_E": "Khuan Don",
+        "LAT_AVG": 6.7745,
+        "LONG_AVG": 100.0965
+      }
+    ]
+  },
+  {
+    "CH_ID": "11",
+    "CHANGWAT_T": "สมุทรปราการ",
+    "CHANGWAT_E": "Samut Prakarn",
+    "AMPHOES": [
+      {
+        "AM_ID": "1101",
+        "AMPHOE_T": "เมืองสมุทรปราการ",
+        "AMPHOE_E": "Mueang Samut Prakan",
+        "LAT_AVG": 13.587,
+        "LONG_AVG": 100.6294
+      },
+      {
+        "AM_ID": "1105",
+        "AMPHOE_T": "พระสมุทรเจดีย์",
+        "AMPHOE_E": "Phra Samut Chedi",
+        "LAT_AVG": 13.5668,
+        "LONG_AVG": 100.5274
+      },
+      {
+        "AM_ID": "1102",
+        "AMPHOE_T": "บางบ่อ",
+        "AMPHOE_E": "Bang Bo",
+        "LAT_AVG": 13.6044,
+        "LONG_AVG": 100.8809
+      },
+      {
+        "AM_ID": "1104",
+        "AMPHOE_T": "พระประแดง",
+        "AMPHOE_E": "Phra Pradaeng",
+        "LAT_AVG": 13.6584,
+        "LONG_AVG": 100.5544
+      },
+      {
+        "AM_ID": "1106",
+        "AMPHOE_T": "บางเสาธง",
+        "AMPHOE_E": "Bang Sao Thong",
+        "LAT_AVG": 13.6433,
+        "LONG_AVG": 100.8057
+      },
+      {
+        "AM_ID": "1103",
+        "AMPHOE_T": "บางพลี",
+        "AMPHOE_E": "Bang Phli",
+        "LAT_AVG": 13.6338,
+        "LONG_AVG": 100.7222
+      }
+    ]
+  },
+  {
+    "CH_ID": "75",
+    "CHANGWAT_T": "สมุทรสงคราม",
+    "CHANGWAT_E": "Samut Songkhram",
+    "AMPHOES": [
+      {
+        "AM_ID": "7501",
+        "AMPHOE_T": "เมืองสมุทรสงคราม",
+        "AMPHOE_E": "Mueang Samut Songkhram",
+        "LAT_AVG": 13.4072,
+        "LONG_AVG": 99.9981
+      },
+      {
+        "AM_ID": "7503",
+        "AMPHOE_T": "อัมพวา",
+        "AMPHOE_E": "Amphawa",
+        "LAT_AVG": 13.4032,
+        "LONG_AVG": 99.9263
+      },
+      {
+        "AM_ID": "7502",
+        "AMPHOE_T": "บางคนที",
+        "AMPHOE_E": "Bang Khonthi",
+        "LAT_AVG": 13.4748,
+        "LONG_AVG": 99.9457
+      }
+    ]
+  },
+  {
+    "CH_ID": "74",
+    "CHANGWAT_T": "สมุทรสาคร",
+    "CHANGWAT_E": "Samut Sakhon",
+    "AMPHOES": [
+      {
+        "AM_ID": "7403",
+        "AMPHOE_T": "บ้านแพ้ว",
+        "AMPHOE_E": "Ban Phaeo",
+        "LAT_AVG": 13.6027,
+        "LONG_AVG": 100.1257
+      },
+      {
+        "AM_ID": "7401",
+        "AMPHOE_T": "เมืองสมุทรสาคร",
+        "AMPHOE_E": "Mueang Samut Sakhon",
+        "LAT_AVG": 13.5378,
+        "LONG_AVG": 100.2506
+      },
+      {
+        "AM_ID": "7402",
+        "AMPHOE_T": "กระทุ่มแบน",
+        "AMPHOE_E": "Krathum Baen",
+        "LAT_AVG": 13.6554,
+        "LONG_AVG": 100.2682
+      }
+    ]
+  },
+  {
+    "CH_ID": "19",
+    "CHANGWAT_T": "สระบุรี",
+    "CHANGWAT_E": "Saraburi",
+    "AMPHOES": [
+      {
+        "AM_ID": "1904",
+        "AMPHOE_T": "วิหารแดง",
+        "AMPHOE_E": "Wihan Daeng",
+        "LAT_AVG": 14.3475,
+        "LONG_AVG": 100.987
+      },
+      {
+        "AM_ID": "1913",
+        "AMPHOE_T": "เฉลิมพระเกียรติ",
+        "AMPHOE_E": "Chaloem Phra Kiet",
+        "LAT_AVG": 14.6327,
+        "LONG_AVG": 100.9098
+      },
+      {
+        "AM_ID": "1912",
+        "AMPHOE_T": "วังม่วง",
+        "AMPHOE_E": "Wang Muang",
+        "LAT_AVG": 14.808,
+        "LONG_AVG": 101.133
+      },
+      {
+        "AM_ID": "1909",
+        "AMPHOE_T": "พระพุทธบาท",
+        "AMPHOE_E": "Phra Phutthabat",
+        "LAT_AVG": 14.7149,
+        "LONG_AVG": 100.8099
+      },
+      {
+        "AM_ID": "1908",
+        "AMPHOE_T": "หนองโดน",
+        "AMPHOE_E": "Nong Don",
+        "LAT_AVG": 14.6995,
+        "LONG_AVG": 100.6913
+      },
+      {
+        "AM_ID": "1903",
+        "AMPHOE_T": "หนองแค",
+        "AMPHOE_E": "Nong Khae",
+        "LAT_AVG": 14.3744,
+        "LONG_AVG": 100.8573
+      },
+      {
+        "AM_ID": "1911",
+        "AMPHOE_T": "มวกเหล็ก",
+        "AMPHOE_E": "Muak Lek",
+        "LAT_AVG": 14.7963,
+        "LONG_AVG": 101.2818
+      },
+      {
+        "AM_ID": "1901",
+        "AMPHOE_T": "เมืองสระบุรี",
+        "AMPHOE_E": "Mueang Saraburi",
+        "LAT_AVG": 14.5123,
+        "LONG_AVG": 100.9163
+      },
+      {
+        "AM_ID": "1910",
+        "AMPHOE_T": "เสาไห้",
+        "AMPHOE_E": "Sao Hai",
+        "LAT_AVG": 14.567,
+        "LONG_AVG": 100.8428
+      },
+      {
+        "AM_ID": "1902",
+        "AMPHOE_T": "แก่งคอย",
+        "AMPHOE_E": "Kaeng Khoi",
+        "LAT_AVG": 14.5903,
+        "LONG_AVG": 101.0294
+      },
+      {
+        "AM_ID": "1905",
+        "AMPHOE_T": "หนองแซง",
+        "AMPHOE_E": "Nong Saeng",
+        "LAT_AVG": 14.4874,
+        "LONG_AVG": 100.8024
+      },
+      {
+        "AM_ID": "1906",
+        "AMPHOE_T": "บ้านหมอ",
+        "AMPHOE_E": "Ban Mo",
+        "LAT_AVG": 14.6097,
+        "LONG_AVG": 100.7191
+      },
+      {
+        "AM_ID": "1907",
+        "AMPHOE_T": "ดอนพุด",
+        "AMPHOE_E": "Don Phut",
+        "LAT_AVG": 14.604,
+        "LONG_AVG": 100.618
+      }
+    ]
+  },
+  {
+    "CH_ID": "27",
+    "CHANGWAT_T": "สระแก้ว",
+    "CHANGWAT_E": "Sa kaeo",
+    "AMPHOES": [
+      {
+        "AM_ID": "2703",
+        "AMPHOE_T": "ตาพระยา",
+        "AMPHOE_E": "Ta Phraya",
+        "LAT_AVG": 14.0346,
+        "LONG_AVG": 102.7422
+      },
+      {
+        "AM_ID": "2704",
+        "AMPHOE_T": "วังน้ำเย็น",
+        "AMPHOE_E": "Wang Nam Yen",
+        "LAT_AVG": 13.519,
+        "LONG_AVG": 102.1023
+      },
+      {
+        "AM_ID": "2701",
+        "AMPHOE_T": "เมืองสระแก้ว",
+        "AMPHOE_E": "Mueang Sa Kaeo",
+        "LAT_AVG": 13.8741,
+        "LONG_AVG": 102.073
+      },
+      {
+        "AM_ID": "2707",
+        "AMPHOE_T": "เขาฉกรรจ์",
+        "AMPHOE_E": "Khao Chakan",
+        "LAT_AVG": 13.6598,
+        "LONG_AVG": 102.0738
+      },
+      {
+        "AM_ID": "2705",
+        "AMPHOE_T": "วัฒนานคร",
+        "AMPHOE_E": "Watthana Nakhon",
+        "LAT_AVG": 13.8452,
+        "LONG_AVG": 102.3506
+      },
+      {
+        "AM_ID": "2702",
+        "AMPHOE_T": "คลองหาด",
+        "AMPHOE_E": "Khlong Hat",
+        "LAT_AVG": 13.4929,
+        "LONG_AVG": 102.278
+      },
+      {
+        "AM_ID": "2708",
+        "AMPHOE_T": "โคกสูง",
+        "AMPHOE_E": "Khok Sung",
+        "LAT_AVG": 13.8363,
+        "LONG_AVG": 102.6598
+      },
+      {
+        "AM_ID": "2706",
+        "AMPHOE_T": "อรัญประเทศ",
+        "AMPHOE_E": "Aranyaprathet",
+        "LAT_AVG": 13.6741,
+        "LONG_AVG": 102.4797
+      },
+      {
+        "AM_ID": "2709",
+        "AMPHOE_T": "วังสมบูรณ์",
+        "AMPHOE_E": "Wang Sombun",
+        "LAT_AVG": 13.365,
+        "LONG_AVG": 102.109
+      }
+    ]
+  },
+  {
+    "CH_ID": "17",
+    "CHANGWAT_T": "สิงห์บุรี",
+    "CHANGWAT_E": "Sing Buri",
+    "AMPHOES": [
+      {
+        "AM_ID": "1704",
+        "AMPHOE_T": "พรหมบุรี",
+        "AMPHOE_E": "Phrom Buri",
+        "LAT_AVG": 14.7939,
+        "LONG_AVG": 100.4429
+      },
+      {
+        "AM_ID": "1706",
+        "AMPHOE_T": "อินทร์บุรี",
+        "AMPHOE_E": "In Buri",
+        "LAT_AVG": 15.0189,
+        "LONG_AVG": 100.3471
+      },
+      {
+        "AM_ID": "1703",
+        "AMPHOE_T": "ค่ายบางระจัน",
+        "AMPHOE_E": "Khai Bang Rachan",
+        "LAT_AVG": 14.8208,
+        "LONG_AVG": 100.296
+      },
+      {
+        "AM_ID": "1702",
+        "AMPHOE_T": "บางระจัน",
+        "AMPHOE_E": "Bang Rachan",
+        "LAT_AVG": 14.8971,
+        "LONG_AVG": 100.2878
+      },
+      {
+        "AM_ID": "1701",
+        "AMPHOE_T": "เมืองสิงห์บุรี",
+        "AMPHOE_E": "Mueang Sing Buri",
+        "LAT_AVG": 14.8995,
+        "LONG_AVG": 100.4023
+      },
+      {
+        "AM_ID": "1705",
+        "AMPHOE_T": "ท่าช้าง",
+        "AMPHOE_E": "Tha Chang",
+        "LAT_AVG": 14.778,
+        "LONG_AVG": 100.3908
+      }
+    ]
+  },
+  {
+    "CH_ID": "72",
+    "CHANGWAT_T": "สุพรรณบุรี",
+    "CHANGWAT_E": "Suphan Buri",
+    "AMPHOES": [
+      {
+        "AM_ID": "7210",
+        "AMPHOE_T": "หนองหญ้าไซ",
+        "AMPHOE_E": "Nong Ya Sai",
+        "LAT_AVG": 14.782,
+        "LONG_AVG": 99.8397
+      },
+      {
+        "AM_ID": "7201",
+        "AMPHOE_T": "เมืองสุพรรณบุรี",
+        "AMPHOE_E": "Mueang Saphan Buri",
+        "LAT_AVG": 14.4804,
+        "LONG_AVG": 100.0933
+      },
+      {
+        "AM_ID": "7208",
+        "AMPHOE_T": "สามชุก",
+        "AMPHOE_E": "Sam Chuk",
+        "LAT_AVG": 14.7571,
+        "LONG_AVG": 100.0693
+      },
+      {
+        "AM_ID": "7205",
+        "AMPHOE_T": "ศรีประจันต์",
+        "AMPHOE_E": "Si Prachan",
+        "LAT_AVG": 14.63,
+        "LONG_AVG": 100.145
+      },
+      {
+        "AM_ID": "7209",
+        "AMPHOE_T": "อู่ทอง",
+        "AMPHOE_E": "U Thong",
+        "LAT_AVG": 14.3687,
+        "LONG_AVG": 99.8974
+      },
+      {
+        "AM_ID": "7203",
+        "AMPHOE_T": "ด่านช้าง",
+        "AMPHOE_E": "Dan Chang",
+        "LAT_AVG": 14.869,
+        "LONG_AVG": 99.5399
+      },
+      {
+        "AM_ID": "7207",
+        "AMPHOE_T": "สองพี่น้อง",
+        "AMPHOE_E": "Song Phi Nong",
+        "LAT_AVG": 14.2101,
+        "LONG_AVG": 100.0312
+      },
+      {
+        "AM_ID": "7206",
+        "AMPHOE_T": "ดอนเจดีย์",
+        "AMPHOE_E": "Don Chedi",
+        "LAT_AVG": 14.6516,
+        "LONG_AVG": 99.9256
+      },
+      {
+        "AM_ID": "7204",
+        "AMPHOE_T": "บางปลาม้า",
+        "AMPHOE_E": "Bang Pla Ma",
+        "LAT_AVG": 14.3534,
+        "LONG_AVG": 100.143
+      },
+      {
+        "AM_ID": "7202",
+        "AMPHOE_T": "เดิมบางนางบวช",
+        "AMPHOE_E": "Doem Bang Nang Buat",
+        "LAT_AVG": 14.871,
+        "LONG_AVG": 100.0612
+      }
+    ]
+  },
+  {
+    "CH_ID": "84",
+    "CHANGWAT_T": "สุราษฎร์ธานี",
+    "CHANGWAT_E": "Surat Thani",
+    "AMPHOES": [
+      {
+        "AM_ID": "8403",
+        "AMPHOE_T": "ดอนสัก",
+        "AMPHOE_E": "Don Sak",
+        "LAT_AVG": 9.2776,
+        "LONG_AVG": 99.6769
+      },
+      {
+        "AM_ID": "8401",
+        "AMPHOE_T": "เมืองสุราษฎร์ธานี",
+        "AMPHOE_E": "Mueang Surat Thani",
+        "LAT_AVG": 9.1287,
+        "LONG_AVG": 99.3176
+      },
+      {
+        "AM_ID": "8419",
+        "AMPHOE_T": "วิภาวดี",
+        "AMPHOE_E": "Chai Buri",
+        "LAT_AVG": 9.2395,
+        "LONG_AVG": 98.858
+      },
+      {
+        "AM_ID": "8414",
+        "AMPHOE_T": "เคียนซา",
+        "AMPHOE_E": "Khian Sa",
+        "LAT_AVG": 8.7616,
+        "LONG_AVG": 99.1744
+      },
+      {
+        "AM_ID": "8418",
+        "AMPHOE_T": "ชัยบุรี",
+        "AMPHOE_E": "Chai Buri",
+        "LAT_AVG": 8.4523,
+        "LONG_AVG": 99.0665
+      },
+      {
+        "AM_ID": "8409",
+        "AMPHOE_T": "บ้านตาขุน",
+        "AMPHOE_E": "Ban Ta Khun",
+        "LAT_AVG": 8.9788,
+        "LONG_AVG": 98.8275
+      },
+      {
+        "AM_ID": "8415",
+        "AMPHOE_T": "เวียงสระ",
+        "AMPHOE_E": "Wiang Sa",
+        "LAT_AVG": 8.5974,
+        "LONG_AVG": 99.3458
+      },
+      {
+        "AM_ID": "8402",
+        "AMPHOE_T": "กาญจนดิษฐ์",
+        "AMPHOE_E": "Kanchanadit",
+        "LAT_AVG": 9.1092,
+        "LONG_AVG": 99.4932
+      },
+      {
+        "AM_ID": "8404",
+        "AMPHOE_T": "เกาะสมุย",
+        "AMPHOE_E": "Ko Samui",
+        "LAT_AVG": 9.5988,
+        "LONG_AVG": 99.743
+      },
+      {
+        "AM_ID": "8416",
+        "AMPHOE_T": "พระแสง",
+        "AMPHOE_E": "Phrasaeng",
+        "LAT_AVG": 8.5397,
+        "LONG_AVG": 99.1396
+      },
+      {
+        "AM_ID": "8412",
+        "AMPHOE_T": "บ้านนาสาร",
+        "AMPHOE_E": "Ban Na San",
+        "LAT_AVG": 8.8049,
+        "LONG_AVG": 99.3665
+      },
+      {
+        "AM_ID": "8406",
+        "AMPHOE_T": "ไชยา",
+        "AMPHOE_E": "Chaiya",
+        "LAT_AVG": 9.4176,
+        "LONG_AVG": 99.1554
+      },
+      {
+        "AM_ID": "8410",
+        "AMPHOE_T": "พนม",
+        "AMPHOE_E": "Phanom",
+        "LAT_AVG": 8.8002,
+        "LONG_AVG": 98.7963
+      },
+      {
+        "AM_ID": "8417",
+        "AMPHOE_T": "พุนพิน",
+        "AMPHOE_E": "Phunphin",
+        "LAT_AVG": 9.0688,
+        "LONG_AVG": 99.1602
+      },
+      {
+        "AM_ID": "8405",
+        "AMPHOE_T": "เกาะพะงัน",
+        "AMPHOE_E": "Ko Pha-ngan",
+        "LAT_AVG": 9.7398,
+        "LONG_AVG": 99.9922
+      },
+      {
+        "AM_ID": "8407",
+        "AMPHOE_T": "ท่าชนะ",
+        "AMPHOE_E": "Tha Chana",
+        "LAT_AVG": 9.6043,
+        "LONG_AVG": 99.0397
+      },
+      {
+        "AM_ID": "8413",
+        "AMPHOE_T": "บ้านนาเดิม",
+        "AMPHOE_E": "Ban Na Doem",
+        "LAT_AVG": 8.9058,
+        "LONG_AVG": 99.278
+      },
+      {
+        "AM_ID": "8408",
+        "AMPHOE_T": "คีรีรัฐนิคม",
+        "AMPHOE_E": "Khiri Rat Nikhom",
+        "LAT_AVG": 9.0262,
+        "LONG_AVG": 98.951
+      },
+      {
+        "AM_ID": "8411",
+        "AMPHOE_T": "ท่าฉาง",
+        "AMPHOE_E": "Tha Chang",
+        "LAT_AVG": 9.2915,
+        "LONG_AVG": 99.0937
+      }
+    ]
+  },
+  {
+    "CH_ID": "32",
+    "CHANGWAT_T": "สุรินทร์",
+    "CHANGWAT_E": "Surin",
+    "AMPHOES": [
+      {
+        "AM_ID": "3211",
+        "AMPHOE_T": "ลำดวน",
+        "AMPHOE_E": "Lamduan",
+        "LAT_AVG": 14.7276,
+        "LONG_AVG": 103.7008
+      },
+      {
+        "AM_ID": "3205",
+        "AMPHOE_T": "ปราสาท",
+        "AMPHOE_E": "Prasat",
+        "LAT_AVG": 14.6426,
+        "LONG_AVG": 103.4031
+      },
+      {
+        "AM_ID": "3209",
+        "AMPHOE_T": "ศีขรภูมิ",
+        "AMPHOE_E": "Sikhoraphum",
+        "LAT_AVG": 14.9533,
+        "LONG_AVG": 103.7905
+      },
+      {
+        "AM_ID": "3213",
+        "AMPHOE_T": "บัวเชด",
+        "AMPHOE_E": "Buachet",
+        "LAT_AVG": 14.5217,
+        "LONG_AVG": 103.9703
+      },
+      {
+        "AM_ID": "3206",
+        "AMPHOE_T": "กาบเชิง",
+        "AMPHOE_E": "Kap Choeng",
+        "LAT_AVG": 14.4712,
+        "LONG_AVG": 103.5928
+      },
+      {
+        "AM_ID": "3215",
+        "AMPHOE_T": "ศรีณรงค์",
+        "AMPHOE_E": "Si Narong",
+        "LAT_AVG": 14.7696,
+        "LONG_AVG": 103.889
+      },
+      {
+        "AM_ID": "3204",
+        "AMPHOE_T": "จอมพระ",
+        "AMPHOE_E": "Chom Phra",
+        "LAT_AVG": 15.1383,
+        "LONG_AVG": 103.59
+      },
+      {
+        "AM_ID": "3212",
+        "AMPHOE_T": "สำโรงทาบ",
+        "AMPHOE_E": "Samrong Thap",
+        "LAT_AVG": 15.0464,
+        "LONG_AVG": 103.9405
+      },
+      {
+        "AM_ID": "3207",
+        "AMPHOE_T": "รัตนบุรี",
+        "AMPHOE_E": "Rattanaburi",
+        "LAT_AVG": 15.3345,
+        "LONG_AVG": 103.8908
+      },
+      {
+        "AM_ID": "3214",
+        "AMPHOE_T": "พนมดงรัก",
+        "AMPHOE_E": "Phanom Dong Rak",
+        "LAT_AVG": 14.4473,
+        "LONG_AVG": 103.3032
+      },
+      {
+        "AM_ID": "3210",
+        "AMPHOE_T": "สังขะ",
+        "AMPHOE_E": "Sangkha",
+        "LAT_AVG": 14.6058,
+        "LONG_AVG": 103.8393
+      },
+      {
+        "AM_ID": "3217",
+        "AMPHOE_T": "โนนนารายณ์",
+        "AMPHOE_E": "Non Narai",
+        "LAT_AVG": 15.1956,
+        "LONG_AVG": 103.909
+      },
+      {
+        "AM_ID": "3202",
+        "AMPHOE_T": "ชุมพลบุรี",
+        "AMPHOE_E": "Chumphon Buri",
+        "LAT_AVG": 15.38,
+        "LONG_AVG": 103.3583
+      },
+      {
+        "AM_ID": "3201",
+        "AMPHOE_T": "เมืองสุรินทร์",
+        "AMPHOE_E": "Mueang Surin",
+        "LAT_AVG": 14.896,
+        "LONG_AVG": 103.515
+      },
+      {
+        "AM_ID": "3203",
+        "AMPHOE_T": "ท่าตูม",
+        "AMPHOE_E": "Tha Tum",
+        "LAT_AVG": 15.2971,
+        "LONG_AVG": 103.6404
+      },
+      {
+        "AM_ID": "3216",
+        "AMPHOE_T": "เขวาสินรินทร์",
+        "AMPHOE_E": "Khwao Sinarin",
+        "LAT_AVG": 15.0074,
+        "LONG_AVG": 103.612
+      },
+      {
+        "AM_ID": "3208",
+        "AMPHOE_T": "สนม",
+        "AMPHOE_E": "Sanom",
+        "LAT_AVG": 15.1709,
+        "LONG_AVG": 103.7793
+      }
+    ]
+  },
+  {
+    "CH_ID": "64",
+    "CHANGWAT_T": "สุโขทัย",
+    "CHANGWAT_E": "Sukhothai",
+    "AMPHOES": [
+      {
+        "AM_ID": "6408",
+        "AMPHOE_T": "ศรีนคร",
+        "AMPHOE_E": "Si Nakhon",
+        "LAT_AVG": 17.372,
+        "LONG_AVG": 99.9674
+      },
+      {
+        "AM_ID": "6401",
+        "AMPHOE_T": "เมืองสุโขทัย",
+        "AMPHOE_E": "Mueang Sukhothai",
+        "LAT_AVG": 17.0192,
+        "LONG_AVG": 99.8091
+      },
+      {
+        "AM_ID": "6406",
+        "AMPHOE_T": "ศรีสำโรง",
+        "AMPHOE_E": "Si Samrong",
+        "LAT_AVG": 17.1566,
+        "LONG_AVG": 99.8022
+      },
+      {
+        "AM_ID": "6402",
+        "AMPHOE_T": "บ้านด่านลานหอย",
+        "AMPHOE_E": "Ban Dan Lan Hoi",
+        "LAT_AVG": 17.0243,
+        "LONG_AVG": 99.5174
+      },
+      {
+        "AM_ID": "6405",
+        "AMPHOE_T": "ศรีสัชนาลัย",
+        "AMPHOE_E": "Si Satchanalai",
+        "LAT_AVG": 17.5287,
+        "LONG_AVG": 99.7666
+      },
+      {
+        "AM_ID": "6407",
+        "AMPHOE_T": "สวรรคโลก",
+        "AMPHOE_E": "Sawankhalok",
+        "LAT_AVG": 17.2881,
+        "LONG_AVG": 99.8264
+      },
+      {
+        "AM_ID": "6404",
+        "AMPHOE_T": "กงไกรลาศ",
+        "AMPHOE_E": "Kong Krailat",
+        "LAT_AVG": 16.944,
+        "LONG_AVG": 99.9836
+      },
+      {
+        "AM_ID": "6409",
+        "AMPHOE_T": "ทุ่งเสลี่ยม",
+        "AMPHOE_E": "Thung Saliam",
+        "LAT_AVG": 17.3284,
+        "LONG_AVG": 99.5846
+      },
+      {
+        "AM_ID": "6403",
+        "AMPHOE_T": "คีรีมาศ",
+        "AMPHOE_E": "Khiri Mat",
+        "LAT_AVG": 16.8318,
+        "LONG_AVG": 99.7619
+      }
+    ]
+  },
+  {
+    "CH_ID": "43",
+    "CHANGWAT_T": "หนองคาย",
+    "CHANGWAT_E": "Nong Khai",
+    "AMPHOES": [
+      {
+        "AM_ID": "4308",
+        "AMPHOE_T": "สังคม",
+        "AMPHOE_E": "Sangkhom",
+        "LAT_AVG": 18.0794,
+        "LONG_AVG": 102.2064
+      },
+      {
+        "AM_ID": "4301",
+        "AMPHOE_T": "เมืองหนองคาย",
+        "AMPHOE_E": "Mueang Nong Khai",
+        "LAT_AVG": 17.8485,
+        "LONG_AVG": 102.7763
+      },
+      {
+        "AM_ID": "4317",
+        "AMPHOE_T": "โพธิ์ตาก",
+        "AMPHOE_E": "Pho Tak",
+        "LAT_AVG": 17.884,
+        "LONG_AVG": 102.4247
+      },
+      {
+        "AM_ID": "4307",
+        "AMPHOE_T": "ศรีเชียงใหม่",
+        "AMPHOE_E": "Si Chiang Mai",
+        "LAT_AVG": 17.9443,
+        "LONG_AVG": 102.5085
+      },
+      {
+        "AM_ID": "4315",
+        "AMPHOE_T": "เฝ้าไร่",
+        "AMPHOE_E": "Fao Rai",
+        "LAT_AVG": 17.9932,
+        "LONG_AVG": 103.2978
+      },
+      {
+        "AM_ID": "4314",
+        "AMPHOE_T": "สระใคร",
+        "AMPHOE_E": "Sakhrai",
+        "LAT_AVG": 17.664,
+        "LONG_AVG": 102.717
+      },
+      {
+        "AM_ID": "4302",
+        "AMPHOE_T": "ท่าบ่อ",
+        "AMPHOE_E": "Tha Bo",
+        "LAT_AVG": 17.7947,
+        "LONG_AVG": 102.5638
+      },
+      {
+        "AM_ID": "4316",
+        "AMPHOE_T": "รัตนวาปี",
+        "AMPHOE_E": "Rattanawapi",
+        "LAT_AVG": 18.2146,
+        "LONG_AVG": 103.2272
+      },
+      {
+        "AM_ID": "4305",
+        "AMPHOE_T": "โพนพิสัย",
+        "AMPHOE_E": "Phon Phisai",
+        "LAT_AVG": 17.9428,
+        "LONG_AVG": 103.1112
+      }
+    ]
+  },
+  {
+    "CH_ID": "39",
+    "CHANGWAT_T": "หนองบัวลำภู",
+    "CHANGWAT_E": "Nong Bua Lam Phu",
+    "AMPHOES": [
+      {
+        "AM_ID": "3906",
+        "AMPHOE_T": "นาวัง",
+        "AMPHOE_E": "Na Wang",
+        "LAT_AVG": 17.3488,
+        "LONG_AVG": 102.0644
+      },
+      {
+        "AM_ID": "3901",
+        "AMPHOE_T": "เมืองหนองบัวลำภู",
+        "AMPHOE_E": "Mueang Nong Bua Lam Phu",
+        "LAT_AVG": 17.1679,
+        "LONG_AVG": 102.3947
+      },
+      {
+        "AM_ID": "3904",
+        "AMPHOE_T": "ศรีบุญเรือง",
+        "AMPHOE_E": "Si Bun Rueang",
+        "LAT_AVG": 17.0028,
+        "LONG_AVG": 102.2386
+      },
+      {
+        "AM_ID": "3902",
+        "AMPHOE_T": "นากลาง",
+        "AMPHOE_E": "Na Klang",
+        "LAT_AVG": 17.316,
+        "LONG_AVG": 102.2031
+      },
+      {
+        "AM_ID": "3905",
+        "AMPHOE_T": "สุวรรณคูหา",
+        "AMPHOE_E": "Suwannakhuha",
+        "LAT_AVG": 17.5524,
+        "LONG_AVG": 102.2631
+      },
+      {
+        "AM_ID": "3903",
+        "AMPHOE_T": "โนนสัง",
+        "AMPHOE_E": "Non Sang",
+        "LAT_AVG": 16.9003,
+        "LONG_AVG": 102.5365
+      }
+    ]
+  },
+  {
+    "CH_ID": "37",
+    "CHANGWAT_T": "อำนาจเจริญ",
+    "CHANGWAT_E": "Amnat Charoen",
+    "AMPHOES": [
+      {
+        "AM_ID": "3707",
+        "AMPHOE_T": "ลืออำนาจ",
+        "AMPHOE_E": "Lue Amnat",
+        "LAT_AVG": 15.7149,
+        "LONG_AVG": 104.6933
+      },
+      {
+        "AM_ID": "3704",
+        "AMPHOE_T": "พนา",
+        "AMPHOE_E": "Phana",
+        "LAT_AVG": 15.6913,
+        "LONG_AVG": 104.8708
+      },
+      {
+        "AM_ID": "3705",
+        "AMPHOE_T": "เสนางคนิคม",
+        "AMPHOE_E": "Senangkhanikhom",
+        "LAT_AVG": 16.053,
+        "LONG_AVG": 104.6805
+      },
+      {
+        "AM_ID": "3702",
+        "AMPHOE_T": "ชานุมาน",
+        "AMPHOE_E": "Chanuman",
+        "LAT_AVG": 16.13,
+        "LONG_AVG": 104.9384
+      },
+      {
+        "AM_ID": "3706",
+        "AMPHOE_T": "หัวตะพาน",
+        "AMPHOE_E": "Hua Taphan",
+        "LAT_AVG": 15.6888,
+        "LONG_AVG": 104.5248
+      },
+      {
+        "AM_ID": "3701",
+        "AMPHOE_T": "เมืองอำนาจเจริญ",
+        "AMPHOE_E": "Mueang Amnat Charoen",
+        "LAT_AVG": 15.874,
+        "LONG_AVG": 104.6307
+      },
+      {
+        "AM_ID": "3703",
+        "AMPHOE_T": "ปทุมราชวงศา",
+        "AMPHOE_E": "Pathum Ratchawongsa",
+        "LAT_AVG": 15.8854,
+        "LONG_AVG": 104.8996
+      }
+    ]
+  },
+  {
+    "CH_ID": "41",
+    "CHANGWAT_T": "อุดรธานี",
+    "CHANGWAT_E": "Udon Thani",
+    "AMPHOES": [
+      {
+        "AM_ID": "4125",
+        "AMPHOE_T": "ประจักษ์ศิลปาคม",
+        "AMPHOE_E": "Prachaksinlapakhom",
+        "LAT_AVG": 17.2423,
+        "LONG_AVG": 102.9907
+      },
+      {
+        "AM_ID": "4104",
+        "AMPHOE_T": "กุมภวาปี",
+        "AMPHOE_E": "Kumphawapi",
+        "LAT_AVG": 17.0933,
+        "LONG_AVG": 102.9888
+      },
+      {
+        "AM_ID": "4103",
+        "AMPHOE_T": "หนองวัวซอ",
+        "AMPHOE_E": "Nong Wua So",
+        "LAT_AVG": 17.1995,
+        "LONG_AVG": 102.5841
+      },
+      {
+        "AM_ID": "4111",
+        "AMPHOE_T": "บ้านดุง",
+        "AMPHOE_E": "Ban Dung",
+        "LAT_AVG": 17.6996,
+        "LONG_AVG": 103.2649
+      },
+      {
+        "AM_ID": "4119",
+        "AMPHOE_T": "เพ็ญ",
+        "AMPHOE_E": "Phen",
+        "LAT_AVG": 17.6495,
+        "LONG_AVG": 102.9352
+      },
+      {
+        "AM_ID": "4105",
+        "AMPHOE_T": "โนนสะอาด",
+        "AMPHOE_E": "Non Sa-at",
+        "LAT_AVG": 16.9657,
+        "LONG_AVG": 102.8935
+      },
+      {
+        "AM_ID": "4106",
+        "AMPHOE_T": "หนองหาน",
+        "AMPHOE_E": "Nong Saeng",
+        "LAT_AVG": 17.3721,
+        "LONG_AVG": 103.1167
+      },
+      {
+        "AM_ID": "4110",
+        "AMPHOE_T": "วังสามหมอ",
+        "AMPHOE_E": "Wang Sam Mo",
+        "LAT_AVG": 17.002,
+        "LONG_AVG": 103.444
+      },
+      {
+        "AM_ID": "4117",
+        "AMPHOE_T": "บ้านผือ",
+        "AMPHOE_E": "Ban Phue",
+        "LAT_AVG": 17.6519,
+        "LONG_AVG": 102.4541
+      },
+      {
+        "AM_ID": "4101",
+        "AMPHOE_T": "เมืองอุดรธานี",
+        "AMPHOE_E": "Mueang Udon Thani",
+        "LAT_AVG": 17.4017,
+        "LONG_AVG": 102.7784
+      },
+      {
+        "AM_ID": "4102",
+        "AMPHOE_T": "กุดจับ",
+        "AMPHOE_E": "Kut Chap",
+        "LAT_AVG": 17.4381,
+        "LONG_AVG": 102.5331
+      },
+      {
+        "AM_ID": "4121",
+        "AMPHOE_T": "หนองแสง",
+        "AMPHOE_E": "Nong Saeng",
+        "LAT_AVG": 17.139,
+        "LONG_AVG": 102.8067
+      },
+      {
+        "AM_ID": "4118",
+        "AMPHOE_T": "น้ำโสม",
+        "AMPHOE_E": "Nam Som",
+        "LAT_AVG": 17.7497,
+        "LONG_AVG": 102.2073
+      },
+      {
+        "AM_ID": "4124",
+        "AMPHOE_T": "กู่แก้ว",
+        "AMPHOE_E": "Ku Kaeo",
+        "LAT_AVG": 17.1738,
+        "LONG_AVG": 103.1623
+      },
+      {
+        "AM_ID": "4122",
+        "AMPHOE_T": "นายูง",
+        "AMPHOE_E": "Na Yung",
+        "LAT_AVG": 17.9222,
+        "LONG_AVG": 102.1438
+      },
+      {
+        "AM_ID": "4120",
+        "AMPHOE_T": "สร้างคอม",
+        "AMPHOE_E": "Sang Khom",
+        "LAT_AVG": 17.7957,
+        "LONG_AVG": 103.055
+      },
+      {
+        "AM_ID": "4123",
+        "AMPHOE_T": "พิบูลย์รักษ์",
+        "AMPHOE_E": "Phibun Rak",
+        "LAT_AVG": 17.5273,
+        "LONG_AVG": 103.0727
+      },
+      {
+        "AM_ID": "4108",
+        "AMPHOE_T": "ไชยวาน",
+        "AMPHOE_E": "Chai Wan",
+        "LAT_AVG": 17.2313,
+        "LONG_AVG": 103.2485
+      },
+      {
+        "AM_ID": "4107",
+        "AMPHOE_T": "ทุ่งฝน",
+        "AMPHOE_E": "Thung Fon",
+        "LAT_AVG": 17.514,
+        "LONG_AVG": 103.1973
+      },
+      {
+        "AM_ID": "4109",
+        "AMPHOE_T": "ศรีธาตุ",
+        "AMPHOE_E": "Si That",
+        "LAT_AVG": 17.0129,
+        "LONG_AVG": 103.2156
+      }
+    ]
+  },
+  {
+    "CH_ID": "53",
+    "CHANGWAT_T": "อุตรดิตถ์",
+    "CHANGWAT_E": "Uttaradit",
+    "AMPHOES": [
+      {
+        "AM_ID": "5307",
+        "AMPHOE_T": "พิชัย",
+        "AMPHOE_E": "Phichai",
+        "LAT_AVG": 17.2865,
+        "LONG_AVG": 100.1067
+      },
+      {
+        "AM_ID": "5302",
+        "AMPHOE_T": "ตรอน",
+        "AMPHOE_E": "Tron",
+        "LAT_AVG": 17.4626,
+        "LONG_AVG": 100.1154
+      },
+      {
+        "AM_ID": "5304",
+        "AMPHOE_T": "น้ำปาด",
+        "AMPHOE_E": "Nam Pat",
+        "LAT_AVG": 17.714,
+        "LONG_AVG": 100.729
+      },
+      {
+        "AM_ID": "5306",
+        "AMPHOE_T": "บ้านโคก",
+        "AMPHOE_E": "Ban Khok",
+        "LAT_AVG": 18.0818,
+        "LONG_AVG": 101.047
+      },
+      {
+        "AM_ID": "5303",
+        "AMPHOE_T": "ท่าปลา",
+        "AMPHOE_E": "Tha Pla",
+        "LAT_AVG": 17.8322,
+        "LONG_AVG": 100.4075
+      },
+      {
+        "AM_ID": "5301",
+        "AMPHOE_T": "เมืองอุตรดิตถ์",
+        "AMPHOE_E": "Mueang Uttaradit",
+        "LAT_AVG": 17.6529,
+        "LONG_AVG": 100.2016
+      },
+      {
+        "AM_ID": "5308",
+        "AMPHOE_T": "ลับแล",
+        "AMPHOE_E": "Laplae",
+        "LAT_AVG": 17.6363,
+        "LONG_AVG": 100.0158
+      },
+      {
+        "AM_ID": "5309",
+        "AMPHOE_T": "ทองแสนขัน",
+        "AMPHOE_E": "Thong Saen Khan",
+        "LAT_AVG": 17.5138,
+        "LONG_AVG": 100.3343
+      },
+      {
+        "AM_ID": "5305",
+        "AMPHOE_T": "ฟากท่า",
+        "AMPHOE_E": "Fak Tha",
+        "LAT_AVG": 17.9668,
+        "LONG_AVG": 100.862
+      }
+    ]
+  },
+  {
+    "CH_ID": "61",
+    "CHANGWAT_T": "อุทัยธานี",
+    "CHANGWAT_E": "Uthai Thani",
+    "AMPHOES": [
+      {
+        "AM_ID": "6108",
+        "AMPHOE_T": "ห้วยคต",
+        "AMPHOE_E": "Huai Khot",
+        "LAT_AVG": 15.2873,
+        "LONG_AVG": 99.565
+      },
+      {
+        "AM_ID": "6105",
+        "AMPHOE_T": "หนองขาหย่าง",
+        "AMPHOE_E": "Nong Khayang",
+        "LAT_AVG": 15.3618,
+        "LONG_AVG": 99.9454
+      },
+      {
+        "AM_ID": "6101",
+        "AMPHOE_T": "เมืองอุทัยธานี",
+        "AMPHOE_E": "Mueang Uthai Thani",
+        "LAT_AVG": 15.4041,
+        "LONG_AVG": 100.0221
+      },
+      {
+        "AM_ID": "6106",
+        "AMPHOE_T": "บ้านไร่",
+        "AMPHOE_E": "Ban Rai",
+        "LAT_AVG": 15.1425,
+        "LONG_AVG": 99.5678
+      },
+      {
+        "AM_ID": "6102",
+        "AMPHOE_T": "ทัพทัน",
+        "AMPHOE_E": "Thap Than",
+        "LAT_AVG": 15.482,
+        "LONG_AVG": 99.8561
+      },
+      {
+        "AM_ID": "6104",
+        "AMPHOE_T": "หนองฉาง",
+        "AMPHOE_E": "Nong Chang",
+        "LAT_AVG": 15.3778,
+        "LONG_AVG": 99.7923
+      },
+      {
+        "AM_ID": "6107",
+        "AMPHOE_T": "ลานสัก",
+        "AMPHOE_E": "Lan Sak",
+        "LAT_AVG": 15.4672,
+        "LONG_AVG": 99.5428
+      },
+      {
+        "AM_ID": "6103",
+        "AMPHOE_T": "สว่างอารมณ์",
+        "AMPHOE_E": "Sawang Arom",
+        "LAT_AVG": 15.587,
+        "LONG_AVG": 99.8
+      }
+    ]
+  },
+  {
+    "CH_ID": "34",
+    "CHANGWAT_T": "อุบลราชธานี",
+    "CHANGWAT_E": "Ubon Ratchathani",
+    "AMPHOES": [
+      {
+        "AM_ID": "3412",
+        "AMPHOE_T": "กุดข้าวปุ้น",
+        "AMPHOE_E": "Kut Khaopun",
+        "LAT_AVG": 15.804,
+        "LONG_AVG": 105.0392
+      },
+      {
+        "AM_ID": "3420",
+        "AMPHOE_T": "ตาลสุม",
+        "AMPHOE_E": "Tan Sum",
+        "LAT_AVG": 15.384,
+        "LONG_AVG": 105.1557
+      },
+      {
+        "AM_ID": "3429",
+        "AMPHOE_T": "นาเยีย",
+        "AMPHOE_E": "Na Yia",
+        "LAT_AVG": 15.0363,
+        "LONG_AVG": 105.0763
+      },
+      {
+        "AM_ID": "3414",
+        "AMPHOE_T": "ม่วงสามสิบ",
+        "AMPHOE_E": "Muang Sam Sip",
+        "LAT_AVG": 15.5277,
+        "LONG_AVG": 104.7182
+      },
+      {
+        "AM_ID": "3430",
+        "AMPHOE_T": "นาตาล",
+        "AMPHOE_E": "Na Tan",
+        "LAT_AVG": 15.9348,
+        "LONG_AVG": 105.281
+      },
+      {
+        "AM_ID": "3402",
+        "AMPHOE_T": "ศรีเมืองใหม่",
+        "AMPHOE_E": "Si Mueang Mai",
+        "LAT_AVG": 15.5295,
+        "LONG_AVG": 105.3177
+      },
+      {
+        "AM_ID": "3411",
+        "AMPHOE_T": "ตระการพืชผล",
+        "AMPHOE_E": "Trakan Phuet Phon",
+        "LAT_AVG": 15.6173,
+        "LONG_AVG": 105.0575
+      },
+      {
+        "AM_ID": "3407",
+        "AMPHOE_T": "เดชอุดม",
+        "AMPHOE_E": "Det Udom",
+        "LAT_AVG": 14.8539,
+        "LONG_AVG": 105.048
+      },
+      {
+        "AM_ID": "3421",
+        "AMPHOE_T": "โพธิ์ไทร",
+        "AMPHOE_E": "Pho Sai",
+        "LAT_AVG": 15.7923,
+        "LONG_AVG": 105.3335
+      },
+      {
+        "AM_ID": "3405",
+        "AMPHOE_T": "เขมราฐ",
+        "AMPHOE_E": "Khemarat",
+        "LAT_AVG": 15.9669,
+        "LONG_AVG": 105.1489
+      },
+      {
+        "AM_ID": "3424",
+        "AMPHOE_T": "ดอนมดแดง",
+        "AMPHOE_E": "Don Mot Daeng",
+        "LAT_AVG": 15.3838,
+        "LONG_AVG": 105.0073
+      },
+      {
+        "AM_ID": "3425",
+        "AMPHOE_T": "สิรินธร",
+        "AMPHOE_E": "Sirindhorn",
+        "LAT_AVG": 15.1547,
+        "LONG_AVG": 105.4087
+      },
+      {
+        "AM_ID": "3426",
+        "AMPHOE_T": "ทุ่งศรีอุดม",
+        "AMPHOE_E": "Thung Si Udom",
+        "LAT_AVG": 14.7434,
+        "LONG_AVG": 104.9142
+      },
+      {
+        "AM_ID": "3403",
+        "AMPHOE_T": "โขงเจียม",
+        "AMPHOE_E": "Khong Chiam",
+        "LAT_AVG": 15.397,
+        "LONG_AVG": 105.489
+      },
+      {
+        "AM_ID": "3408",
+        "AMPHOE_T": "นาจะหลวย",
+        "AMPHOE_E": "Na Chaluai",
+        "LAT_AVG": 14.6217,
+        "LONG_AVG": 105.2137
+      },
+      {
+        "AM_ID": "3410",
+        "AMPHOE_T": "บุณฑริก",
+        "AMPHOE_E": "Boontharik",
+        "LAT_AVG": 14.7718,
+        "LONG_AVG": 105.3696
+      },
+      {
+        "AM_ID": "3433",
+        "AMPHOE_T": "น้ำขุ่น",
+        "AMPHOE_E": "Nam Khun",
+        "LAT_AVG": 14.5595,
+        "LONG_AVG": 104.88
+      },
+      {
+        "AM_ID": "3409",
+        "AMPHOE_T": "น้ำยืน",
+        "AMPHOE_E": "Nam Yuen",
+        "LAT_AVG": 14.5149,
+        "LONG_AVG": 105.0324
+      },
+      {
+        "AM_ID": "3401",
+        "AMPHOE_T": "เมืองอุบลราชธานี",
+        "AMPHOE_E": "Mueang Ubon Ratchathani",
+        "LAT_AVG": 15.2987,
+        "LONG_AVG": 104.8446
+      },
+      {
+        "AM_ID": "3432",
+        "AMPHOE_T": "สว่างวีระวงศ์",
+        "AMPHOE_E": "Sawang Wirawong",
+        "LAT_AVG": 15.2363,
+        "LONG_AVG": 105.06
+      },
+      {
+        "AM_ID": "3419",
+        "AMPHOE_T": "พิบูลมังสาหาร",
+        "AMPHOE_E": "Phibun Mangsahan",
+        "LAT_AVG": 15.1512,
+        "LONG_AVG": 105.2487
+      },
+      {
+        "AM_ID": "3431",
+        "AMPHOE_T": "เหล่าเสือโก้ก",
+        "AMPHOE_E": "Lao Suea Kok",
+        "LAT_AVG": 15.4355,
+        "LONG_AVG": 104.9195
+      },
+      {
+        "AM_ID": "3404",
+        "AMPHOE_T": "เขื่องใน",
+        "AMPHOE_E": "Khueang Nai",
+        "LAT_AVG": 15.3873,
+        "LONG_AVG": 104.5269
+      },
+      {
+        "AM_ID": "3422",
+        "AMPHOE_T": "สำโรง",
+        "AMPHOE_E": "Samrong",
+        "LAT_AVG": 14.9862,
+        "LONG_AVG": 104.7876
+      },
+      {
+        "AM_ID": "3415",
+        "AMPHOE_T": "วารินชำราบ",
+        "AMPHOE_E": "Warin Chamrap",
+        "LAT_AVG": 15.1363,
+        "LONG_AVG": 104.8504
+      }
+    ]
+  },
+  {
+    "CH_ID": "15",
+    "CHANGWAT_T": "อ่างทอง",
+    "CHANGWAT_E": "Ang Thong",
+    "AMPHOES": [
+      {
+        "AM_ID": "1502",
+        "AMPHOE_T": "ไชโย",
+        "AMPHOE_E": "Chaiyo",
+        "LAT_AVG": 14.6747,
+        "LONG_AVG": 100.4682
+      },
+      {
+        "AM_ID": "1506",
+        "AMPHOE_T": "วิเศษชัยชาญ",
+        "AMPHOE_E": "Wiset Chai Chan",
+        "LAT_AVG": 14.5549,
+        "LONG_AVG": 100.3234
+      },
+      {
+        "AM_ID": "1504",
+        "AMPHOE_T": "โพธิ์ทอง",
+        "AMPHOE_E": "Pho Thong",
+        "LAT_AVG": 14.6701,
+        "LONG_AVG": 100.369
+      },
+      {
+        "AM_ID": "1505",
+        "AMPHOE_T": "แสวงหา",
+        "AMPHOE_E": "Sawaeng Ha",
+        "LAT_AVG": 14.7477,
+        "LONG_AVG": 100.3001
+      },
+      {
+        "AM_ID": "1503",
+        "AMPHOE_T": "ป่าโมก",
+        "AMPHOE_E": "Pa Mok",
+        "LAT_AVG": 14.4903,
+        "LONG_AVG": 100.4533
+      },
+      {
+        "AM_ID": "1501",
+        "AMPHOE_T": "เมืองอ่างทอง",
+        "AMPHOE_E": "Mueang Ang Thong",
+        "LAT_AVG": 14.583,
+        "LONG_AVG": 100.449
+      },
+      {
+        "AM_ID": "1507",
+        "AMPHOE_T": "สามโก้",
+        "AMPHOE_E": "Samko",
+        "LAT_AVG": 14.5986,
+        "LONG_AVG": 100.261
+      }
+    ]
+  },
+  {
+    "CH_ID": "57",
+    "CHANGWAT_T": "เชียงราย",
+    "CHANGWAT_E": "Chiang Rai",
+    "AMPHOES": [
+      {
+        "AM_ID": "5702",
+        "AMPHOE_T": "เวียงชัย",
+        "AMPHOE_E": "Wiang Chai",
+        "LAT_AVG": 19.8778,
+        "LONG_AVG": 99.9754
+      },
+      {
+        "AM_ID": "5712",
+        "AMPHOE_T": "พญาเม็งราย",
+        "AMPHOE_E": "Phaya Mengrai",
+        "LAT_AVG": 19.8898,
+        "LONG_AVG": 100.166
+      },
+      {
+        "AM_ID": "5709",
+        "AMPHOE_T": "แม่สาย",
+        "AMPHOE_E": "Mae Sai",
+        "LAT_AVG": 20.3634,
+        "LONG_AVG": 99.9178
+      },
+      {
+        "AM_ID": "5710",
+        "AMPHOE_T": "แม่สรวย",
+        "AMPHOE_E": "Mae Suai",
+        "LAT_AVG": 19.6599,
+        "LONG_AVG": 99.4856
+      },
+      {
+        "AM_ID": "5704",
+        "AMPHOE_T": "เทิง",
+        "AMPHOE_E": "Thoeng",
+        "LAT_AVG": 19.6643,
+        "LONG_AVG": 100.1477
+      },
+      {
+        "AM_ID": "5707",
+        "AMPHOE_T": "แม่จัน",
+        "AMPHOE_E": "Mae Chan",
+        "LAT_AVG": 20.1896,
+        "LONG_AVG": 99.8866
+      },
+      {
+        "AM_ID": "5708",
+        "AMPHOE_T": "เชียงแสน",
+        "AMPHOE_E": "Chiang Saen",
+        "LAT_AVG": 20.2782,
+        "LONG_AVG": 100.1125
+      },
+      {
+        "AM_ID": "5706",
+        "AMPHOE_T": "ป่าแดด",
+        "AMPHOE_E": "Pa Daet",
+        "LAT_AVG": 19.4962,
+        "LONG_AVG": 99.9754
+      },
+      {
+        "AM_ID": "5718",
+        "AMPHOE_T": "ดอยหลวง",
+        "AMPHOE_E": "Doi Luang",
+        "LAT_AVG": 20.1397,
+        "LONG_AVG": 100.1283
+      },
+      {
+        "AM_ID": "5705",
+        "AMPHOE_T": "พาน",
+        "AMPHOE_E": "Phan",
+        "LAT_AVG": 19.5683,
+        "LONG_AVG": 99.7643
+      },
+      {
+        "AM_ID": "5711",
+        "AMPHOE_T": "เวียงป่าเป้า",
+        "AMPHOE_E": "Wiang Pa Pao",
+        "LAT_AVG": 19.262,
+        "LONG_AVG": 99.4541
+      },
+      {
+        "AM_ID": "5703",
+        "AMPHOE_T": "เชียงของ",
+        "AMPHOE_E": "Chiang Khong",
+        "LAT_AVG": 20.1553,
+        "LONG_AVG": 100.3433
+      },
+      {
+        "AM_ID": "5713",
+        "AMPHOE_T": "เวียงแก่น",
+        "AMPHOE_E": "Wiang Kaen",
+        "LAT_AVG": 20.0518,
+        "LONG_AVG": 100.497
+      },
+      {
+        "AM_ID": "5717",
+        "AMPHOE_T": "เวียงเชียงรุ้ง",
+        "AMPHOE_E": "Wiang Chiang Rung",
+        "LAT_AVG": 20.0243,
+        "LONG_AVG": 100.0583
+      },
+      {
+        "AM_ID": "5715",
+        "AMPHOE_T": "แม่ฟ้าหลวง",
+        "AMPHOE_E": "Mae Fa Luang",
+        "LAT_AVG": 20.2323,
+        "LONG_AVG": 99.6865
+      },
+      {
+        "AM_ID": "5716",
+        "AMPHOE_T": "แม่ลาว",
+        "AMPHOE_E": "Mae Lao",
+        "LAT_AVG": 19.7802,
+        "LONG_AVG": 99.7106
+      },
+      {
+        "AM_ID": "5701",
+        "AMPHOE_T": "เมืองเชียงราย",
+        "AMPHOE_E": "Mueang Chiang Rai",
+        "LAT_AVG": 19.8986,
+        "LONG_AVG": 99.807
+      },
+      {
+        "AM_ID": "5714",
+        "AMPHOE_T": "ขุนตาล",
+        "AMPHOE_E": "Khun Tan",
+        "LAT_AVG": 19.8583,
+        "LONG_AVG": 100.2703
+      }
+    ]
+  },
+  {
+    "CH_ID": "50",
+    "CHANGWAT_T": "เชียงใหม่",
+    "CHANGWAT_E": "Chiang Mai",
+    "AMPHOES": [
+      {
+        "AM_ID": "5003",
+        "AMPHOE_T": "แม่แจ่ม",
+        "AMPHOE_E": "Mae Chaem",
+        "LAT_AVG": 18.5326,
+        "LONG_AVG": 98.3086
+      },
+      {
+        "AM_ID": "5015",
+        "AMPHOE_T": "หางดง",
+        "AMPHOE_E": "Hang Dong",
+        "LAT_AVG": 18.6927,
+        "LONG_AVG": 98.9306
+      },
+      {
+        "AM_ID": "5023",
+        "AMPHOE_T": "แม่ออน",
+        "AMPHOE_E": "Mae On",
+        "LAT_AVG": 18.7588,
+        "LONG_AVG": 99.2895
+      },
+      {
+        "AM_ID": "5019",
+        "AMPHOE_T": "สารภี",
+        "AMPHOE_E": "Saraphi",
+        "LAT_AVG": 18.6984,
+        "LONG_AVG": 99.0218
+      },
+      {
+        "AM_ID": "5010",
+        "AMPHOE_T": "แม่อาย",
+        "AMPHOE_E": "Mae Ai",
+        "LAT_AVG": 19.9983,
+        "LONG_AVG": 99.3037
+      },
+      {
+        "AM_ID": "5011",
+        "AMPHOE_T": "พร้าว",
+        "AMPHOE_E": "Phrao",
+        "LAT_AVG": 19.3337,
+        "LONG_AVG": 99.2025
+      },
+      {
+        "AM_ID": "5022",
+        "AMPHOE_T": "แม่วาง",
+        "AMPHOE_E": "Mae Wang",
+        "LAT_AVG": 18.628,
+        "LONG_AVG": 98.7598
+      },
+      {
+        "AM_ID": "5020",
+        "AMPHOE_T": "เวียงแหง",
+        "AMPHOE_E": "Wiang Haeng",
+        "LAT_AVG": 19.6073,
+        "LONG_AVG": 98.6547
+      },
+      {
+        "AM_ID": "5014",
+        "AMPHOE_T": "สันทราย",
+        "AMPHOE_E": "San Sai",
+        "LAT_AVG": 18.8826,
+        "LONG_AVG": 99.0482
+      },
+      {
+        "AM_ID": "5008",
+        "AMPHOE_T": "สะเมิง",
+        "AMPHOE_E": "Samoeng",
+        "LAT_AVG": 18.9074,
+        "LONG_AVG": 98.6324
+      },
+      {
+        "AM_ID": "5016",
+        "AMPHOE_T": "ฮอด",
+        "AMPHOE_E": "Hot",
+        "LAT_AVG": 18.1122,
+        "LONG_AVG": 98.4863
+      },
+      {
+        "AM_ID": "5013",
+        "AMPHOE_T": "สันกำแพง",
+        "AMPHOE_E": "San Kamphaeng",
+        "LAT_AVG": 18.7464,
+        "LONG_AVG": 99.1418
+      },
+      {
+        "AM_ID": "5007",
+        "AMPHOE_T": "แม่ริม",
+        "AMPHOE_E": "Mae Rim",
+        "LAT_AVG": 18.9298,
+        "LONG_AVG": 98.9218
+      },
+      {
+        "AM_ID": "5017",
+        "AMPHOE_T": "ดอยเต่า",
+        "AMPHOE_E": "Doi Tao",
+        "LAT_AVG": 17.9392,
+        "LONG_AVG": 98.6705
+      },
+      {
+        "AM_ID": "5021",
+        "AMPHOE_T": "ไชยปราการ",
+        "AMPHOE_E": "Chai Prakan",
+        "LAT_AVG": 19.715,
+        "LONG_AVG": 99.1607
+      },
+      {
+        "AM_ID": "5006",
+        "AMPHOE_T": "แม่แตง",
+        "AMPHOE_E": "Mae Taeng",
+        "LAT_AVG": 19.1505,
+        "LONG_AVG": 98.8922
+      },
+      {
+        "AM_ID": "5004",
+        "AMPHOE_T": "เชียงดาว",
+        "AMPHOE_E": "Chiang Dao",
+        "LAT_AVG": 19.4731,
+        "LONG_AVG": 98.9063
+      },
+      {
+        "AM_ID": "5009",
+        "AMPHOE_T": "ฝาง",
+        "AMPHOE_E": "Fang",
+        "LAT_AVG": 19.9088,
+        "LONG_AVG": 99.1655
+      },
+      {
+        "AM_ID": "5024",
+        "AMPHOE_T": "ดอยหล่อ",
+        "AMPHOE_E": "Doi Lo",
+        "LAT_AVG": 18.5333,
+        "LONG_AVG": 98.7758
+      },
+      {
+        "AM_ID": "5018",
+        "AMPHOE_T": "อมก๋อย",
+        "AMPHOE_E": "Omkoi",
+        "LAT_AVG": 17.6572,
+        "LONG_AVG": 98.3325
+      },
+      {
+        "AM_ID": "5002",
+        "AMPHOE_T": "จอมทอง",
+        "AMPHOE_E": "Chom Thong",
+        "LAT_AVG": 18.3657,
+        "LONG_AVG": 98.6427
+      },
+      {
+        "AM_ID": "5012",
+        "AMPHOE_T": "สันป่าตอง",
+        "AMPHOE_E": "San Pa Tong",
+        "LAT_AVG": 18.6019,
+        "LONG_AVG": 98.8831
+      },
+      {
+        "AM_ID": "5025",
+        "AMPHOE_T": "กัลยาณิวัฒนา",
+        "AMPHOE_E": "Kanlayaniwatthana",
+        "LAT_AVG": 19.019,
+        "LONG_AVG": 98.293
+      },
+      {
+        "AM_ID": "5005",
+        "AMPHOE_T": "ดอยสะเก็ด",
+        "AMPHOE_E": "Doi Saket",
+        "LAT_AVG": 18.8552,
+        "LONG_AVG": 99.1496
+      },
+      {
+        "AM_ID": "5001",
+        "AMPHOE_T": "เมืองเชียงใหม่",
+        "AMPHOE_E": "Mueang Chiang Mai",
+        "LAT_AVG": 18.7885,
+        "LONG_AVG": 98.9942
+      }
+    ]
+  },
+  {
+    "CH_ID": "76",
+    "CHANGWAT_T": "เพชรบุรี",
+    "CHANGWAT_E": "Phetchaburi",
+    "AMPHOES": [
+      {
+        "AM_ID": "7602",
+        "AMPHOE_T": "เขาย้อย",
+        "AMPHOE_E": "Khao Yoi",
+        "LAT_AVG": 13.2388,
+        "LONG_AVG": 99.8141
+      },
+      {
+        "AM_ID": "7607",
+        "AMPHOE_T": "บ้านแหลม",
+        "AMPHOE_E": "Ban Laem",
+        "LAT_AVG": 13.169,
+        "LONG_AVG": 99.989
+      },
+      {
+        "AM_ID": "7603",
+        "AMPHOE_T": "หนองหญ้าปล้อง",
+        "AMPHOE_E": "Nong Ya Plong",
+        "LAT_AVG": 13.132,
+        "LONG_AVG": 99.5882
+      },
+      {
+        "AM_ID": "7604",
+        "AMPHOE_T": "ชะอำ",
+        "AMPHOE_E": "Cha-am",
+        "LAT_AVG": 12.7849,
+        "LONG_AVG": 99.9051
+      },
+      {
+        "AM_ID": "7601",
+        "AMPHOE_T": "เมืองเพชรบุรี",
+        "AMPHOE_E": "Mueang Phetchaburi",
+        "LAT_AVG": 13.094,
+        "LONG_AVG": 99.9582
+      },
+      {
+        "AM_ID": "7608",
+        "AMPHOE_T": "แก่งกระจาน",
+        "AMPHOE_E": "Kaeng Krachan",
+        "LAT_AVG": 12.8892,
+        "LONG_AVG": 99.5775
+      },
+      {
+        "AM_ID": "7605",
+        "AMPHOE_T": "ท่ายาง",
+        "AMPHOE_E": "Tha Yang",
+        "LAT_AVG": 12.9089,
+        "LONG_AVG": 99.8715
+      },
+      {
+        "AM_ID": "7606",
+        "AMPHOE_T": "บ้านลาด",
+        "AMPHOE_E": "Ban Lat",
+        "LAT_AVG": 13.0519,
+        "LONG_AVG": 99.8861
+      }
+    ]
+  },
+  {
+    "CH_ID": "67",
+    "CHANGWAT_T": "เพชรบูรณ์",
+    "CHANGWAT_E": "Phetchabun",
+    "AMPHOES": [
+      {
+        "AM_ID": "6702",
+        "AMPHOE_T": "ชนแดน",
+        "AMPHOE_E": "Chon Daen",
+        "LAT_AVG": 16.1227,
+        "LONG_AVG": 100.8139
+      },
+      {
+        "AM_ID": "6703",
+        "AMPHOE_T": "หล่มสัก",
+        "AMPHOE_E": "Lom Sak",
+        "LAT_AVG": 16.7499,
+        "LONG_AVG": 101.2476
+      },
+      {
+        "AM_ID": "6704",
+        "AMPHOE_T": "หล่มเก่า",
+        "AMPHOE_E": "Lom Kao",
+        "LAT_AVG": 16.939,
+        "LONG_AVG": 101.2377
+      },
+      {
+        "AM_ID": "6710",
+        "AMPHOE_T": "วังโป่ง",
+        "AMPHOE_E": "Wang Pong",
+        "LAT_AVG": 16.3352,
+        "LONG_AVG": 100.7834
+      },
+      {
+        "AM_ID": "6707",
+        "AMPHOE_T": "หนองไผ่",
+        "AMPHOE_E": "Nong Phai",
+        "LAT_AVG": 16.0153,
+        "LONG_AVG": 101.1119
+      },
+      {
+        "AM_ID": "6706",
+        "AMPHOE_T": "ศรีเทพ",
+        "AMPHOE_E": "Si Thep",
+        "LAT_AVG": 15.4387,
+        "LONG_AVG": 101.1006
+      },
+      {
+        "AM_ID": "6705",
+        "AMPHOE_T": "วิเชียรบุรี",
+        "AMPHOE_E": "Wichian Buri",
+        "LAT_AVG": 15.6559,
+        "LONG_AVG": 101.076
+      },
+      {
+        "AM_ID": "6701",
+        "AMPHOE_T": "เมืองเพชรบูรณ์",
+        "AMPHOE_E": "Mueang Phetchabun",
+        "LAT_AVG": 16.3747,
+        "LONG_AVG": 101.1637
+      },
+      {
+        "AM_ID": "6709",
+        "AMPHOE_T": "น้ำหนาว",
+        "AMPHOE_E": "Nam Nao",
+        "LAT_AVG": 16.8365,
+        "LONG_AVG": 101.6157
+      },
+      {
+        "AM_ID": "6708",
+        "AMPHOE_T": "บึงสามพัน",
+        "AMPHOE_E": "Bueng Sam Phan",
+        "LAT_AVG": 15.8289,
+        "LONG_AVG": 100.9789
+      },
+      {
+        "AM_ID": "6711",
+        "AMPHOE_T": "เขาค้อ",
+        "AMPHOE_E": "Khao kho",
+        "LAT_AVG": 16.6576,
+        "LONG_AVG": 100.9913
+      }
+    ]
+  },
+  {
+    "CH_ID": "42",
+    "CHANGWAT_T": "เลย",
+    "CHANGWAT_E": "Loei",
+    "AMPHOES": [
+      {
+        "AM_ID": "4205",
+        "AMPHOE_T": "ด่านซ้าย",
+        "AMPHOE_E": "Dan Sai",
+        "LAT_AVG": 17.2757,
+        "LONG_AVG": 101.2059
+      },
+      {
+        "AM_ID": "4208",
+        "AMPHOE_T": "ท่าลี่",
+        "AMPHOE_E": "Tha Li",
+        "LAT_AVG": 17.6185,
+        "LONG_AVG": 101.4188
+      },
+      {
+        "AM_ID": "4207",
+        "AMPHOE_T": "ภูเรือ",
+        "AMPHOE_E": "Phu Ruea",
+        "LAT_AVG": 17.411,
+        "LONG_AVG": 101.3955
+      },
+      {
+        "AM_ID": "4210",
+        "AMPHOE_T": "ภูกระดึง",
+        "AMPHOE_E": "Phu Kradueng",
+        "LAT_AVG": 16.921,
+        "LONG_AVG": 101.8865
+      },
+      {
+        "AM_ID": "4201",
+        "AMPHOE_T": "เมืองเลย",
+        "AMPHOE_E": "Mueang Loei",
+        "LAT_AVG": 17.5351,
+        "LONG_AVG": 101.7126
+      },
+      {
+        "AM_ID": "4203",
+        "AMPHOE_T": "เชียงคาน",
+        "AMPHOE_E": "Chiang Khan",
+        "LAT_AVG": 17.8106,
+        "LONG_AVG": 101.7104
+      },
+      {
+        "AM_ID": "4213",
+        "AMPHOE_T": "เอราวัณ",
+        "AMPHOE_E": "Erawan",
+        "LAT_AVG": 17.2743,
+        "LONG_AVG": 101.9785
+      },
+      {
+        "AM_ID": "4206",
+        "AMPHOE_T": "นาแห้ว",
+        "AMPHOE_E": "Na Haeo",
+        "LAT_AVG": 17.4456,
+        "LONG_AVG": 100.9986
+      },
+      {
+        "AM_ID": "4211",
+        "AMPHOE_T": "ภูหลวง",
+        "AMPHOE_E": "Phu Luang",
+        "LAT_AVG": 17.1098,
+        "LONG_AVG": 101.6594
+      },
+      {
+        "AM_ID": "4202",
+        "AMPHOE_T": "นาด้วง",
+        "AMPHOE_E": "Na Duang",
+        "LAT_AVG": 17.505,
+        "LONG_AVG": 101.9725
+      },
+      {
+        "AM_ID": "4209",
+        "AMPHOE_T": "วังสะพุง",
+        "AMPHOE_E": "Wang Saphung",
+        "LAT_AVG": 17.2779,
+        "LONG_AVG": 101.7532
+      },
+      {
+        "AM_ID": "4214",
+        "AMPHOE_T": "หนองหิน",
+        "AMPHOE_E": "Nong Hin",
+        "LAT_AVG": 17.0587,
+        "LONG_AVG": 101.8267
+      },
+      {
+        "AM_ID": "4212",
+        "AMPHOE_T": "ผาขาว",
+        "AMPHOE_E": "Pha  Khao",
+        "LAT_AVG": 17.0446,
+        "LONG_AVG": 102.005
+      },
+      {
+        "AM_ID": "4204",
+        "AMPHOE_T": "ปากชม",
+        "AMPHOE_E": "Pak Chom",
+        "LAT_AVG": 17.8948,
+        "LONG_AVG": 101.9588
+      }
+    ]
+  },
+  {
+    "CH_ID": "54",
+    "CHANGWAT_T": "แพร่",
+    "CHANGWAT_E": "Phrae",
+    "AMPHOES": [
+      {
+        "AM_ID": "5405",
+        "AMPHOE_T": "เด่นชัย",
+        "AMPHOE_E": "Den Chai",
+        "LAT_AVG": 17.9524,
+        "LONG_AVG": 100.0362
+      },
+      {
+        "AM_ID": "5407",
+        "AMPHOE_T": "วังชิ้น",
+        "AMPHOE_E": "Wang Chin",
+        "LAT_AVG": 17.8731,
+        "LONG_AVG": 99.581
+      },
+      {
+        "AM_ID": "5408",
+        "AMPHOE_T": "หนองม่วงไข่",
+        "AMPHOE_E": "Nong Muang Khai",
+        "LAT_AVG": 18.2865,
+        "LONG_AVG": 100.1775
+      },
+      {
+        "AM_ID": "5404",
+        "AMPHOE_T": "สูงเม่น",
+        "AMPHOE_E": "Sung Men",
+        "LAT_AVG": 18.0592,
+        "LONG_AVG": 100.1183
+      },
+      {
+        "AM_ID": "5403",
+        "AMPHOE_T": "ลอง",
+        "AMPHOE_E": "Long",
+        "LAT_AVG": 18.0826,
+        "LONG_AVG": 99.8526
+      },
+      {
+        "AM_ID": "5406",
+        "AMPHOE_T": "สอง",
+        "AMPHOE_E": "Song",
+        "LAT_AVG": 18.46,
+        "LONG_AVG": 100.2004
+      },
+      {
+        "AM_ID": "5401",
+        "AMPHOE_T": "เมืองแพร่",
+        "AMPHOE_E": "Mueang Phrae",
+        "LAT_AVG": 18.1632,
+        "LONG_AVG": 100.1975
+      },
+      {
+        "AM_ID": "5402",
+        "AMPHOE_T": "ร้องกวาง",
+        "AMPHOE_E": "Mueang Phrae",
+        "LAT_AVG": 18.3305,
+        "LONG_AVG": 100.3395
+      }
+    ]
+  },
+  {
+    "CH_ID": "58",
+    "CHANGWAT_T": "แม่ฮ่องสอน",
+    "CHANGWAT_E": "Mae Hong Son",
+    "AMPHOES": [
+      {
+        "AM_ID": "5805",
+        "AMPHOE_T": "แม่ลาน้อย",
+        "AMPHOE_E": "Mae La Noi",
+        "LAT_AVG": 18.4875,
+        "LONG_AVG": 98.0119
+      },
+      {
+        "AM_ID": "5801",
+        "AMPHOE_T": "เมืองแม่ฮ่องสอน",
+        "AMPHOE_E": "Mueang Mae Hong Son",
+        "LAT_AVG": 19.264,
+        "LONG_AVG": 97.9847
+      },
+      {
+        "AM_ID": "5803",
+        "AMPHOE_T": "ปาย",
+        "AMPHOE_E": "Pai",
+        "LAT_AVG": 19.3289,
+        "LONG_AVG": 98.4187
+      },
+      {
+        "AM_ID": "5807",
+        "AMPHOE_T": "ปางมะผ้า",
+        "AMPHOE_E": "Pang Mapha",
+        "LAT_AVG": 19.5773,
+        "LONG_AVG": 98.199
+      },
+      {
+        "AM_ID": "5806",
+        "AMPHOE_T": "สบเมย",
+        "AMPHOE_E": "Sop Moei",
+        "LAT_AVG": 17.954,
+        "LONG_AVG": 97.9978
+      },
+      {
+        "AM_ID": "5804",
+        "AMPHOE_T": "แม่สะเรียง",
+        "AMPHOE_E": "Mae Sariang",
+        "LAT_AVG": 18.2181,
+        "LONG_AVG": 97.8804
+      },
+      {
+        "AM_ID": "5802",
+        "AMPHOE_T": "ขุนยวม",
+        "AMPHOE_E": "Khun Yuam",
+        "LAT_AVG": 18.8048,
+        "LONG_AVG": 97.911
+      }
+    ]
+  }
+]
