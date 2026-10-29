@@ -7,7 +7,7 @@ let thailandData = [];
 // ฟังก์ชันโหลดไฟล์ district.json เมื่อเปิดหน้าเว็บ
 async function loadDistrictData() {
   try {
-    const response = await fetch('/static/district.json?date=' + new Date().getTime());
+    const response = await fetch('/static/district.json?v=1');
     if (!response.ok) throw new Error('ไม่สามารถโหลดข้อมูลพื้นที่ได้');
     
     thailandData = await response.json();

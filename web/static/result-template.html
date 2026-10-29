@@ -1,4 +1,4 @@
-<!-- html/static/result-template.html -->
+<!-- web/static/result-template.html -->
 <div class="flex items-start gap-3">
   <div class="w-8 h-8 rounded-lg bg-purple-600 flex items-center justify-center text-sm shadow shrink-0">
     AI
@@ -15,10 +15,10 @@
 
       <!-- ปุ่มกดประมวลผลดวงชะตา -->
       <div class="mt-4 flex flex-col sm:flex-row gap-2">
-        <button onclick="calculateAstrology()" class="flex-1 bg-gradient-to-r from-purple-600 to-amber-500 hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <button type="button" onclick="calculateAstrology()" class="flex-1 bg-gradient-to-r from-purple-600 to-amber-500 hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
           <span>🔮</span> เริ่มคำนวณและทำนายดวงชะตา
         </button>
-        <button onclick="resetBirthInfo()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2.5 px-3 rounded-xl text-xs transition cursor-pointer border border-slate-700 flex items-center justify-center gap-1">
+        <button type="button" onclick="resetBirthInfo()" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-2.5 px-3 rounded-xl text-xs transition cursor-pointer border border-slate-700 flex items-center justify-center gap-1">
           <span>✏️</span> แก้ไขข้อมูล
         </button>
       </div>

@@ -40,12 +40,19 @@ async function calculateAstrology() {
         astroOutput.innerHTML = `
           <div class="bg-purple-950/40 p-4 rounded-xl border border-purple-500/30 space-y-2">
             <h4 class="font-semibold text-amber-300 text-sm">✨ ผลการคำนวณลัคนาและดาวเคราะห์</h4>
-            <p><strong>วันเกิด:</strong> พ.ศ. ${birthData.birthYearBE} (${birthData.birthDateCE}) เวลา ${birthData.birthTime} น.</p>
-            <p><strong>สถานที่:</strong> อ. ${birthData.amphoe} จ. ${birthData.province}</p>
-            <p><strong>พิกัดคำนวณ:</strong> Lat ${birthData.latitude}, Long ${birthData.longitude}</p>
+            <p><strong>วันเกิด:</strong> <span id="astroBirthDateText"></span></p>
+            <p><strong>สถานที่:</strong> <span id="astroLocationText"></span></p>
+            <p><strong>พิกัดคำนวณ:</strong> <span id="astroCoordText"></span></p>
             <p class="text-emerald-400 mt-2">✅ คำนวณตำแหน่งดาวและสมโณฤกษ์เรียบร้อยแล้ว พร้อมสำหรับการทำนายต่อในขั้นตอนถัดไป</p>
           </div>
         `;
+
+        document.getElementById('astroBirthDateText').textContent =
+          `พ.ศ. ${birthData.birthYearBE} (${birthData.birthDateCE}) เวลา ${birthData.birthTime} น.`;
+        document.getElementById('astroLocationText').textContent =
+          `อ. ${birthData.amphoe} จ. ${birthData.province}`;
+        document.getElementById('astroCoordText').textContent =
+          `Lat ${birthData.latitude}, Long ${birthData.longitude}`;
       }
     }, 1000);
 
@@ -63,7 +70,7 @@ function resetBirthInfo() {
   // แสดงฟอร์มกรอกข้อมูลกลับมา
   const formContainer = document.getElementById('formContainer');
   if (formContainer) {
-    formContainer.style.display = 'flex'; // หรือ block ตามโครงสร้างเดิม
+    formContainer.classList.remove('hidden');
   }
 
   // ซ่อนและล้างกล่องผลลัพธ์

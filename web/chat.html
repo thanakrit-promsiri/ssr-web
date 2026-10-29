@@ -31,7 +31,7 @@
         <p id="userInfo" class="text-xs text-slate-400">ผู้ใช้งาน: กำลังโหลด...</p>
       </div>
     </div>
-    <button onclick="handleLogout()" class="text-xs bg-slate-800 hover:bg-red-500/20 hover:text-red-300 border border-slate-700 hover:border-red-500/30 text-slate-300 px-3 py-1.5 rounded-lg transition duration-200 cursor-pointer">
+    <button type="button" onclick="handleLogout()" class="text-xs bg-slate-800 hover:bg-red-500/20 hover:text-red-300 border border-slate-700 hover:border-red-500/30 text-slate-300 px-3 py-1.5 rounded-lg transition duration-200 cursor-pointer">
       ออกจากระบบ
     </button>
   </header>
@@ -54,32 +54,32 @@
         <!-- ฟอร์มกรอกข้อมูลดวงชะตา -->
         <div class="mt-4 space-y-3">
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">วัน เดือน ปีเกิด (กรอกปี พ.ศ. ตั้งแต่ 2500 ขึ้นไป)</label>
+            <label for="birthDate" class="block text-xs font-medium text-slate-300 mb-1">วัน เดือน ปีเกิด (ตั้งแต่ พ.ศ. 2500 / ค.ศ. 1957 ขึ้นไป)</label>
             <input type="date" id="birthDate" 
                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-purple-500">
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-300 mb-1">เวลาเกิด (น. - ระบุตามสูติบัตร)</label>
+            <label for="birthTime" class="block text-xs font-medium text-slate-300 mb-1">เวลาเกิด (น. - ระบุตามสูติบัตร)</label>
             <input type="time" id="birthTime" 
                    class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-purple-500">
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
-              <label class="block text-xs font-medium text-slate-300 mb-1">จังหวัด ของโรงพยาบาลที่เกิด</label>
+              <label for="provinceSelect" class="block text-xs font-medium text-slate-300 mb-1">จังหวัด ของโรงพยาบาลที่เกิด</label>
               <select id="provinceSelect" onchange="onProvinceChange()" 
                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-purple-500">
                 <option value="">-- เลือกจังหวัด --</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs font-medium text-slate-300 mb-1">อำเภอ/เขต (ที่เกิด)</label>
+              <label for="amphoeSelect" class="block text-xs font-medium text-slate-300 mb-1">อำเภอ/เขต (ที่เกิด)</label>
               <select id="amphoeSelect" 
                       class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-purple-500">
                 <option value="">-- เลือกอำเภอ/เขต --</option>
               </select>
             </div>
           </div>
-          <button onclick="submitBirthInfo()" class="w-full mt-2 bg-gradient-to-r from-purple-600 to-amber-500 hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-xl text-sm transition cursor-pointer shadow-md shadow-purple-500/20">
+          <button type="button" onclick="submitBirthInfo()" class="w-full mt-2 bg-gradient-to-r from-purple-600 to-amber-500 hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-xl text-sm transition cursor-pointer shadow-md shadow-purple-500/20">
             คำนวณและดูดวงชะตา
           </button>
         </div>
@@ -92,10 +92,10 @@
   </main>
 
   <!-- โหลดไฟล์ JavaScript แบบมาตรฐานพร้อมพารามิเตอร์กันแคช -->
-  <script src="/static/auth.js?v=2026102611"></script>
-  <script src="/static/district.js?v=2026102611"></script>
-  <script src="/static/birth.js?v=2026102611"></script>
-  <script src="/static/astrology.js?v=2026102611"></script>
+  <script src="/static/auth.js?v=2026102901"></script>
+  <script src="/static/district.js?v=2026102901"></script>
+  <script src="/static/birth.js?v=2026102901"></script>
+  <script src="/static/astrology.js?v=2026102901"></script>
 
   <script>
     // สั่งรันการทำงานเมื่อโครงสร้าง DOM โหลดเสร็จสมบูรณ์
