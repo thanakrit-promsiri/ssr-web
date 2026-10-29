@@ -3,6 +3,7 @@ package handler
 import (
 	"io/fs"
 	"net/http"
+	"path/filepath"
 	"time"
 
 	"ssr-web/web"
@@ -31,14 +32,25 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) error {
 	mux.HandleFunc("GET /index.html", h.HandleIndex)
 	mux.HandleFunc("GET /chat.html", h.HandleChat)
 
-	// 2. Route สำหรับเสิร์ฟไฟล์ Static ทั้งหมดจาก embed.FS (web/static/)
+	// 2. Route สำหรับเสิร์ฟไฟล์ Static โค้ดหลักจาก embed.FS (web/static/) ใน RAM
 	staticFS, err := fs.Sub(web.Assets, "static")
 	if err != nil {
 		return err
 	}
 	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServerFS(staticFS)))
 
+	// 3. Hybrid Mode: เสิร์ฟไฟล์รูปภาพและ Favicon จากโฟลเดอร์ public/ บน Disk โดยตรง
+	// ช่วยให้ไฟล์ Binary ไม่บวม และเปลี่ยนรูปภาพได้ทันทีโดยไม่ต้อง Compile ใหม่
+	publicServer := http.FileServer(http.Dir("public"))
+	mux.Handle("GET /public/", http.StripPrefix("/public/", publicServer))
+	mux.HandleFunc("GET /favicon.ico", h.HandleFavicon)
+
 	return nil
+}
+
+// HandleFavicon เสิร์ฟไฟล์ไอคอนจากโฟลเดอร์ public/ บน Disk
+func (h *Handler) HandleFavicon(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, filepath.Join("public", "favicon.png"))
 }
 
 // HandleIndex เสิร์ฟหน้าลงทะเบียน/เข้าสู่ระบบ (index.html)
