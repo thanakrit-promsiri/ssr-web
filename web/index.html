@@ -34,8 +34,8 @@
         <form onsubmit="handleRegister(event)" class="space-y-4 text-left">
             <!-- ช่องกรอก Username -->
             <div>
-                <label for="username" class="block text-xs font-medium text-slate-300 mb-1.5 ml-1">ชื่อผู้ใช้ (Username / ชื่อเล่นของคุณ)</label>
-                <input type="text" id="username" name="username" autocomplete="username" placeholder="เช่น Somchai_Amulet" required
+                <label for="username" class="block text-xs font-medium text-slate-300 mb-1.5 ml-1">ชื่อผู้ใช้ (ภาษาอังกฤษหรือตัวเลขเท่านั้น)</label>
+                <input type="text" id="username" name="username" autocomplete="username" placeholder="เช่น Somchai99" required
                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 text-sm focus:outline-none focus:border-purple-500 transition placeholder-slate-600">
             </div>
 
@@ -69,6 +69,14 @@
             const errorBox = document.getElementById('errorMsg');
             
             errorBox.classList.add('hidden');
+
+            // ตรวจสอบว่าชื่อผู้ใช้เป็นตัวอักษรโรมัน (a-z, A-Z) หรือตัวเลข (0-9) เท่านั้นก่อนส่ง API
+            const usernameRegex = /^[A-Za-z0-9]+$/;
+            if (!usernameRegex.test(username)) {
+                errorBox.textContent = 'ชื่อผู้ใช้ต้องเป็นตัวอักษรภาษาอังกฤษ (a-z, A-Z) หรือตัวเลข (0-9) เท่านั้น ห้ามเว้นวรรคหรือใช้อักขระพิเศษ';
+                errorBox.classList.remove('hidden');
+                return;
+            }
 
             fetch('/api/v1/auth/register-serial', {
                 method: 'POST',
