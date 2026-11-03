@@ -10,23 +10,30 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
+
 	cfg := config.Load()
 
 	mux := http.NewServeMux()
-	h := handler.New(cfg.AuthServiceURL)
+	h := handler.New(cfg.AuthServiceURL, cfg.HoraServiceURL)
 	if err := h.RegisterRoutes(mux); err != nil {
 		log.Fatalf("Failed to register routes: %v", err)
 	}
 
 	server := &http.Server{
 		Addr:         ":" + cfg.Port,
-		Handler:      mux,
+		Handler:      h.LoggingMiddleware(mux),
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
 		IdleTimeout:  60 * time.Second,
 	}
 
-	log.Printf("🚀 SSR Web Server กำลังรันที่พอร์ต http://localhost:%s (Auth: %s)", cfg.Port, cfg.AuthServiceURL)
+	log.Println("==========================================================")
+	log.Printf("🚀 SSR Web Server กำลังรันที่ http://localhost:%s", cfg.Port)
+	log.Printf("🔐 Auth Microservice URL : %s", cfg.AuthServiceURL)
+	log.Printf("🔮 Hora Microservice URL : %s", cfg.HoraServiceURL)
+	log.Println("==========================================================")
+
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("Server failed: %v", err)
 	}

@@ -2,23 +2,45 @@
 // birth.js - จัดการการตรวจสอบวันเกิด คำนวณพิกัด และบันทึกข้อมูล
 // ==========================================
 
-// 1. ตรวจสอบข้อมูลใน localStorage ทันทีที่โหลดไฟล์
+// 1. ตรวจสอบข้อมูลใน sessionStorage ทันทีที่โหลดไฟล์ (พร้อมเคลียร์ค่าเก่าที่อาจค้างใน localStorage)
 document.addEventListener('DOMContentLoaded', () => {
+  localStorage.removeItem('user_birth_info');
+  localStorage.removeItem('user_hora_result');
   checkExistingBirthInfo();
 });
 
+const THAI_MONTHS = [
+  'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+  'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
+];
+
+// แปลงวันที่ "2003-04-25" เป็นรูปแบบวันที่ไทย เช่น "25 เมษายน พ.ศ. 2546"
+function formatThaiDateBE(birthDateCE, birthYearBE) {
+  if (!birthDateCE) return `พ.ศ. ${birthYearBE}`;
+  const parts = String(birthDateCE).split('-');
+  if (parts.length !== 3) return `พ.ศ. ${birthYearBE}`;
+
+  const yearCE = parseInt(parts[0], 10);
+  const monthIdx = parseInt(parts[1], 10) - 1;
+  const day = parseInt(parts[2], 10);
+  const yearBE = birthYearBE || (yearCE + 543);
+  const monthName = THAI_MONTHS[monthIdx] || parts[1];
+
+  return `${day} ${monthName} พ.ศ. ${yearBE}`;
+}
+
 // ฟังก์ชันกลางสำหรับโหลด Template และแสดงผลข้อมูลวันเกิด
 async function renderBirthResult(birthData) {
-  const response = await fetch('/static/result-template.html?v=1');
+  const response = await fetch('/static/result-template.html?v=4');
   if (!response.ok) throw new Error('ไม่สามารถโหลดเทมเพลตผลลัพธ์ได้');
 
   const html = await response.text();
   const container = document.getElementById('resultContainer');
   container.innerHTML = html;
 
-  const yearCEFallback = parseInt(birthData.birthYearBE, 10) - 543;
-  document.getElementById('resYearBE').textContent = birthData.birthYearBE;
-  document.getElementById('resYearCE').textContent = birthData.birthDateCE || yearCEFallback;
+  const yearCE = parseInt(birthData.birthYearBE, 10) - 543;
+  document.getElementById('resYearBE').textContent = formatThaiDateBE(birthData.birthDateCE, birthData.birthYearBE);
+  document.getElementById('resYearCE').textContent = yearCE;
   document.getElementById('resTime').textContent = birthData.birthTime;
   document.getElementById('resAmphoe').textContent = birthData.amphoe;
   document.getElementById('resProvince').textContent = birthData.province;
@@ -31,11 +53,16 @@ async function renderBirthResult(birthData) {
   }
 
   container.classList.remove('hidden');
+
+  // หากมีผลลัพธ์ตำแหน่งดาวใน localStorage อยู่แล้ว ให้แสดงตารางตำแหน่งดาวทันที
+  if (typeof checkExistingHoraResult === 'function') {
+    checkExistingHoraResult(birthData);
+  }
 }
 
-// ฟังก์ชันตรวจสอบและแสดงผลข้อมูลเก่าถ้ามีอยู่แล้ว
+// ฟังก์ชันตรวจสอบและแสดงผลข้อมูลเก่าถ้ามีอยู่แล้วใน sessionStorage
 async function checkExistingBirthInfo() {
-  const savedDataStr = localStorage.getItem('user_birth_info');
+  const savedDataStr = sessionStorage.getItem('user_birth_info');
   if (!savedDataStr) return; // ถ้าไม่มีข้อมูล ให้แสดงฟอร์มตามปกติ
 
   try {
@@ -47,6 +74,11 @@ async function checkExistingBirthInfo() {
 }
 
 async function submitBirthInfo() {
+  if (sessionStorage.getItem('user_hora_result')) {
+    alert('คำนวณตำแหน่งดาวเรียบร้อยแล้ว ไม่สามารถแก้ไขข้อมูลวันเกิดได้');
+    return;
+  }
+
   const birthDateStr = document.getElementById('birthDate').value; // วัน/เดือน/ปีเกิด
   const birthTime = document.getElementById('birthTime').value;    // เวลาเกิด
 
@@ -63,18 +95,18 @@ async function submitBirthInfo() {
     return;
   }
 
-  // 2. ดึงปีที่ผู้ใช้กรอกมาและรองรับทั้งรูปแบบ พ.ศ. และ ค.ศ. จาก <input type="date">
-  const parts = birthDateStr.split('-');
+  // 2. ดึงปีที่ผู้ใช้กรอกมา (ซึ่งเป็น พ.ศ.)
+  const parts = birthDateStr.split('-'); // [ปีพศ, เดือน, วัน]
   const inputYear = parseInt(parts[0], 10);
 
-  const yearBE = inputYear >= 2400 ? inputYear : inputYear + 543;
-  const yearCE = yearBE - 543;
-
-  // 3. ตรวจสอบเงื่อนไข: ต้องเป็น พ.ศ. 2500 (ค.ศ. 1957) ขึ้นไป
-  if (isNaN(yearBE) || yearBE < 2500) {
-    alert('กรุณากรอกปีเกิดตั้งแต่ พ.ศ. 2500 (ค.ศ. 1957) ขึ้นไปเท่านั้น');
+  // 3. ตรวจสอบเงื่อนไข: ต้องเป็น พ.ศ. 2500 ขึ้นไป (>= 2500)
+  if (isNaN(inputYear) || inputYear < 2500) {
+    alert('กรุณากรอกปีเกิดตั้งแต่ พ.ศ. 2500 ขึ้นไปเท่านั้น');
     return;
   }
+
+  const yearBE = inputYear;        // เก็บปี พ.ศ. ไว้ (เช่น 2538)
+  const yearCE = inputYear - 543;  // แปลงเป็น ค.ศ. สำหรับเก็บ (เช่น 1995)
 
   // เปลี่ยนปีในวันที่ให้เป็น ค.ศ. เพื่อความถูกต้องเวลาเอาไปใช้งานต่อ
   parts[0] = String(yearCE);
@@ -100,7 +132,7 @@ async function submitBirthInfo() {
     return;
   }
 
-  // 5. บันทึกลง localStorage (เก็บบันทึกปีเป็น ค.ศ. และ พ.ศ.)
+  // 5. บันทึกลง sessionStorage (ปิดแท็บ/เบราว์เซอร์แล้วข้อมูลจะถูกลบอัตโนมัติ)
   const birthData = {
     birthDateCE,
     birthYearBE: yearBE,
@@ -112,7 +144,8 @@ async function submitBirthInfo() {
     savedAt: new Date().toISOString()
   };
 
-  localStorage.setItem('user_birth_info', JSON.stringify(birthData));
+  sessionStorage.removeItem('user_hora_result');
+  sessionStorage.setItem('user_birth_info', JSON.stringify(birthData));
 
   // 6. โหลด Template หน้าแสดงผลและหยอดค่าข้อมูล
   try {

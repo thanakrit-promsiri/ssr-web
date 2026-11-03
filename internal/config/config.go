@@ -12,6 +12,7 @@ import (
 type Config struct {
 	Port           string
 	AuthServiceURL string
+	HoraServiceURL string
 }
 
 // Load โหลดค่าจากไฟล์ .env หรือใช้ค่าเริ่มต้นหากไม่ได้กำหนดไว้
@@ -30,8 +31,14 @@ func Load() *Config {
 		authURL = "http://localhost:7777"
 	}
 
+	horaURL := strings.TrimRight(os.Getenv("HORA_SERVICE_URL"), "/")
+	if horaURL == "" {
+		horaURL = "http://localhost:8083"
+	}
+
 	return &Config{
 		Port:           port,
 		AuthServiceURL: authURL,
+		HoraServiceURL: horaURL,
 	}
 }

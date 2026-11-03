@@ -43,7 +43,8 @@ async function handleLogout() {
     console.error('Logout error:', e);
   }
 
-  // 2. ล้างข้อมูลทั้งหมดใน LocalStorage (เช่น ข้อมูลวันเกิดผู้ใช้, ข้อมูลชั่วคราวต่างๆ)
+  // 2. ล้างข้อมูลทั้งหมดใน SessionStorage และ LocalStorage (เช่น ข้อมูลวันเกิดผู้ใช้, ผลคำนวณดวงชะตา)
+  sessionStorage.clear();
   localStorage.clear();
 
   // 3. กวาดล้าง Cookie ทุกตัวที่เบราว์เซอร์ฝั่ง Client เข้าถึงได้

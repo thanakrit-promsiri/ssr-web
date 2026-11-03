@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -56,6 +57,22 @@ func TestHandleIndex(t *testing.T) {
 	}
 }
 
+func TestHandleIndex_WithCookie_RedirectsToChat(t *testing.T) {
+	h := New("http://localhost:8082")
+	req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: "some-token"})
+	rec := httptest.NewRecorder()
+
+	h.HandleIndex(rec, req)
+
+	if rec.Code != http.StatusSeeOther {
+		t.Fatalf("expected status 303 redirect, got %d", rec.Code)
+	}
+	if loc := rec.Header().Get("Location"); loc != "/chat.html" {
+		t.Fatalf("expected redirect location /chat.html, got %s", loc)
+	}
+}
+
 func TestHandleChat_NoCookie_Redirects(t *testing.T) {
 	h := New("http://localhost:8082")
 	req := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
@@ -101,6 +118,72 @@ func TestStaticDistrictJSON(t *testing.T) {
 	}
 	if rec.Body.Len() == 0 {
 		t.Fatal("expected non-empty district.json body")
+	}
+}
+
+func TestHandleHoraCalculate_ProxiesLahiriAPI(t *testing.T) {
+	sampleUpstreamJSON := `{
+		"status": "success",
+		"calculateResp": {
+			"metadata": {
+				"julian_day": 2447518.6395833334,
+				"ayanamsa_name": "Lahiri",
+				"ayanamsa_degrees": "23° 42' 11.19\"",
+				"location": {"latitude": 13.7563, "longitude": 100.5018}
+			},
+			"planets": [
+				{
+					"name": "Sun",
+					"name_thai": "อาทิตย์",
+					"symbol": "๑",
+					"degree_formatted": "07° 49' 03\"",
+					"position": {"sign": "Sagittarius", "sign_thai": "ธนู", "degree": 7, "minute": 49, "second": 3.38},
+					"nakshatra": "Mula",
+					"nakshatra_thai": "มูละ",
+					"pada": 3,
+					"lord": "Ketu",
+					"lord_thai": "เกตุ (๙)",
+					"is_retrograde": false,
+					"is_combust": false,
+					"dignity": "Friend",
+					"dignity_thai": "มิตร",
+					"house": 11,
+					"house_name_thai": "ลาภะ",
+					"house_thai": "11 (ลาภะ)",
+					"navamsa": {"sign": "Gemini", "sign_thai": "เมถุน", "index": 3}
+				}
+			]
+		}
+	}`
+
+	h := New("http://auth-service", "http://hora-service")
+	h.httpClient.Transport = roundTripFunc(func(req *http.Request) (*http.Response, error) {
+		if req.URL.Path != "/api/v1/hora/calculate" {
+			t.Fatalf("unexpected upstream path: %s", req.URL.Path)
+		}
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(strings.NewReader(sampleUpstreamJSON)),
+			Header:     make(http.Header),
+		}, nil
+	})
+
+	reqBody := `{"calculateReq":{"year":1988,"month":12,"day":23,"hour_thai":10.35,"time_zone":7.0,"latitude":13.7563,"longitude":100.5018,"house_system":"W"}}`
+	req := httptest.NewRequest(http.MethodPost, "/hora/calculate", strings.NewReader(reqBody))
+	rec := httptest.NewRecorder()
+
+	h.HandleHoraCalculate(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d", rec.Code)
+	}
+
+	var got map[string]any
+	if err := json.Unmarshal(rec.Body.Bytes(), &got); err != nil {
+		t.Fatalf("failed to unmarshal response: %v", err)
+	}
+	if got["status"] != "success" {
+		t.Fatalf("expected status success, got %v", got["status"])
 	}
 }
 
