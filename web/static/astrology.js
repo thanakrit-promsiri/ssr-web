@@ -25,7 +25,7 @@ function parseHourThai(timeStr) {
 
 // เลือกสีป้ายกำกับตามมาตรฐานดาวพระเวท (Dignity)
 function getDignityBadgeClass(dignity, dignityThai) {
-  const key = String(dignity || dignityThai || '').toLowerCase();
+  const key = `${dignity || ''} ${dignityThai || ''}`.toLowerCase();
   if (key.includes('exalt') || key.includes('อุจจ์')) {
     return 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
   }
@@ -44,7 +44,13 @@ function getDignityBadgeClass(dignity, dignityThai) {
   if (key.includes('enemy') || key.includes('ศัตรู')) {
     return 'bg-orange-500/20 text-orange-300 border-orange-500/40';
   }
-  if (key.includes('ลัคนา')) {
+  if (
+    key.includes('ลัคนา') ||
+    key.includes('ascendant') ||
+    key.includes('descendant') ||
+    key.includes('midheaven') ||
+    key.includes('imum coeli')
+  ) {
     return 'bg-amber-500/20 text-amber-300 border-amber-500/40';
   }
   return 'bg-slate-800 text-slate-300 border-slate-700';
@@ -63,28 +69,66 @@ function renderAstrologyTable(calc, birthData) {
   if (editBirthBtn) editBirthBtn.classList.add('hidden');
   if (!astroOutput || !calc) return;
 
-  // ดึงลัคนา (Ascendant) มาแสดงแถวแรกสุดของตาราง ตามด้วยดาวเคราะห์ทั้งหมด
-  const ascendant = (calc.houses_and_angles || []).find(a => a.name === 'Ascendant (ASC)');
-  const allRows = [];
-
-  if (ascendant) {
-    allRows.push({
-      isAscendant: true,
-      isRetrograde: false,
-      isCombust: false,
-      symbol: ascendant.symbol || 'ลั',
-      nameThai: ascendant.name_thai || 'ลัคนา',
-      signThai: ascendant.position?.sign_thai || ascendant.position?.sign || '-',
-      degreeFormatted: ascendant.degree_formatted || '-',
-      nakshatraThai: ascendant.nakshatra_thai || ascendant.nakshatra || '-',
-      pada: ascendant.pada || '-',
-      lordThai: ascendant.lord_thai || ascendant.lord || '-',
-      navamsaThai: ascendant.navamsa?.sign_thai || ascendant.navamsa?.sign || '-',
-      houseThai: ascendant.house_thai || '1 (ตนุ)',
+  // ดึงลัคนาและจุดมุมสำคัญทั้ง 4 (Ascendant, Descendant, Midheaven, Imum Coeli) มาแสดงก่อนดาวเคราะห์ทั้งหมด
+  const housesAndAngles = calc.houses_and_angles || [];
+  const angleConfigs = [
+    {
+      match: a => a.name === 'Ascendant (ASC)' || String(a.name || '').includes('Ascendant') || a.name_thai === 'ลัคนา',
+      defaultSymbol: 'ลั',
+      defaultNameThai: 'ลัคนา',
+      defaultHouseThai: '1 (ตนุ)',
       dignity: 'Ascendant',
       dignityThai: 'ลัคนา'
-    });
-  }
+    },
+    {
+      match: a => a.name === 'Descendant (DSC)' || String(a.name || '').includes('Descendant') || a.name_thai === 'อัสตลัคนา',
+      defaultSymbol: 'DSC',
+      defaultNameThai: 'อัสตลัคนา',
+      defaultHouseThai: '7 (ปัตนิ)',
+      dignity: 'Descendant',
+      dignityThai: 'อัสตลัคนา'
+    },
+    {
+      match: a => a.name === 'Midheaven (MC)' || String(a.name || '').includes('Midheaven') || a.name_thai === 'มัธยลัคนา',
+      defaultSymbol: 'MC',
+      defaultNameThai: 'มัธยลัคนา',
+      defaultHouseThai: '10 (กัมมะ)',
+      dignity: 'Midheaven',
+      dignityThai: 'มัธยลัคนา'
+    },
+    {
+      match: a => a.name === 'Imum Coeli (IC)' || String(a.name || '').includes('Imum Coeli') || a.name_thai === 'ปาตาลลัคนา',
+      defaultSymbol: 'IC',
+      defaultNameThai: 'ปาตาลลัคนา',
+      defaultHouseThai: '4 (พันธุ)',
+      dignity: 'Imum Coeli',
+      dignityThai: 'ปาตาลลัคนา'
+    }
+  ];
+
+  const allRows = [];
+
+  angleConfigs.forEach(cfg => {
+    const angle = housesAndAngles.find(cfg.match);
+    if (angle) {
+      allRows.push({
+        isAscendant: true,
+        isRetrograde: false,
+        isCombust: false,
+        symbol: angle.symbol || cfg.defaultSymbol,
+        nameThai: angle.name_thai || cfg.defaultNameThai,
+        signThai: angle.position?.sign_thai || angle.position?.sign || '-',
+        degreeFormatted: angle.degree_formatted || '-',
+        nakshatraThai: angle.nakshatra_thai || angle.nakshatra || '-',
+        pada: angle.pada || '-',
+        lordThai: angle.lord_thai || angle.lord || '-',
+        navamsaThai: angle.navamsa?.sign_thai || angle.navamsa?.sign || '-',
+        houseThai: angle.house_thai || (angle.house ? `${angle.house} (${angle.house_name_thai || ''})` : cfg.defaultHouseThai),
+        dignity: angle.dignity || cfg.dignity,
+        dignityThai: angle.dignity_thai || cfg.dignityThai
+      });
+    }
+  });
 
   (calc.planets || []).forEach(p => {
     allRows.push({

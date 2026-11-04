@@ -92,18 +92,31 @@
     <div id="resultContainer" class="hidden"></div>
   </main>
 
-  <!-- โหลดไฟล์ JavaScript แบบมาตรฐานพร้อมพารามิเตอร์กันแคช -->
-  <script src="/static/auth.js?v=2026110301"></script>
-  <script src="/static/district.js?v=2026110301"></script>
-  <script src="/static/birth.js?v=2026110301"></script>
-  <script src="/static/astrology.js?v=2026110301"></script>
-
+  <!-- บังคับโหลดไฟล์ JavaScript ใหม่เสมอทุกครั้ง (ไม่ใช้ Cache) -->
   <script>
-    // สั่งรันการทำงานเมื่อโครงสร้าง DOM โหลดเสร็จสมบูรณ์
-    document.addEventListener('DOMContentLoaded', () => {
-      checkAuthWithBackend(); 
-      loadDistrictData();     
-    });
+    (async () => {
+      const ts = Date.now();
+      const scripts = [
+        '/static/auth.js',
+        '/static/district.js',
+        '/static/birth.js',
+        '/static/astrology.js'
+      ];
+
+      for (const src of scripts) {
+        await new Promise((resolve, reject) => {
+          const s = document.createElement('script');
+          s.src = `${src}?t=${ts}`;
+          s.async = false;
+          s.onload = resolve;
+          s.onerror = reject;
+          document.body.appendChild(s);
+        });
+      }
+
+      if (typeof checkAuthWithBackend === 'function') checkAuthWithBackend();
+      if (typeof loadDistrictData === 'function') loadDistrictData();
+    })();
   </script>
 </body>
 </html>

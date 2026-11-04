@@ -3,11 +3,17 @@
 // ==========================================
 
 // 1. ตรวจสอบข้อมูลใน sessionStorage ทันทีที่โหลดไฟล์ (พร้อมเคลียร์ค่าเก่าที่อาจค้างใน localStorage)
-document.addEventListener('DOMContentLoaded', () => {
+function initBirthInfo() {
   localStorage.removeItem('user_birth_info');
   localStorage.removeItem('user_hora_result');
   checkExistingBirthInfo();
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initBirthInfo);
+} else {
+  initBirthInfo();
+}
 
 const THAI_MONTHS = [
   'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
@@ -31,7 +37,7 @@ function formatThaiDateBE(birthDateCE, birthYearBE) {
 
 // ฟังก์ชันกลางสำหรับโหลด Template และแสดงผลข้อมูลวันเกิด
 async function renderBirthResult(birthData) {
-  const response = await fetch('/static/result-template.html?v=4');
+  const response = await fetch(`/static/result-template.html?t=${Date.now()}`, { cache: 'no-store' });
   if (!response.ok) throw new Error('ไม่สามารถโหลดเทมเพลตผลลัพธ์ได้');
 
   const html = await response.text();

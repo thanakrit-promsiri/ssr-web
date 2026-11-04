@@ -102,6 +102,25 @@ func TestHandleChat_Authorized(t *testing.T) {
 	}
 }
 
+func TestStaticJSNoCacheHeaders(t *testing.T) {
+	h := New("http://localhost:8082")
+	mux := http.NewServeMux()
+	if err := h.RegisterRoutes(mux); err != nil {
+		t.Fatalf("RegisterRoutes failed: %v", err)
+	}
+
+	req := httptest.NewRequest(http.MethodGet, "/static/birth.js", nil)
+	rec := httptest.NewRecorder()
+	mux.ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected status 200 for /static/birth.js, got %d", rec.Code)
+	}
+	if cc := rec.Header().Get("Cache-Control"); !strings.Contains(cc, "no-store") {
+		t.Fatalf("expected Cache-Control to contain no-store, got %q", cc)
+	}
+}
+
 func TestStaticDistrictJSON(t *testing.T) {
 	h := New("http://localhost:8082")
 	mux := http.NewServeMux()

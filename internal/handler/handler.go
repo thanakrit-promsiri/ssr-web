@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"ssr-web/web"
@@ -52,7 +53,13 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) error {
 	if err != nil {
 		return err
 	}
-	mux.Handle("GET /static/", http.StripPrefix("/static/", http.FileServerFS(staticFS)))
+	staticServer := http.StripPrefix("/static/", http.FileServerFS(staticFS))
+	mux.HandleFunc("GET /static/", func(w http.ResponseWriter, r *http.Request) {
+		if strings.HasSuffix(r.URL.Path, ".js") {
+			setNoCacheHeaders(w)
+		}
+		staticServer.ServeHTTP(w, r)
+	})
 
 	// 4. Hybrid Mode: เสิร์ฟไฟล์รูปภาพและ Favicon จากโฟลเดอร์ public/ บน Disk โดยตรง
 	publicServer := http.FileServer(http.Dir("public"))
@@ -134,12 +141,19 @@ func clearAuthCookie(w http.ResponseWriter) {
 	})
 }
 
+func setNoCacheHeaders(w http.ResponseWriter) {
+	w.Header().Set("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+	w.Header().Set("Pragma", "no-cache")
+	w.Header().Set("Expires", "0")
+}
+
 func (h *Handler) serveEmbeddedHTML(w http.ResponseWriter, name string) {
 	data, err := fs.ReadFile(web.Assets, name)
 	if err != nil {
 		http.Error(w, "Page Not Found", http.StatusNotFound)
 		return
 	}
+	setNoCacheHeaders(w)
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
 	_, _ = w.Write(data)
 }
