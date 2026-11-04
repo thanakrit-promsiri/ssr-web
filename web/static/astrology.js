@@ -33,15 +33,6 @@ function fillFields(root, values) {
   });
 }
 
-function escapeHtml(str) {
-  return String(str ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
-}
-
 // แปลงเวลา "10:35" เป็นรูปแบบทศนิยม hour_thai 10.35 ตามที่ lahiri-api กำหนด
 function parseHourThai(timeStr) {
   if (!timeStr) return 0;
@@ -85,131 +76,203 @@ function getDignityBadgeClass(dignity, dignityThai) {
   return 'bg-slate-800 text-slate-300 border-slate-700';
 }
 
-// ฟังก์ชันแสดงตารางตำแหน่งดาวพระเวทลงในหน้าเว็บ
-async function renderAstrologyTable(calc, birthData) {
-  const astroArea = document.getElementById('astroCalculationArea');
-  const astroLoading = document.getElementById('astroLoading');
-  const astroOutput = document.getElementById('astroOutput');
-  const editBirthBtn = document.getElementById('editBirthBtn');
+// ------------------------------------------
+// Helper: จัดการ Element และสถานะหน้าจอ
+// ------------------------------------------
 
-  if (astroArea) astroArea.classList.remove('hidden');
-  if (astroLoading) astroLoading.classList.add('hidden');
-  // ซ่อนปุ่มแก้ไขข้อมูลทันทีที่มีข้อมูลตารางสมผุสดาวแล้ว
-  if (editBirthBtn) editBirthBtn.classList.add('hidden');
-  if (!astroOutput || !calc) return;
+// ดึง Element ที่เกี่ยวข้องกับพื้นที่แสดงผลการคำนวณ
+function getAstroElements() {
+  return {
+    area: document.getElementById('astroCalculationArea'),
+    loading: document.getElementById('astroLoading'),
+    output: document.getElementById('astroOutput'),
+    editBtn: document.getElementById('editBirthBtn')
+  };
+}
 
-  // ดึงลัคนาและจุดมุมสำคัญทั้ง 4 (Ascendant, Descendant, Midheaven, Imum Coeli) มาแสดงก่อนดาวเคราะห์ทั้งหมด
+// แสดงหรือซ่อน Element (ปลอดภัยเมื่อ el เป็น null)
+function setHidden(el, hidden) {
+  if (el) el.classList.toggle('hidden', hidden);
+}
+
+// แสดงข้อความ error ในพื้นที่ผลลัพธ์ (ใช้ textContent ป้องกัน XSS)
+function showAstroError(message) {
+  const { loading, output } = getAstroElements();
+  setHidden(loading, true);
+  if (!output) return;
+
+  const errP = document.createElement('p');
+  errP.className = 'text-red-400';
+  errP.textContent = message || 'เกิดข้อผิดพลาดในการคำนวณดวงชะตา กรุณาลองใหม่อีกครั้ง';
+  output.replaceChildren(errP);
+}
+
+// ------------------------------------------
+// Helper: แปลงข้อมูลจาก API เป็นข้อมูลสำหรับแสดงผล
+// ------------------------------------------
+
+// ลัคนาและจุดมุมสำคัญทั้ง 4 (Ascendant, Descendant, Midheaven, Imum Coeli)
+const ANGLE_CONFIGS = [
+  {
+    key: 'Ascendant',
+    nameThai: 'ลัคนา',
+    symbol: 'ลั',
+    houseThai: '1 (ตนุ)',
+    exactName: 'Ascendant (ASC)'
+  },
+  {
+    key: 'Descendant',
+    nameThai: 'อัสตลัคนา',
+    symbol: 'DSC',
+    houseThai: '7 (ปัตนิ)',
+    exactName: 'Descendant (DSC)'
+  },
+  {
+    key: 'Midheaven',
+    nameThai: 'มัธยลัคนา',
+    symbol: 'MC',
+    houseThai: '10 (กัมมะ)',
+    exactName: 'Midheaven (MC)'
+  },
+  {
+    key: 'Imum Coeli',
+    nameThai: 'ปาตาลลัคนา',
+    symbol: 'IC',
+    houseThai: '4 (พันธุ)',
+    exactName: 'Imum Coeli (IC)'
+  }
+];
+
+// แปลงข้อมูลดาว/จุดมุม 1 รายการจาก API เป็นแถวสำหรับตาราง (ใช้ค่า defaults เมื่อ API ไม่ส่งมา)
+function buildAstroRow(body, defaults, flags) {
+  return {
+    isAscendant: flags.isAscendant,
+    isRetrograde: flags.isRetrograde,
+    isCombust: flags.isCombust,
+    symbol: body.symbol || defaults.symbol,
+    nameThai: body.name_thai || defaults.nameThai || body.name || '-',
+    signThai: body.position?.sign_thai || body.position?.sign || '-',
+    degreeFormatted: body.degree_formatted || '-',
+    nakshatraThai: body.nakshatra_thai || body.nakshatra || '-',
+    pada: body.pada || '-',
+    lordThai: body.lord_thai || body.lord || '-',
+    navamsaThai: body.navamsa?.sign_thai || body.navamsa?.sign || '-',
+    houseThai: body.house_thai || (body.house ? `${body.house} (${body.house_name_thai || ''})` : defaults.houseThai),
+    dignity: body.dignity || defaults.dignity || '',
+    dignityThai: body.dignity_thai || defaults.dignityThai || body.dignity || 'ปกติ'
+  };
+}
+
+// รวมแถวทั้งหมด: จุดมุมสำคัญทั้ง 4 มาก่อน แล้วตามด้วยดาวเคราะห์
+function buildAstroRows(calc) {
   const housesAndAngles = calc.houses_and_angles || [];
-  const angleConfigs = [
-    {
-      match: a => a.name === 'Ascendant (ASC)' || String(a.name || '').includes('Ascendant') || a.name_thai === 'ลัคนา',
-      defaultSymbol: 'ลั',
-      defaultNameThai: 'ลัคนา',
-      defaultHouseThai: '1 (ตนุ)',
-      dignity: 'Ascendant',
-      dignityThai: 'ลัคนา'
-    },
-    {
-      match: a => a.name === 'Descendant (DSC)' || String(a.name || '').includes('Descendant') || a.name_thai === 'อัสตลัคนา',
-      defaultSymbol: 'DSC',
-      defaultNameThai: 'อัสตลัคนา',
-      defaultHouseThai: '7 (ปัตนิ)',
-      dignity: 'Descendant',
-      dignityThai: 'อัสตลัคนา'
-    },
-    {
-      match: a => a.name === 'Midheaven (MC)' || String(a.name || '').includes('Midheaven') || a.name_thai === 'มัธยลัคนา',
-      defaultSymbol: 'MC',
-      defaultNameThai: 'มัธยลัคนา',
-      defaultHouseThai: '10 (กัมมะ)',
-      dignity: 'Midheaven',
-      dignityThai: 'มัธยลัคนา'
-    },
-    {
-      match: a => a.name === 'Imum Coeli (IC)' || String(a.name || '').includes('Imum Coeli') || a.name_thai === 'ปาตาลลัคนา',
-      defaultSymbol: 'IC',
-      defaultNameThai: 'ปาตาลลัคนา',
-      defaultHouseThai: '4 (พันธุ)',
-      dignity: 'Imum Coeli',
-      dignityThai: 'ปาตาลลัคนา'
-    }
-  ];
+  const rows = [];
 
-  const allRows = [];
+  ANGLE_CONFIGS.forEach(cfg => {
+    const angle = housesAndAngles.find(a =>
+      a.name === cfg.exactName ||
+      String(a.name || '').includes(cfg.key) ||
+      a.name_thai === cfg.nameThai
+    );
+    if (!angle) return;
 
-  angleConfigs.forEach(cfg => {
-    const angle = housesAndAngles.find(cfg.match);
-    if (angle) {
-      allRows.push({
-        isAscendant: true,
-        isRetrograde: false,
-        isCombust: false,
-        symbol: angle.symbol || cfg.defaultSymbol,
-        nameThai: angle.name_thai || cfg.defaultNameThai,
-        signThai: angle.position?.sign_thai || angle.position?.sign || '-',
-        degreeFormatted: angle.degree_formatted || '-',
-        nakshatraThai: angle.nakshatra_thai || angle.nakshatra || '-',
-        pada: angle.pada || '-',
-        lordThai: angle.lord_thai || angle.lord || '-',
-        navamsaThai: angle.navamsa?.sign_thai || angle.navamsa?.sign || '-',
-        houseThai: angle.house_thai || (angle.house ? `${angle.house} (${angle.house_name_thai || ''})` : cfg.defaultHouseThai),
-        dignity: angle.dignity || cfg.dignity,
-        dignityThai: angle.dignity_thai || cfg.dignityThai
-      });
-    }
+    rows.push(buildAstroRow(angle, {
+      symbol: cfg.symbol,
+      nameThai: cfg.nameThai,
+      houseThai: cfg.houseThai,
+      dignity: cfg.key,
+      dignityThai: cfg.nameThai
+    }, { isAscendant: true, isRetrograde: false, isCombust: false }));
   });
 
   (calc.planets || []).forEach(p => {
-    allRows.push({
+    rows.push(buildAstroRow(p, { symbol: '-', houseThai: '-' }, {
       isAscendant: false,
       isRetrograde: Boolean(p.is_retrograde),
-      isCombust: Boolean(p.is_combust),
-      symbol: p.symbol || '-',
-      nameThai: p.name_thai || p.name || '-',
-      signThai: p.position?.sign_thai || p.position?.sign || '-',
-      degreeFormatted: p.degree_formatted || '-',
-      nakshatraThai: p.nakshatra_thai || p.nakshatra || '-',
-      pada: p.pada || '-',
-      lordThai: p.lord_thai || p.lord || '-',
-      navamsaThai: p.navamsa?.sign_thai || p.navamsa?.sign || '-',
-      houseThai: p.house_thai || (p.house ? `${p.house} (${p.house_name_thai || ''})` : '-'),
-      dignity: p.dignity || '',
-      dignityThai: p.dignity_thai || p.dignity || 'ปกติ'
-    });
+      isCombust: Boolean(p.is_combust)
+    }));
   });
 
+  return rows;
+}
+
+// สรุปจันทร์เสวยฤกษ์ และวิมโสตรีทศา (Vimshottari Dasha)
+function buildDashaSummary(calc) {
   const moonObj = (calc.planets || []).find(p => p.name === 'Moon');
   const dasha = calc.vimshottari_dasha || {};
-  const currentDasha = dasha.current_dasha || {};
+  const current = dasha.current_dasha || {};
 
-  const moonNakshatraSummary = moonObj
-    ? `${moonObj.nakshatra_thai || moonObj.nakshatra} (บาทที่ ${moonObj.pada}) — เจ้าฤกษ์: ${moonObj.lord_thai || moonObj.lord}`
-    : (dasha.moon_nakshatra_thai || '-');
+  const formatPeriod = (lord, start, end) =>
+    lord ? `${lord} (${start || ''} ถึง ${end || ''})` : '-';
 
-  const dashaBalanceText = dasha.balance_at_birth || '-';
-  const mahaText = currentDasha.mahadasha_lord_thai
-    ? `${currentDasha.mahadasha_lord_thai} (${currentDasha.mahadasha_start || ''} ถึง ${currentDasha.mahadasha_end || ''})`
-    : '-';
-  const antarText = currentDasha.antardasha_lord_thai
-    ? `${currentDasha.antardasha_lord_thai} (${currentDasha.antardasha_start || ''} ถึง ${currentDasha.antardasha_end || ''})`
-    : '-';
+  return {
+    moonNakshatraSummary: moonObj
+      ? `${moonObj.nakshatra_thai || moonObj.nakshatra} (บาทที่ ${moonObj.pada}) — เจ้าฤกษ์: ${moonObj.lord_thai || moonObj.lord}`
+      : (dasha.moon_nakshatra_thai || '-'),
+    dashaBalanceText: dasha.balance_at_birth || '-',
+    mahaText: formatPeriod(current.mahadasha_lord_thai, current.mahadasha_start, current.mahadasha_end),
+    antarText: formatPeriod(current.antardasha_lord_thai, current.antardasha_start, current.antardasha_end)
+  };
+}
 
-  const ayanamsaName = calc.metadata?.ayanamsa_name || 'Lahiri';
-  const ayanamsaDeg = calc.metadata?.ayanamsa_degrees || '-';
+// ข้อมูลเจ้าชะตาโดยย่อ (วันเวลาเกิด สถานที่ พิกัด)
+function buildBirthSummary(birthData) {
+  if (!birthData) return { birthDateText: '', locationText: '', coordText: '' };
 
-  // ข้อมูลเจ้าชะตาโดยย่อ
-  let birthDateText = '';
-  let locationText = '';
-  let coordText = '';
-  if (birthData) {
-    const yearCE = parseInt(birthData.birthYearBE, 10) - 543;
-    const thaiDateText = typeof formatThaiDateBE === 'function'
-      ? formatThaiDateBE(birthData.birthDateCE, birthData.birthYearBE)
-      : `พ.ศ. ${birthData.birthYearBE}`;
-    birthDateText = `${thaiDateText} (ค.ศ. ${yearCE}) เวลา ${birthData.birthTime} น.`;
-    locationText = `อ. ${birthData.amphoe} จ. ${birthData.province}`;
-    coordText = `${birthData.latitude}, ${birthData.longitude}`;
+  const yearCE = parseInt(birthData.birthYearBE, 10) - 543;
+  const thaiDateText = typeof formatThaiDateBE === 'function'
+    ? formatThaiDateBE(birthData.birthDateCE, birthData.birthYearBE)
+    : `พ.ศ. ${birthData.birthYearBE}`;
+
+  return {
+    birthDateText: `${thaiDateText} (ค.ศ. ${yearCE}) เวลา ${birthData.birthTime} น.`,
+    locationText: `อ. ${birthData.amphoe} จ. ${birthData.province}`,
+    coordText: `${birthData.latitude}, ${birthData.longitude}`
+  };
+}
+
+// สร้าง Element แถวดาว 1 แถวจาก Template
+function createAstroRowElement(rowTemplate, item) {
+  const rowFrag = document.importNode(rowTemplate.content, true);
+  rowFrag.querySelector('tr').className = item.isAscendant
+    ? 'bg-amber-500/10 border-b border-amber-500/20'
+    : 'border-b border-slate-800/80 hover:bg-purple-950/30 transition';
+
+  fillFields(rowFrag, {
+    symbol: item.symbol,
+    nameThai: item.nameThai,
+    signThai: item.signThai,
+    degreeFormatted: item.degreeFormatted,
+    nakshatraThai: item.nakshatraThai,
+    pada: item.pada,
+    lordThai: item.lordThai,
+    navamsaThai: item.navamsaThai,
+    houseThai: item.houseThai,
+    dignityThai: item.dignityThai
+  });
+
+  if (item.isRetrograde && !String(item.nameThai).includes('พักร์')) {
+    setHidden(rowFrag.querySelector('[data-field="retroBadge"]'), false);
   }
+  if (item.isCombust) {
+    setHidden(rowFrag.querySelector('[data-field="combustBadge"]'), false);
+  }
+
+  rowFrag.querySelector('[data-field="dignityThai"]')
+    .classList.add(...getDignityBadgeClass(item.dignity, item.dignityThai).split(' '));
+
+  return rowFrag;
+}
+
+// ฟังก์ชันแสดงตารางตำแหน่งดาวพระเวทลงในหน้าเว็บ
+async function renderAstrologyTable(calc, birthData) {
+  const { area, loading, output, editBtn } = getAstroElements();
+
+  setHidden(area, false);
+  setHidden(loading, true);
+  // ซ่อนปุ่มแก้ไขข้อมูลทันทีที่มีข้อมูลตารางสมผุสดาวแล้ว
+  setHidden(editBtn, true);
+  if (!output || !calc) return;
 
   // โหลด Template HTML แยกไฟล์ (astrology-template.html)
   let templates;
@@ -217,64 +280,24 @@ async function renderAstrologyTable(calc, birthData) {
     templates = await loadAstrologyTemplates();
   } catch (err) {
     console.error('Error loading astrology template:', err);
-    astroOutput.innerHTML = '';
-    const errP = document.createElement('p');
-    errP.className = 'text-red-400';
-    errP.textContent = err.message;
-    astroOutput.appendChild(errP);
+    showAstroError(err.message);
     return;
   }
 
-  // สร้างแถวดาวแต่ละดวงจาก Template
   const tableFrag = document.importNode(templates.table.content, true);
   const tbody = tableFrag.querySelector('[data-field="rows"]');
-
-  allRows.forEach(item => {
-    const rowFrag = document.importNode(templates.row.content, true);
-    const tr = rowFrag.querySelector('tr');
-    tr.className = item.isAscendant
-      ? 'bg-amber-500/10 border-b border-amber-500/20'
-      : 'border-b border-slate-800/80 hover:bg-purple-950/30 transition';
-
-    fillFields(rowFrag, {
-      symbol: item.symbol,
-      nameThai: item.nameThai,
-      signThai: item.signThai,
-      degreeFormatted: item.degreeFormatted,
-      nakshatraThai: item.nakshatraThai,
-      pada: item.pada,
-      lordThai: item.lordThai,
-      navamsaThai: item.navamsaThai,
-      houseThai: item.houseThai,
-      dignityThai: item.dignityThai
-    });
-
-    if (item.isRetrograde && !String(item.nameThai).includes('พักร์')) {
-      rowFrag.querySelector('[data-field="retroBadge"]').classList.remove('hidden');
-    }
-    if (item.isCombust) {
-      rowFrag.querySelector('[data-field="combustBadge"]').classList.remove('hidden');
-    }
-
-    const dignityEl = rowFrag.querySelector('[data-field="dignityThai"]');
-    dignityEl.classList.add(...getDignityBadgeClass(item.dignity, item.dignityThai).split(' '));
-
-    tbody.appendChild(rowFrag);
+  buildAstroRows(calc).forEach(item => {
+    tbody.appendChild(createAstroRowElement(templates.row, item));
   });
 
   fillFields(tableFrag, {
-    ayanamsaName,
-    ayanamsaDeg,
-    birthDateText,
-    locationText,
-    coordText,
-    moonNakshatraSummary,
-    dashaBalanceText,
-    mahaText,
-    antarText
+    ayanamsaName: calc.metadata?.ayanamsa_name || 'Lahiri',
+    ayanamsaDeg: calc.metadata?.ayanamsa_degrees || '-',
+    ...buildBirthSummary(birthData),
+    ...buildDashaSummary(calc)
   });
 
-  astroOutput.replaceChildren(tableFrag);
+  output.replaceChildren(tableFrag);
 }
 
 // ตรวจสอบว่ามีผลลัพธ์ตำแหน่งดาวใน sessionStorage หรือไม่ หากมีให้แสดงทันที
@@ -296,6 +319,77 @@ async function checkExistingHoraResult(birthData) {
   return false;
 }
 
+// ------------------------------------------
+// Helper: เรียก API คำนวณดวงชะตา
+// ------------------------------------------
+
+// สร้าง payload สำหรับ lahiri-api จากข้อมูลวันเกิด
+function buildCalculatePayload(birthData) {
+  // แยก ปี-เดือน-วัน ค.ศ. จาก birthDateCE (เช่น "1988-12-23")
+  const [yearStr, monthStr, dayStr] = String(birthData.birthDateCE || '').split('-');
+  return {
+    calculateReq: {
+      year: parseInt(yearStr, 10),
+      month: parseInt(monthStr, 10),
+      day: parseInt(dayStr, 10),
+      hour_thai: parseHourThai(birthData.birthTime),
+      time_zone: 7.0,
+      latitude: parseFloat(birthData.latitude),
+      longitude: parseFloat(birthData.longitude),
+      house_system: 'W'
+    }
+  };
+}
+
+// ส่ง POST JSON พร้อม Cookie ไปยัง endpoint ที่กำหนด
+function postJson(url, payload) {
+  return fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify(payload)
+  });
+}
+
+// อ่านข้อความ error จาก Response ที่ไม่สำเร็จ
+async function readHoraErrorMessage(response) {
+  const errText = await response.text();
+  console.error('❌ [DEBUG:Hora] Server Error Response:', errText);
+  try {
+    const errData = JSON.parse(errText);
+    if (errData.message) return errData.message;
+  } catch (_) {}
+  return `ไม่สามารถคำนวณดวงชะตาจากเซิร์ฟเวอร์ได้ (HTTP ${response.status})`;
+}
+
+// เรียก /hora/calculate ที่ ssr-web โดยตรง (ป้องกันกรณี Nginx ดัก /api/* ไปที่ Auth Service)
+// หากได้ 404 ให้ fallback ไปที่ /api/v1/hora/calculate แล้วคืนผลลัพธ์ JSON
+async function fetchHoraResult(payload) {
+  console.log('🔮 [DEBUG:Hora] กำลังส่งคำขอคำนวณดวงชะตา:', payload);
+
+  let url = '/hora/calculate';
+  let response = await postJson(url, payload);
+  console.log(`🔮 [DEBUG:Hora] ผลตอบกลับจาก ${url} -> HTTP Status:`, response.status);
+
+  if (response.status === 404) {
+    console.warn('⚠️ [DEBUG:Hora] /hora/calculate คืนค่า 404 ลองเรียก /api/v1/hora/calculate แทน...');
+    url = '/api/v1/hora/calculate';
+    response = await postJson(url, payload);
+    console.log(`🔮 [DEBUG:Hora] ผลตอบกลับจาก ${url} -> HTTP Status:`, response.status);
+  }
+
+  if (!response.ok) {
+    throw new Error(await readHoraErrorMessage(response));
+  }
+
+  const result = await response.json();
+  console.log('✅ [DEBUG:Hora] ได้รับข้อมูลดวงชะตาจาก lahiri-api:', result);
+  if (!result.calculateResp) {
+    throw new Error('รูปแบบข้อมูลผลลัพธ์ไม่ถูกต้อง');
+  }
+  return result;
+}
+
 // 1. ฟังก์ชันกดปุ่มคำนวณดวงชะตา (ตรวจ sessionStorage ก่อน หากไม่มีจึงเรียก API)
 async function calculateAstrology() {
   const savedDataStr = sessionStorage.getItem('user_birth_info');
@@ -312,85 +406,23 @@ async function calculateAstrology() {
     return;
   }
 
-  // แยก ปี-เดือน-วัน ค.ศ. จาก birthDateCE (เช่น "1988-12-23")
-  const [yearStr, monthStr, dayStr] = String(birthData.birthDateCE || '').split('-');
-  const payload = {
-    calculateReq: {
-      year: parseInt(yearStr, 10),
-      month: parseInt(monthStr, 10),
-      day: parseInt(dayStr, 10),
-      hour_thai: parseHourThai(birthData.birthTime),
-      time_zone: 7.0,
-      latitude: parseFloat(birthData.latitude),
-      longitude: parseFloat(birthData.longitude),
-      house_system: 'W'
-    }
-  };
-
-  // ดึง Element จากหน้าเว็บ
-  const astroArea = document.getElementById('astroCalculationArea');
-  const astroLoading = document.getElementById('astroLoading');
-  const astroOutput = document.getElementById('astroOutput');
-
-  if (astroArea) astroArea.classList.remove('hidden');
-  if (astroLoading) astroLoading.classList.remove('hidden');
-  if (astroOutput) astroOutput.innerHTML = '';
+  const { area, loading, output } = getAstroElements();
+  setHidden(area, false);
+  setHidden(loading, false);
+  if (output) output.replaceChildren();
 
   try {
-    console.log('🔮 [DEBUG:Hora] กำลังส่งคำขอคำนวณดวงชะตา:', payload);
-
-    // เรียก /hora/calculate ที่ ssr-web โดยตรง (ป้องกันกรณี Nginx ดัก /api/* ไปที่ Auth Service)
-    let response = await fetch('/hora/calculate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify(payload)
-    });
-
-    console.log('🔮 [DEBUG:Hora] ผลตอบกลับจาก /hora/calculate -> HTTP Status:', response.status);
-
-    if (response.status === 404) {
-      console.warn('⚠️ [DEBUG:Hora] /hora/calculate คืนค่า 404 ลองเรียก /api/v1/hora/calculate แทน...');
-      response = await fetch('/api/v1/hora/calculate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(payload)
-      });
-      console.log('🔮 [DEBUG:Hora] ผลตอบกลับจาก /api/v1/hora/calculate -> HTTP Status:', response.status);
-    }
-
-    if (!response.ok) {
-      const errText = await response.text();
-      console.error('❌ [DEBUG:Hora] Server Error Response:', errText);
-      let errMsg = `ไม่สามารถคำนวณดวงชะตาจากเซิร์ฟเวอร์ได้ (HTTP ${response.status})`;
-      try {
-        const errData = JSON.parse(errText);
-        if (errData.message) errMsg = errData.message;
-      } catch (_) {}
-      throw new Error(errMsg);
-    }
-
-    const result = await response.json();
-    console.log('✅ [DEBUG:Hora] ได้รับข้อมูลดวงชะตาจาก lahiri-api:', result);
-    const calc = result.calculateResp;
-    if (!calc) {
-      throw new Error('รูปแบบข้อมูลผลลัพธ์ไม่ถูกต้อง');
-    }
+    const result = await fetchHoraResult(buildCalculatePayload(birthData));
 
     // บันทึกผลลัพธ์ตำแหน่งดาวไว้ใน sessionStorage
     sessionStorage.setItem(HORA_STORAGE_KEY, JSON.stringify(result));
     console.log('💾 [DEBUG:Hora] บันทึกผลลัพธ์ตำแหน่งดาวลง sessionStorage (user_hora_result) เรียบร้อยแล้ว');
 
     // แสดงตารางตำแหน่งดาว
-    await renderAstrologyTable(calc, birthData);
-
+    await renderAstrologyTable(result.calculateResp, birthData);
   } catch (error) {
     console.error('Calculation Error:', error);
-    if (astroLoading) astroLoading.classList.add('hidden');
-    if (astroOutput) {
-      astroOutput.innerHTML = `<p class="text-red-400">${escapeHtml(error.message || 'เกิดข้อผิดพลาดในการคำนวณดวงชะตา กรุณาลองใหม่อีกครั้ง')}</p>`;
-    }
+    showAstroError(error.message);
   }
 }
 
@@ -401,16 +433,13 @@ function resetBirthInfo() {
     return;
   }
 
-  sessionStorage.removeItem('user_birth_info');
-  sessionStorage.removeItem(HORA_STORAGE_KEY);
-  localStorage.removeItem('user_birth_info');
-  localStorage.removeItem(HORA_STORAGE_KEY);
-  
+  [sessionStorage, localStorage].forEach(storage => {
+    storage.removeItem('user_birth_info');
+    storage.removeItem(HORA_STORAGE_KEY);
+  });
+
   // แสดงฟอร์มกรอกข้อมูลกลับมา
-  const formContainer = document.getElementById('formContainer');
-  if (formContainer) {
-    formContainer.classList.remove('hidden');
-  }
+  setHidden(document.getElementById('formContainer'), false);
 
   // ซ่อนและล้างกล่องผลลัพธ์
   const resultContainer = document.getElementById('resultContainer');
@@ -420,14 +449,12 @@ function resetBirthInfo() {
   }
 
   // ล้างค่าฟอร์มช่องกรอกให้ว่าง พร้อมกรอกรอบใหม่
-  const birthDateInput = document.getElementById('birthDate');
-  const birthTimeInput = document.getElementById('birthTime');
-  const provinceSelect = document.getElementById('provinceSelect');
-  const amphoeSelect = document.getElementById('amphoeSelect');
+  ['birthDate', 'birthTime', 'provinceSelect'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
 
-  if (birthDateInput) birthDateInput.value = '';
-  if (birthTimeInput) birthTimeInput.value = '';
-  if (provinceSelect) provinceSelect.value = '';
+  const amphoeSelect = document.getElementById('amphoeSelect');
   if (amphoeSelect) {
     amphoeSelect.innerHTML = '<option value="">-- เลือกอำเภอ/เขต --</option>';
   }
