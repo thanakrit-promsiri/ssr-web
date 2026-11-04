@@ -97,6 +97,9 @@
                 return data;
             })
             .then(data => {
+                // บันทึก Username ลง sessionStorage (ใช้ค่าจาก Backend ถ้ามี) — ถูกล้างเมื่อปิดแท็บหรือออกจากระบบ
+                sessionStorage.setItem('user_username', (data && data.username) || username);
+
                 // สำเร็จ: Token ถูกเก็บใน HttpOnly Cookie อัตโนมัติแล้ว พาไปหน้าแชทได้ทันที
                 window.location.href = '/chat.html';
             })

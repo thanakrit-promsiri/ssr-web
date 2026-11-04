@@ -3,6 +3,35 @@
 // ==========================================
 
 const HORA_STORAGE_KEY = 'user_hora_result';
+const ASTRO_TEMPLATE_URL = '/static/astrology-template.html';
+
+// แคช Template ตารางสมผุสดาว (โหลดครั้งเดียวต่อการเปิดหน้า)
+let astroTemplateCache = null;
+
+// โหลดไฟล์ astrology-template.html และดึง <template> ตารางหลักและแถวดาว
+async function loadAstrologyTemplates() {
+  if (astroTemplateCache) return astroTemplateCache;
+
+  const response = await fetch(`${ASTRO_TEMPLATE_URL}?t=${Date.now()}`, { cache: 'no-store' });
+  if (!response.ok) throw new Error('ไม่สามารถโหลดเทมเพลตตารางสมผุสดาวได้');
+
+  const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+  const table = doc.getElementById('astroTableTemplate');
+  const row = doc.getElementById('astroRowTemplate');
+  if (!table || !row) throw new Error('รูปแบบเทมเพลตตารางสมผุสดาวไม่ถูกต้อง');
+
+  astroTemplateCache = { table, row };
+  return astroTemplateCache;
+}
+
+// เติมค่าลงใน Element ที่มี data-field ตรงกับ key (ใช้ textContent ป้องกัน XSS)
+function fillFields(root, values) {
+  Object.entries(values).forEach(([field, value]) => {
+    root.querySelectorAll(`[data-field="${field}"]`).forEach(el => {
+      el.textContent = String(value ?? '');
+    });
+  });
+}
 
 function escapeHtml(str) {
   return String(str ?? '')
@@ -57,7 +86,7 @@ function getDignityBadgeClass(dignity, dignityThai) {
 }
 
 // ฟังก์ชันแสดงตารางตำแหน่งดาวพระเวทลงในหน้าเว็บ
-function renderAstrologyTable(calc, birthData) {
+async function renderAstrologyTable(calc, birthData) {
   const astroArea = document.getElementById('astroCalculationArea');
   const astroLoading = document.getElementById('astroLoading');
   const astroOutput = document.getElementById('astroOutput');
@@ -149,41 +178,6 @@ function renderAstrologyTable(calc, birthData) {
     });
   });
 
-  const rowsHtml = allRows.map(item => {
-    const rowHighlight = item.isAscendant
-      ? 'bg-amber-500/10 border-b border-amber-500/20'
-      : 'border-b border-slate-800/80 hover:bg-purple-950/30 transition';
-
-    const retroBadge = item.isRetrograde && !String(item.nameThai).includes('พักร์')
-      ? '<span class="ml-1 text-[10px] text-sky-300 font-normal">(พักร์)</span>'
-      : '';
-    const combustBadge = item.isCombust
-      ? '<span class="ml-1 text-[10px] bg-red-500/20 text-red-300 border border-red-500/30 rounded px-1 py-0.2">ดับ</span>'
-      : '';
-    const badgeClass = getDignityBadgeClass(item.dignity, item.dignityThai);
-
-    return `
-      <tr class="${rowHighlight}">
-        <td class="py-2.5 px-3 font-medium text-amber-200 whitespace-nowrap">
-          <span class="inline-block w-7 text-[10px] font-mono text-purple-300 bg-purple-950/80 border border-purple-500/30 rounded px-1 py-0.5 mr-1.5 text-center">${escapeHtml(item.symbol)}</span>
-          ${escapeHtml(item.nameThai)}${retroBadge}${combustBadge}
-        </td>
-        <td class="py-2.5 px-3 text-slate-200 whitespace-nowrap">${escapeHtml(item.signThai)}</td>
-        <td class="py-2.5 px-3 font-mono text-amber-300 whitespace-nowrap">${escapeHtml(item.degreeFormatted)}</td>
-        <td class="py-2.5 px-3 text-slate-200 whitespace-nowrap">
-          ${escapeHtml(item.nakshatraThai)}
-          <span class="text-[11px] text-purple-300 font-medium ml-1">(บาท ${escapeHtml(item.pada)})</span>
-        </td>
-        <td class="py-2.5 px-3 text-slate-300 whitespace-nowrap">${escapeHtml(item.lordThai)}</td>
-        <td class="py-2.5 px-3 text-purple-200 whitespace-nowrap">${escapeHtml(item.navamsaThai)}</td>
-        <td class="py-2.5 px-3 text-slate-300 whitespace-nowrap">${escapeHtml(item.houseThai)}</td>
-        <td class="py-2.5 px-3 text-center whitespace-nowrap">
-          <span class="text-[10px] px-2 py-0.5 rounded-full border ${badgeClass}">${escapeHtml(item.dignityThai)}</span>
-        </td>
-      </tr>
-    `;
-  }).join('');
-
   const moonObj = (calc.planets || []).find(p => p.name === 'Moon');
   const dasha = calc.vimshottari_dasha || {};
   const currentDasha = dasha.current_dasha || {};
@@ -203,93 +197,88 @@ function renderAstrologyTable(calc, birthData) {
   const ayanamsaName = calc.metadata?.ayanamsa_name || 'Lahiri';
   const ayanamsaDeg = calc.metadata?.ayanamsa_degrees || '-';
 
-  astroOutput.innerHTML = `
-    <div class="bg-slate-950/80 p-4 rounded-xl border border-purple-500/30 space-y-3">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-slate-800 pb-3">
-        <div>
-          <h4 class="font-semibold text-amber-300 text-sm">🕉️ ตารางสมผุสดาวโหราศาสตร์พระเวท (Nirayana Graha Sphuta)</h4>
-          <p class="text-[11px] text-slate-400">เกณฑ์คำนวณ: ${escapeHtml(ayanamsaName)} Ayanamsa: ${escapeHtml(ayanamsaDeg)} | Whole Sign (W)</p>
-        </div>
-        <span class="self-start sm:self-auto text-[10px] bg-purple-900/50 text-purple-200 border border-purple-500/30 px-2.5 py-1 rounded-lg">
-          D-1 Rashi &amp; D-9 Navamsa
-        </span>
-      </div>
-
-      <!-- ข้อมูลเจ้าชะตาโดยย่อ -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] bg-slate-900/90 p-2.5 rounded-lg border border-slate-800">
-        <div><span class="text-slate-400">วันเวลาเกิด:</span> <span id="astroBirthDateText" class="text-slate-200 font-medium"></span></div>
-        <div><span class="text-slate-400">สถานที่:</span> <span id="astroLocationText" class="text-slate-200 font-medium"></span></div>
-        <div><span class="text-slate-400">พิกัด:</span> <span id="astroCoordText" class="text-amber-300 font-mono"></span></div>
-      </div>
-
-      <!-- ตารางตำแหน่งดาวพระเวท -->
-      <div class="overflow-x-auto rounded-xl border border-slate-800">
-        <table class="w-full text-left border-collapse text-xs">
-          <thead>
-            <tr class="bg-purple-950/60 text-purple-200 border-b border-purple-500/20 text-[11px]">
-              <th class="py-2.5 px-3 font-semibold whitespace-nowrap">ดาว / ปัจจัย</th>
-              <th class="py-2.5 px-3 font-semibold whitespace-nowrap">ราศี (Rashi)</th>
-              <th class="py-2.5 px-3 font-semibold whitespace-nowrap">องศา (Degree)</th>
-              <th class="py-2.5 px-3 font-semibold whitespace-nowrap">นักษัตรฤกษ์ (บาท)</th>
-              <th class="py-2.5 px-3 font-semibold whitespace-nowrap">เจ้าฤกษ์ (Lord)</th>
-              <th class="py-2.5 px-3 font-semibold whitespace-nowrap">นวางศ์ (D-9)</th>
-              <th class="py-2.5 px-3 font-semibold whitespace-nowrap">ภพ (House)</th>
-              <th class="py-2.5 px-3 font-semibold text-center whitespace-nowrap">มาตรฐานดาว</th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-slate-800/60 bg-slate-950/40">
-            ${rowsHtml}
-          </tbody>
-        </table>
-      </div>
-
-      <!-- สรุปจันทร์เสวยฤกษ์ และวิมโสตรีทศา (Vimshottari Dasha) -->
-      <div class="bg-purple-950/30 p-3 rounded-lg border border-purple-500/20 space-y-1.5 text-[11px]">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-          <div>
-            <span class="text-amber-300 font-semibold">🌟 จันทร์เสวยฤกษ์:</span>
-            <span class="text-slate-200">${escapeHtml(moonNakshatraSummary)}</span>
-          </div>
-          <div>
-            <span class="text-purple-300 font-semibold">⏳ ทศาคงเหลือแรกเกิด:</span>
-            <span class="text-slate-200">${escapeHtml(dashaBalanceText)}</span>
-          </div>
-        </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 pt-1 border-t border-purple-500/10">
-          <div>
-            <span class="text-emerald-300 font-semibold">🪐 มหาทศาปัจจุบัน:</span>
-            <span class="text-slate-200">${escapeHtml(mahaText)}</span>
-          </div>
-          <div>
-            <span class="text-sky-300 font-semibold">✨ อันตรทศาปัจจุบัน:</span>
-            <span class="text-slate-200">${escapeHtml(antarText)}</span>
-          </div>
-        </div>
-      </div>
-
-      <p class="text-emerald-400 text-xs pt-1">
-        ✅ คำนวณสมผุสดาว 27 นักษัตรฤกษ์ นวางศ์ และวิมโสตรีทศาจากระบบ lahiri-api เรียบร้อยแล้ว
-      </p>
-    </div>
-  `;
-
+  // ข้อมูลเจ้าชะตาโดยย่อ
+  let birthDateText = '';
+  let locationText = '';
+  let coordText = '';
   if (birthData) {
     const yearCE = parseInt(birthData.birthYearBE, 10) - 543;
     const thaiDateText = typeof formatThaiDateBE === 'function'
       ? formatThaiDateBE(birthData.birthDateCE, birthData.birthYearBE)
       : `พ.ศ. ${birthData.birthYearBE}`;
-
-    document.getElementById('astroBirthDateText').textContent =
-      `${thaiDateText} (ค.ศ. ${yearCE}) เวลา ${birthData.birthTime} น.`;
-    document.getElementById('astroLocationText').textContent =
-      `อ. ${birthData.amphoe} จ. ${birthData.province}`;
-    document.getElementById('astroCoordText').textContent =
-      `${birthData.latitude}, ${birthData.longitude}`;
+    birthDateText = `${thaiDateText} (ค.ศ. ${yearCE}) เวลา ${birthData.birthTime} น.`;
+    locationText = `อ. ${birthData.amphoe} จ. ${birthData.province}`;
+    coordText = `${birthData.latitude}, ${birthData.longitude}`;
   }
+
+  // โหลด Template HTML แยกไฟล์ (astrology-template.html)
+  let templates;
+  try {
+    templates = await loadAstrologyTemplates();
+  } catch (err) {
+    console.error('Error loading astrology template:', err);
+    astroOutput.innerHTML = '';
+    const errP = document.createElement('p');
+    errP.className = 'text-red-400';
+    errP.textContent = err.message;
+    astroOutput.appendChild(errP);
+    return;
+  }
+
+  // สร้างแถวดาวแต่ละดวงจาก Template
+  const tableFrag = document.importNode(templates.table.content, true);
+  const tbody = tableFrag.querySelector('[data-field="rows"]');
+
+  allRows.forEach(item => {
+    const rowFrag = document.importNode(templates.row.content, true);
+    const tr = rowFrag.querySelector('tr');
+    tr.className = item.isAscendant
+      ? 'bg-amber-500/10 border-b border-amber-500/20'
+      : 'border-b border-slate-800/80 hover:bg-purple-950/30 transition';
+
+    fillFields(rowFrag, {
+      symbol: item.symbol,
+      nameThai: item.nameThai,
+      signThai: item.signThai,
+      degreeFormatted: item.degreeFormatted,
+      nakshatraThai: item.nakshatraThai,
+      pada: item.pada,
+      lordThai: item.lordThai,
+      navamsaThai: item.navamsaThai,
+      houseThai: item.houseThai,
+      dignityThai: item.dignityThai
+    });
+
+    if (item.isRetrograde && !String(item.nameThai).includes('พักร์')) {
+      rowFrag.querySelector('[data-field="retroBadge"]').classList.remove('hidden');
+    }
+    if (item.isCombust) {
+      rowFrag.querySelector('[data-field="combustBadge"]').classList.remove('hidden');
+    }
+
+    const dignityEl = rowFrag.querySelector('[data-field="dignityThai"]');
+    dignityEl.classList.add(...getDignityBadgeClass(item.dignity, item.dignityThai).split(' '));
+
+    tbody.appendChild(rowFrag);
+  });
+
+  fillFields(tableFrag, {
+    ayanamsaName,
+    ayanamsaDeg,
+    birthDateText,
+    locationText,
+    coordText,
+    moonNakshatraSummary,
+    dashaBalanceText,
+    mahaText,
+    antarText
+  });
+
+  astroOutput.replaceChildren(tableFrag);
 }
 
 // ตรวจสอบว่ามีผลลัพธ์ตำแหน่งดาวใน sessionStorage หรือไม่ หากมีให้แสดงทันที
-function checkExistingHoraResult(birthData) {
+async function checkExistingHoraResult(birthData) {
   const savedHoraStr = sessionStorage.getItem(HORA_STORAGE_KEY);
   if (!savedHoraStr) return false;
 
@@ -297,7 +286,7 @@ function checkExistingHoraResult(birthData) {
     const savedResult = JSON.parse(savedHoraStr);
     if (savedResult && savedResult.calculateResp) {
       console.log('📦 [DEBUG:Hora] พบข้อมูลตำแหน่งดาวใน sessionStorage แสดงผลตารางทันที');
-      renderAstrologyTable(savedResult.calculateResp, birthData);
+      await renderAstrologyTable(savedResult.calculateResp, birthData);
       return true;
     }
   } catch (err) {
@@ -319,7 +308,7 @@ async function calculateAstrology() {
   const birthData = JSON.parse(savedDataStr);
 
   // หากมีผลลัพธ์ใน sessionStorage แล้ว ให้แสดงผลทันทีโดยไม่ต้องยิง API ซ้ำ
-  if (checkExistingHoraResult(birthData)) {
+  if (await checkExistingHoraResult(birthData)) {
     return;
   }
 
@@ -394,7 +383,7 @@ async function calculateAstrology() {
     console.log('💾 [DEBUG:Hora] บันทึกผลลัพธ์ตำแหน่งดาวลง sessionStorage (user_hora_result) เรียบร้อยแล้ว');
 
     // แสดงตารางตำแหน่งดาว
-    renderAstrologyTable(calc, birthData);
+    await renderAstrologyTable(calc, birthData);
 
   } catch (error) {
     console.error('Calculation Error:', error);
