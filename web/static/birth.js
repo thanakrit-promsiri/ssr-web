@@ -40,9 +40,13 @@ async function renderBirthResult(birthData) {
   const response = await fetch(`/static/result-template.html?t=${Date.now()}`, { cache: 'no-store' });
   if (!response.ok) throw new Error('ไม่สามารถโหลดเทมเพลตผลลัพธ์ได้');
 
-  const html = await response.text();
+  // แปลง HTML ด้วย DOMParser (ไม่รัน Script) แล้วนำเฉพาะ Node ที่ปลอดภัยมาแทรกใน DOM
+  // แทนการกำหนด innerHTML ตรง ๆ เพื่อป้องกัน DOM XSS หากไฟล์ Template ถูกแก้ไขหรือถูกแทรกแซง
+  const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
+  doc.querySelectorAll('script, iframe, object, embed, link, meta, base').forEach(el => el.remove());
+
   const container = document.getElementById('resultContainer');
-  container.innerHTML = html;
+  container.replaceChildren(...Array.from(doc.body.childNodes).map(node => document.importNode(node, true)));
 
   const yearCE = parseInt(birthData.birthYearBE, 10) - 543;
   document.getElementById('resYearBE').textContent = formatThaiDateBE(birthData.birthDateCE, birthData.birthYearBE);
