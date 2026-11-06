@@ -47,6 +47,8 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) error {
 	mux.HandleFunc("POST /hora/calculate", h.HandleHoraCalculate)
 	mux.HandleFunc("POST /api/v1/hora/dasha", h.HandleHoraDasha)
 	mux.HandleFunc("POST /hora/dasha", h.HandleHoraDasha)
+	mux.HandleFunc("POST /api/v1/hora/predict", h.HandleHoraPredict)
+	mux.HandleFunc("POST /hora/predict", h.HandleHoraPredict)
 
 	// 3. Route สำหรับเสิร์ฟไฟล์ Static โค้ดหลักจาก embed.FS (web/static/) ใน RAM
 	staticFS, err := fs.Sub(web.Assets, "static")

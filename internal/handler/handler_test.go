@@ -206,6 +206,107 @@ func TestHandleHoraCalculate_ProxiesLahiriAPI(t *testing.T) {
 	}
 }
 
+func TestHandleHoraPredict_ProxiesLahiriAPI(t *testing.T) {
+	samplePredictJSON := `{
+		"success": true,
+		"message": "พยากรณ์พื้นดวงชะตาสำเร็จ",
+		"data": {
+			"status": "success",
+			"prompt": "[Vedic Sidereal(Lahiri)/WholeSign]\nASC:Aq 03°39'23\"|D9:Sc|Nak:Dhanishta(4,Ma)",
+			"prediction": "คำพยากรณ์พื้นดวงชะตากำเนิด...",
+			"workspace_slug": "testuser01",
+			"thread_slug": "testuser01-hora"
+		}
+	}`
+
+	h := New("http://auth-service", "http://hora-service")
+	h.httpClient.Transport = roundTripFunc(func(req *http.Request) (*http.Response, error) {
+		if req.URL.Path != "/api/v1/hora/predict" {
+			t.Fatalf("unexpected upstream path: %s", req.URL.Path)
+		}
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(strings.NewReader(samplePredictJSON)),
+			Header:     make(http.Header),
+		}, nil
+	})
+
+	reqBody := `{"year":1988,"month":12,"day":23,"hour_thai":10.35,"latitude":13.7563,"longitude":100.5018}`
+	req := httptest.NewRequest(http.MethodPost, "/hora/predict", strings.NewReader(reqBody))
+	rec := httptest.NewRecorder()
+
+	h.HandleHoraPredict(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d", rec.Code)
+	}
+
+	var got map[string]any
+	if err := json.Unmarshal(rec.Body.Bytes(), &got); err != nil {
+		t.Fatalf("failed to unmarshal response: %v", err)
+	}
+	if got["success"] != true {
+		t.Fatalf("expected success true, got %v", got["success"])
+	}
+	data, ok := got["data"].(map[string]any)
+	if !ok || data["prompt"] == "" {
+		t.Fatalf("expected non-empty prompt in data, got %v", got["data"])
+	}
+	if data["prediction"] != "คำพยากรณ์พื้นดวงชะตากำเนิด..." {
+		t.Fatalf("expected non-empty prediction, got %v", data["prediction"])
+	}
+}
+
+func TestHandleHoraPredict_AIUnavailableWarning(t *testing.T) {
+	sampleWarningJSON := `{
+		"success": true,
+		"message": "คำนวณข้อมูลพื้นดวงชะตาสำเร็จ (ระบบทำนาย AI ไม่พร้อมใช้งานชั่วคราว)",
+		"data": {
+			"status": "success",
+			"prompt": "[Vedic Sidereal(Lahiri)/WholeSign]\nASC:Aq 03°39'23\"|D9:Sc|Nak:Dhanishta(4,Ma)",
+			"prediction": "",
+			"warning": "ไม่สามารถเชื่อมต่อบริการทำนาย AI ได้ในขณะนี้ ระบบได้ส่งคืนข้อมูลพื้นดวงชะตาสำหรับการผูกดวงแล้ว"
+		}
+	}`
+
+	h := New("http://auth-service", "http://hora-service")
+	h.httpClient.Transport = roundTripFunc(func(req *http.Request) (*http.Response, error) {
+		if req.URL.Path != "/api/v1/hora/predict" {
+			t.Fatalf("unexpected upstream path: %s", req.URL.Path)
+		}
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(strings.NewReader(sampleWarningJSON)),
+			Header:     make(http.Header),
+		}, nil
+	})
+
+	reqBody := `{"year":1988,"month":12,"day":23,"hour_thai":10.35,"latitude":13.7563,"longitude":100.5018}`
+	req := httptest.NewRequest(http.MethodPost, "/hora/predict", strings.NewReader(reqBody))
+	rec := httptest.NewRecorder()
+
+	h.HandleHoraPredict(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d", rec.Code)
+	}
+
+	var got map[string]any
+	if err := json.Unmarshal(rec.Body.Bytes(), &got); err != nil {
+		t.Fatalf("failed to unmarshal response: %v", err)
+	}
+	if got["success"] != true {
+		t.Fatalf("expected success true, got %v", got["success"])
+	}
+	data, ok := got["data"].(map[string]any)
+	if !ok || data["prompt"] == "" {
+		t.Fatalf("expected non-empty prompt in data, got %v", got["data"])
+	}
+	if data["warning"] == "" {
+		t.Fatalf("expected warning message, got empty")
+	}
+}
+
 // ==========================================
 // 2. Load / Benchmark Tests (ทดสอบยิงพร้อมกันแบบ Parallel)
 // ==========================================

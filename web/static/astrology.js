@@ -18,9 +18,10 @@ async function loadAstrologyTemplates() {
   const doc = new DOMParser().parseFromString(await response.text(), 'text/html');
   const table = doc.getElementById('astroTableTemplate');
   const row = doc.getElementById('astroRowTemplate');
+  const promptTemplate = doc.getElementById('predictPromptTemplate');
   if (!table || !row) throw new Error('รูปแบบเทมเพลตตารางสมผุสดาวไม่ถูกต้อง');
 
-  astroTemplateCache = { table, row };
+  astroTemplateCache = { table, row, promptTemplate };
   return astroTemplateCache;
 }
 
@@ -298,6 +299,23 @@ async function renderAstrologyTable(calc, birthData) {
   });
 
   output.replaceChildren(tableFrag);
+
+  // หากมีผลลัพธ์การทำนายใน sessionStorage ให้นำมาแสดงผลต่อในหน้าแชททันที
+  const savedPredictStr = sessionStorage.getItem('user_predict_result');
+  if (savedPredictStr) {
+    try {
+      const savedResult = JSON.parse(savedPredictStr);
+      await renderPredictResult(savedResult);
+    } catch (err) {
+      console.error('Error parsing saved predict result:', err);
+    }
+  } else {
+    // Fallback: รองรับ key เก่า user_predict_prompt
+    const savedPrompt = sessionStorage.getItem('user_predict_prompt');
+    if (savedPrompt) {
+      await renderPredictResult({ prompt: savedPrompt });
+    }
+  }
 }
 
 // ตรวจสอบว่ามีผลลัพธ์ตำแหน่งดาวใน sessionStorage หรือไม่ หากมีให้แสดงทันที
@@ -436,7 +454,15 @@ function resetBirthInfo() {
   [sessionStorage, localStorage].forEach(storage => {
     storage.removeItem('user_birth_info');
     storage.removeItem(HORA_STORAGE_KEY);
+    storage.removeItem('user_predict_result');
+    storage.removeItem('user_predict_prompt');
   });
+
+  // ลบ bubble ของการทำนายออกถ้ามี
+  const promptBubble = document.getElementById('predictPromptBubble');
+  if (promptBubble) {
+    promptBubble.remove();
+  }
 
   // แสดงฟอร์มกรอกข้อมูลกลับมา
   setHidden(document.getElementById('formContainer'), false);
@@ -458,4 +484,325 @@ function resetBirthInfo() {
   if (amphoeSelect) {
     amphoeSelect.innerHTML = '<option value="">-- เลือกอำเภอ/เขต --</option>';
   }
+}
+
+// ------------------------------------------
+// 3. ฟังก์ชันการทำนายดวงชะตา (Predict) และแสดงผลคำทำนาย / Prompt
+// ------------------------------------------
+
+// ฟังก์ชันแปลงข้อความ Markdown เป็น HTML แบบ Zero-Dependency ทำงานเร็วระดับไมโครวินาที
+function renderMarkdown(mdText) {
+  if (!mdText) return '';
+
+  const lines = String(mdText).split('\n');
+  const out = [];
+  let inList = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // เส้นคั่น ---
+    if (/^\s*---\s*$/.test(line)) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push('<hr class="border-purple-500/20 my-3">');
+      continue;
+    }
+
+    // หัวข้อ ###, ##, #
+    const h3Match = line.match(/^\s*###\s+(.*)$/);
+    if (h3Match) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(`<h3 class="text-amber-300 font-semibold text-sm mt-3 mb-1">${formatInlineMarkdown(h3Match[1])}</h3>`);
+      continue;
+    }
+    const h2Match = line.match(/^\s*##\s+(.*)$/);
+    if (h2Match) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(`<h2 class="text-amber-200 font-bold text-base mt-4 mb-2">${formatInlineMarkdown(h2Match[1])}</h2>`);
+      continue;
+    }
+    const h1Match = line.match(/^\s*#\s+(.*)$/);
+    if (h1Match) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(`<h1 class="text-amber-100 font-bold text-lg mt-5 mb-2">${formatInlineMarkdown(h1Match[1])}</h1>`);
+      continue;
+    }
+
+    // รายการแบบ Bullet (* หรือ -) พร้อมตรวจจับการเยื้องหน้า (Indentation)
+    const listMatch = line.match(/^(\s*)[*-]\s+(.*)$/);
+    if (listMatch) {
+      if (!inList) { out.push('<ul class="space-y-1.5 my-2">'); inList = true; }
+      const indent = listMatch[1].length;
+      const marginClass = indent >= 4 ? 'ml-6 list-[circle] text-slate-300' : 'ml-3 list-disc text-slate-200';
+      out.push(`<li class="${marginClass}">${formatInlineMarkdown(listMatch[2])}</li>`);
+      continue;
+    }
+
+    // รายการแบบตัวเลข (1. 2.)
+    const numMatch = line.match(/^(\s*)\d+\.\s+(.*)$/);
+    if (numMatch) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(`<li class="ml-4 list-decimal text-slate-200 my-1">${formatInlineMarkdown(numMatch[2])}</li>`);
+      continue;
+    }
+
+    if (inList) { out.push('</ul>'); inList = false; }
+
+    // บรรทัดว่าง
+    if (!line.trim()) {
+      out.push('<div class="h-2"></div>');
+      continue;
+    }
+
+    // ย่อหน้าทั่วไป
+    out.push(`<p class="leading-relaxed text-slate-200 mb-1">${formatInlineMarkdown(line)}</p>`);
+  }
+
+  if (inList) out.push('</ul>');
+
+  return out.join('');
+}
+
+// แปลงรูปแบบตัวหนา/ตัวเอียง และ escape HTML เพื่อความปลอดภัย XSS
+function formatInlineMarkdown(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\*\*\*(.*?)\*\*\*/g, '<strong class="text-amber-300 font-bold"><em>$1</em></strong>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-300 font-semibold">$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em class="text-purple-300 font-normal">$1</em>');
+}
+
+// ฟังก์ชันกดปุ่มทำนายดวงชะตา: ส่งข้อมูลไปยัง API และจัดการผลลัพธ์ทั้งกรณี AI สำเร็จ และ AI ไม่สำเร็จ
+async function predictAstrology() {
+  const savedDataStr = sessionStorage.getItem('user_birth_info');
+  if (!savedDataStr) {
+    alert('ไม่พบข้อมูลวันเกิด กรุณากรอกข้อมูลใหม่อีกครั้ง');
+    return;
+  }
+
+  const birthData = JSON.parse(savedDataStr);
+  const [yearStr, monthStr, dayStr] = String(birthData.birthDateCE || '').split('-');
+
+  const payload = {
+    year: parseInt(yearStr, 10),
+    month: parseInt(monthStr, 10),
+    day: parseInt(dayStr, 10),
+    hour_thai: parseHourThai(birthData.birthTime),
+    latitude: parseFloat(birthData.latitude),
+    longitude: parseFloat(birthData.longitude)
+  };
+
+  const predictBtn = document.getElementById('predictAstroBtn');
+  const predictBtnText = document.getElementById('predictBtnText');
+  const predictLoading = document.getElementById('predictLoading');
+  const predictError = document.getElementById('predictError');
+
+  if (predictBtn) predictBtn.disabled = true;
+  if (predictBtnText) predictBtnText.textContent = 'กำลังประมวลผลคำทำนายด้วย AI...';
+  setHidden(predictLoading, false);
+  setHidden(predictError, true);
+
+  try {
+    console.log('🔮 [DEBUG:Predict] กำลังส่งคำขอทำนายไปยัง API:', payload);
+
+    let response;
+    try {
+      response = await fetch('https://hora.garbagecollection.info/api/v1/hora/predict', {
+        method: 'POST',
+        credentials: 'include', // ส่ง Cookie auth_token ไปด้วย
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    } catch (networkErr) {
+      console.warn('⚠️ ไม่สามารถเชื่อมต่อ https://hora.garbagecollection.info โดยตรงได้ ลองเรียกผ่าน Gateway ภายใน...', networkErr);
+      response = await fetch('/hora/predict', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    }
+
+    if (!response.ok) {
+      const errText = await response.text();
+      let errMsg = `เกิดข้อผิดพลาดในการทำนาย (HTTP ${response.status})`;
+      try {
+        const errJson = JSON.parse(errText);
+        if (errJson.message) errMsg = errJson.message;
+      } catch (_) {}
+      throw new Error(errMsg);
+    }
+
+    const result = await response.json();
+    console.log('✅ [DEBUG:Predict] ได้รับผลลัพธ์จาก API:', result);
+
+    const predictData = result.data || {};
+    const promptText = predictData.prompt || result.prompt || '';
+    const predictionText = String(predictData.prediction || '').trim();
+    const warningText = predictData.warning || (!predictionText ? (result.message || '') : '');
+
+    if (!promptText && !predictionText) {
+      throw new Error(result.message || 'ไม่พบข้อมูล prompt หรือคำทำนายในผลลัพธ์ที่ตอบกลับจากระบบ');
+    }
+
+    const predictResult = {
+      prompt: promptText,
+      prediction: predictionText,
+      warning: warningText,
+      message: result.message || ''
+    };
+
+    // บันทึกผลลัพธ์ลง sessionStorage (Session Storage Only)
+    sessionStorage.setItem('user_predict_result', JSON.stringify(predictResult));
+
+    // แสดงผลข้อมูลลงในหน้าแชท
+    await renderPredictResult(predictResult);
+
+    if (predictBtnText) {
+      predictBtnText.textContent = predictionText
+        ? 'ทำนายดวงชะตาอีกครั้ง (AI Predict)'
+        : 'ลองทำนายใหม่อีกครั้ง (Retry AI Predict)';
+    }
+  } catch (error) {
+    console.error('❌ [DEBUG:Predict] Error:', error);
+    if (predictError) {
+      predictError.textContent = `❌ ${error.message || 'ไม่สามารถเชื่อมต่อระบบทำนายได้'}`;
+      setHidden(predictError, false);
+    } else {
+      alert(`ไม่สามารถทำนายได้: ${error.message}`);
+    }
+    if (predictBtnText) predictBtnText.textContent = 'เริ่มทำนายดวงชะตา (AI Predict)';
+  } finally {
+    if (predictBtn) predictBtn.disabled = false;
+    setHidden(predictLoading, true);
+  }
+}
+
+// แสดงผลกล่องข้อความคำทำนายและ Prompt ลงในหน้าแชท (<main>)
+async function renderPredictResult(data) {
+  let templates;
+  try {
+    templates = await loadAstrologyTemplates();
+  } catch (err) {
+    console.error('Error loading astrology templates for prompt:', err);
+    return;
+  }
+
+  if (!templates.promptTemplate) {
+    console.error('ไม่พบ predictPromptTemplate ใน astrology-template.html');
+    return;
+  }
+
+  // หากมีกล่องข้อความเก่าอยู่แล้ว ให้ลบออกก่อน เพื่อแสดงผลข้อมูลล่าสุด
+  const existingBubble = document.getElementById('predictPromptBubble');
+  if (existingBubble) {
+    existingBubble.remove();
+  }
+
+  const frag = document.importNode(templates.promptTemplate.content, true);
+
+  const warningBanner = frag.getElementById('predictWarningBanner');
+  const warningMsg = frag.getElementById('predictWarningMsg');
+  const predictionArea = frag.getElementById('predictionContentArea');
+  const predictionBody = frag.getElementById('predictionBody');
+  const promptEl = frag.querySelector('[data-field="predictPromptText"]');
+  const promptDesc = frag.getElementById('promptDesc');
+  const statusFooter = frag.getElementById('predictStatusFooter');
+
+  const hasPrediction = Boolean(data.prediction && String(data.prediction).trim());
+  const hasWarning = Boolean(data.warning && String(data.warning).trim());
+
+  // กรณีที่ 1: เรียก AI ไม่สำเร็จ (มี warning หรือไม่มีคำทำนาย)
+  if (!hasPrediction && hasWarning) {
+    setHidden(warningBanner, false);
+    if (warningMsg) warningMsg.textContent = data.warning;
+    setHidden(predictionArea, true);
+    if (promptDesc) {
+      promptDesc.textContent = 'ระบบคำนวณข้อมูลพื้นดวงชะตาสำเร็จ ได้จัดเตรียมชุด Prompt สำหรับผูกดวงดังนี้:';
+    }
+    if (statusFooter) {
+      statusFooter.className = 'text-amber-300';
+      statusFooter.textContent = '⚠️ คำนวณพื้นดวงสำเร็จ (ระบบ AI ไม่พร้อมใช้งานชั่วคราว)';
+    }
+  } else {
+    // กรณีที่ 2: เรียก AI สำเร็จ (มีข้อความคำทำนาย)
+    setHidden(warningBanner, true);
+    setHidden(predictionArea, false);
+    if (predictionBody) {
+      predictionBody.innerHTML = renderMarkdown(data.prediction);
+    }
+    if (promptDesc) {
+      promptDesc.textContent = 'ข้อมูล Prompt พื้นดวงชะตาที่ใช้ในการวิเคราะห์ทำนาย:';
+    }
+    if (statusFooter) {
+      statusFooter.className = 'text-emerald-400';
+      statusFooter.textContent = '✅ พยากรณ์พื้นดวงชะตาสำเร็จ';
+    }
+  }
+
+  // เติมข้อมูล Prompt ลงในกล่อง code เสมอทั้งสองกรณี
+  if (promptEl) {
+    promptEl.textContent = data.prompt || '';
+  }
+
+  const mainEl = document.querySelector('main');
+  if (mainEl) {
+    mainEl.appendChild(frag);
+    const bubble = document.getElementById('predictPromptBubble');
+    if (bubble) {
+      bubble.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+}
+
+// คัดลอกคำทำนาย (Prediction) ไปยัง Clipboard
+function copyPredictionText() {
+  const savedDataStr = sessionStorage.getItem('user_predict_result');
+  let text = '';
+  if (savedDataStr) {
+    try {
+      const parsed = JSON.parse(savedDataStr);
+      text = parsed.prediction || '';
+    } catch (_) {}
+  }
+  if (!text) {
+    const bodyEl = document.getElementById('predictionBody');
+    if (bodyEl) text = bodyEl.innerText || '';
+  }
+  if (!text) return;
+
+  navigator.clipboard.writeText(text).then(() => {
+    const textEl = document.getElementById('copyPredText');
+    const iconEl = document.getElementById('copyPredIcon');
+    if (textEl) textEl.textContent = 'คัดลอกสำเร็จ!';
+    if (iconEl) iconEl.textContent = '✅';
+    setTimeout(() => {
+      if (textEl) textEl.textContent = 'คัดลอกคำทำนาย';
+      if (iconEl) iconEl.textContent = '📋';
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy prediction:', err);
+  });
+}
+
+// คัดลอก Prompt ไปยัง Clipboard พร้อมแสดงผลลัพธ์ชั่วคราว
+function copyPredictPrompt() {
+  const promptEl = document.querySelector('[data-field="predictPromptText"]');
+  if (!promptEl) return;
+
+  const text = promptEl.textContent || '';
+  navigator.clipboard.writeText(text).then(() => {
+    const textEl = document.getElementById('copyPromptText');
+    const iconEl = document.getElementById('copyPromptIcon');
+    if (textEl) textEl.textContent = 'คัดลอกสำเร็จ!';
+    if (iconEl) iconEl.textContent = '✅';
+    setTimeout(() => {
+      if (textEl) textEl.textContent = 'คัดลอก Prompt';
+      if (iconEl) iconEl.textContent = '📋';
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy prompt:', err);
+  });
 }

@@ -67,6 +67,91 @@
     <p class="text-emerald-400 text-xs pt-1">
       ✅ คำนวณสมผุสดาว 27 นักษัตรฤกษ์ นวางศ์ และวิมโสตรีทศาจากระบบ lahiri-api เรียบร้อยแล้ว
     </p>
+
+    <!-- ปุ่มเริ่มทำนายดวงชะตาด้วย AI -->
+    <div class="pt-3 border-t border-purple-500/20 space-y-2">
+      <button id="predictAstroBtn" type="button" onclick="predictAstrology()" class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span id="predictBtnText">เริ่มทำนายดวงชะตา (AI Predict)</span>
+      </button>
+
+      <!-- แสดงสถานะ Loading ระหว่างประมวลผลคำทำนาย -->
+      <div id="predictLoading" class="hidden flex items-center gap-2 text-xs text-amber-300 py-1">
+        <div class="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+        <span>กำลังส่งข้อมูลเพื่อทำนายดวงชะตา...</span>
+      </div>
+
+      <!-- แสดงข้อความ Error หากทำนายไม่สำเร็จ -->
+      <div id="predictError" class="hidden text-xs text-rose-400 bg-rose-500/10 border border-rose-500/30 p-3 rounded-xl"></div>
+    </div>
+  </div>
+</template>
+
+<!-- Template สำหรับแสดงผลการทำนาย (Prediction & Prompt) ในหน้าแชท -->
+<template id="predictPromptTemplate">
+  <div id="predictPromptBubble" class="flex items-start gap-3 mt-4">
+    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-600 to-amber-400 flex items-center justify-center text-sm shadow shrink-0">
+      🔮
+    </div>
+    <div class="bg-slate-900/90 border border-purple-500/30 p-4 md:p-6 rounded-2xl rounded-tl-none max-w-3xl shadow-xl w-full text-sm text-slate-200 leading-relaxed space-y-4">
+      
+      <!-- กล่องแจ้งเตือนกรณีเรียก AI ไม่สำเร็จ (Warning Banner) -->
+      <div id="predictWarningBanner" class="hidden bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl space-y-1">
+        <div class="flex items-center gap-2 text-amber-300 font-semibold text-xs">
+          <span>⚠️</span>
+          <span id="predictWarningTitle">ระบบทำนาย AI ไม่พร้อมใช้งานชั่วคราว</span>
+        </div>
+        <p id="predictWarningMsg" class="text-xs text-amber-200/90 leading-relaxed"></p>
+      </div>
+
+      <!-- ส่วนแสดงผลคำทำนาย AI (แสดงเมื่อเรียก AI สำเร็จ) -->
+      <div id="predictionContentArea" class="hidden space-y-3">
+        <div class="flex items-center justify-between pb-3 border-b border-purple-500/20">
+          <div>
+            <h4 class="font-semibold text-amber-300 text-sm flex items-center gap-2">
+              <span>✨</span> คำพยากรณ์พื้นดวงชะตากำเนิด (AI Vedic Jyotish)
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">Vedic Sidereal (Lahiri) / Whole Sign (W)</p>
+          </div>
+          <button id="copyPredictionBtn" type="button" onclick="copyPredictionText()" class="text-xs bg-purple-950/80 hover:bg-purple-900 text-purple-200 border border-purple-500/30 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 cursor-pointer">
+            <span id="copyPredIcon">📋</span>
+            <span id="copyPredText">คัดลอกคำทำนาย</span>
+          </button>
+        </div>
+
+        <!-- เนื้อหาคำทำนายแบบ Markdown -->
+        <div id="predictionBody" class="text-xs text-slate-200 leading-relaxed space-y-2"></div>
+      </div>
+
+      <!-- ส่วนแสดงผลข้อมูล Prompt พื้นดวงชะตา (Lahiri Sidereal) -->
+      <div id="promptSection" class="bg-slate-950/70 p-3.5 rounded-xl border border-purple-500/20 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-sm">📜</span>
+            <span id="promptSectionTitle" class="font-semibold text-xs text-amber-300">ข้อมูล Prompt พื้นดวงชะตา (Lahiri Sidereal)</span>
+          </div>
+          <button id="copyPromptBtn" type="button" onclick="copyPredictPrompt()" class="text-xs bg-purple-950/80 hover:bg-purple-900 text-purple-200 border border-purple-500/30 px-3 py-1.5 rounded-lg transition flex items-center gap-1.5 cursor-pointer">
+            <span id="copyPromptIcon">📋</span>
+            <span id="copyPromptText">คัดลอก Prompt</span>
+          </button>
+        </div>
+
+        <p id="promptDesc" class="text-xs text-slate-300">
+          ข้อมูลตำแหน่งดาว สมผุสดาว 27 นักษัตรฤกษ์ นวางศ์ และวิมโสตรีทศา สำหรับผูกดวงหรือวิเคราะห์ทำนาย:
+        </p>
+
+        <!-- กล่องแสดงข้อความ prompt -->
+        <div class="relative">
+          <pre data-field="predictPromptText" class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs text-amber-200/90 font-mono whitespace-pre-wrap break-words overflow-x-auto max-h-96 leading-relaxed select-all"></pre>
+        </div>
+      </div>
+
+      <!-- Footer สถานะ -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] text-slate-400 pt-2 border-t border-slate-800">
+        <span id="predictStatusFooter" class="text-emerald-400">✅ คำนวณข้อมูลพื้นดวงชะตาสำเร็จ</span>
+        <span class="text-slate-500">API: hora.garbagecollection.info</span>
+      </div>
+    </div>
   </div>
 </template>
 
