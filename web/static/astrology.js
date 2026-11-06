@@ -306,6 +306,11 @@ async function renderAstrologyTable(calc, birthData) {
     try {
       const savedResult = JSON.parse(savedPredictStr);
       await renderPredictResult(savedResult);
+      // หากพยากรณ์พื้นดวงสำเร็จแล้ว ให้ซ่อนปุ่มทำนายทันที
+      if (savedResult.prediction && String(savedResult.prediction).trim()) {
+        const predictBtnContainer = document.getElementById('predictBtnContainer');
+        setHidden(predictBtnContainer || document.getElementById('predictAstroBtn'), true);
+      }
     } catch (err) {
       console.error('Error parsing saved predict result:', err);
     }
@@ -660,10 +665,15 @@ async function predictAstrology() {
     // แสดงผลข้อมูลลงในหน้าแชท
     await renderPredictResult(predictResult);
 
-    if (predictBtnText) {
-      predictBtnText.textContent = predictionText
-        ? 'ทำนายดวงชะตาอีกครั้ง (AI Predict)'
-        : 'ลองทำนายใหม่อีกครั้ง (Retry AI Predict)';
+    if (predictionText) {
+      // เมื่อพยากรณ์พื้นดวงชะตาสำเร็จ ให้ซ่อนปุ่มทำนายทันที
+      const predictBtnContainer = document.getElementById('predictBtnContainer');
+      setHidden(predictBtnContainer || predictBtn, true);
+    } else {
+      // กรณี AI ไม่พร้อมใช้งาน ให้แสดงปุ่มสำหรับลองใหม่อีกครั้ง
+      if (predictBtnText) {
+        predictBtnText.textContent = 'ลองทำนายใหม่อีกครั้ง (Retry AI Predict)';
+      }
     }
   } catch (error) {
     console.error('❌ [DEBUG:Predict] Error:', error);

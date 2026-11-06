@@ -69,7 +69,7 @@
     </p>
 
     <!-- ปุ่มเริ่มทำนายดวงชะตาด้วย AI -->
-    <div class="pt-3 border-t border-purple-500/20 space-y-2">
+    <div id="predictBtnContainer" class="pt-3 border-t border-purple-500/20 space-y-2">
       <button id="predictAstroBtn" type="button" onclick="predictAstrology()" class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-90 text-white font-medium py-2.5 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
         <span>🔮</span>
         <span id="predictBtnText">เริ่มทำนายดวงชะตา (AI Predict)</span>
@@ -78,7 +78,7 @@
       <!-- แสดงสถานะ Loading ระหว่างประมวลผลคำทำนาย -->
       <div id="predictLoading" class="hidden flex items-center gap-2 text-xs text-amber-300 py-1">
         <div class="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
-        <span>กำลังส่งข้อมูลเพื่อทำนายดวงชะตา...</span>
+        <span>กำลังประมวลผลคำทำนายด้วย AI...</span>
       </div>
 
       <!-- แสดงข้อความ Error หากทำนายไม่สำเร็จ -->
