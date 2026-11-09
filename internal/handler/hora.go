@@ -44,6 +44,80 @@ func (h *Handler) HandleHoraPredict(w http.ResponseWriter, r *http.Request) {
 	h.proxyRawToHoraService(w, r, "/api/v1/hora/predict")
 }
 
+// TransitMockReq โครงสร้างคำขอทำนายดวงชะตารายเดือน พ.ศ. 2570 (Mock API)
+type TransitMockReq struct {
+	YearBE    int    `json:"year_be"`
+	Month     int    `json:"month"`
+	Username  string `json:"username"`
+	Ascendant string `json:"ascendant"`
+}
+
+var thaiMonthNames = [12]string{
+	"มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน",
+	"กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม",
+}
+
+// HandleHoraTransitMock จำลอง API ทำนายดวงชะตารายเดือน (เดือน 1 - 12) ประจำปี พ.ศ. 2570
+func (h *Handler) HandleHoraTransitMock(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
+	var req TransitMockReq
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]any{
+			"success": false,
+			"message": "รูปแบบคำขอไม่ถูกต้อง: " + err.Error(),
+		})
+		return
+	}
+
+	if req.Month < 1 || req.Month > 12 {
+		w.WriteHeader(http.StatusBadRequest)
+		_ = json.NewEncoder(w).Encode(map[string]any{
+			"success": false,
+			"message": "กรุณาระบุเดือนระหว่าง 1 ถึง 12",
+		})
+		return
+	}
+
+	if req.YearBE == 0 {
+		req.YearBE = 2570
+	}
+	if req.Ascendant == "" {
+		req.Ascendant = "ลัคนากำเนิด"
+	}
+
+	monthName := thaiMonthNames[req.Month-1]
+	log.Printf("🌟 [TransitMock] พยากรณ์ดวงชะตาเดือน%s %d (เดือนที่ %d/12) สำหรับผู้ใช้ %s", monthName, req.YearBE, req.Month, req.Username)
+
+	prediction := fmt.Sprintf(
+		"### คำพยากรณ์ดวงชะตาประจำเดือน%s พ.ศ. %d\n"+
+			"อิทธิพลของดาวจรสำคัญในเดือน%s พ.ศ. %d ส่งกระแสสัมพันธ์กับ%sของเจ้าชะตา มีเกณฑ์การเปลี่ยนแปลงไปในทิศทางที่โดดเด่นดังนี้:\n"+
+			"- การงานและการศึกษา: มีโอกาสได้รับผิดชอบงานสำคัญหรือโปรเจกต์ใหม่ ผู้ใหญ่และผู้ร่วมงานให้ความไว้วางใจ\n"+
+			"- การเงินและโชคลาภ: กระแสการเงินหมุนเวียนคล่องตัว มีเกณฑ์ได้ผลตอบแทนหรือรายได้เสริมจากความสามารถเฉพาะตัว\n"+
+			"- ความรักและสุขภาพ: ความสัมพันธ์ราบรื่นและมีความเข้าใจอันดี ควรดูแลสุขภาพเรื่องการพักผ่อนให้เพียงพอ",
+		monthName, req.YearBE, monthName, req.YearBE, req.Ascendant,
+	)
+
+	respPayload := map[string]any{
+		"success": true,
+		"message": fmt.Sprintf("พยากรณ์ดวงชะตาเดือน%s %d สำเร็จ", monthName, req.YearBE),
+		"data": map[string]any{
+			"month":            req.Month,
+			"yearBE":           req.YearBE,
+			"monthName":        monthName,
+			"title":            fmt.Sprintf("คำพยากรณ์ดวงชะตาประจำเดือน%s พ.ศ. %d", monthName, req.YearBE),
+			"subtitle":         fmt.Sprintf("วิเคราะห์ดาวจรเทียบ%s • เดือนที่ %d จาก 12 เดือน", req.Ascendant, req.Month),
+			"prediction":       prediction,
+			"transitHighlight": fmt.Sprintf("ดาวพฤหัสบดีและดาวศุกร์จรส่งกระแสศุภมงคลในเดือน%s %d", monthName, req.YearBE),
+			"luckyHint":        fmt.Sprintf("✨ เดือน%s %d: แนะนำทำบุญแสงสว่างหรือบริจาคทานเพื่อเสริมสิริมงคล", monthName, req.YearBE),
+		},
+	}
+
+	w.WriteHeader(http.StatusOK)
+	_ = json.NewEncoder(w).Encode(respPayload)
+}
+
 func (h *Handler) proxyRawToHoraService(w http.ResponseWriter, r *http.Request, endpointPath string) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 

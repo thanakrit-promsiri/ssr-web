@@ -1,0 +1,164 @@
+<!-- web/static/transit-template.html -->
+<!-- Template สำหรับหน้าทำนายดวงชะตารายเดือน พ.ศ. 2570 (โหลดผ่าน DOMParser ใน transit.js) -->
+
+<!-- 1. โครงสร้างหลักของหน้าพยากรณ์ปี พ.ศ. 2570 และปุ่มรอทั้ง 12 เดือน -->
+<template id="transitBoardTemplate">
+  <!-- การ์ดข้อมูลสรุปเจ้าชะตา -->
+  <div class="bg-slate-900/80 border border-purple-500/30 p-4 md:p-5 rounded-2xl shadow-lg space-y-3">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-purple-500/20 pb-3">
+      <div>
+        <h2 class="text-sm md:text-base font-bold text-amber-300 flex items-center gap-2">
+          <span>🪐</span>
+          <span>พยากรณ์ดวงชะตาจร 12 เดือน ประจำปี พ.ศ. 2570 (ค.ศ. 2027)</span>
+        </h2>
+        <p class="text-xs text-slate-400 mt-0.5">
+          วิเคราะห์ดาวจร (Gochar) เทียบลัคนาและพื้นดวงกำเนิดตามหลักโหราศาสตร์พระเวท ลาหิรี
+        </p>
+      </div>
+      <span id="transitProgressBadge" class="self-start sm:self-auto text-xs bg-amber-500/15 text-amber-300 border border-amber-500/30 px-3 py-1 rounded-full font-medium">
+        พยากรณ์แล้ว 0 / 12 เดือน
+      </span>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs bg-slate-950/70 p-3 rounded-xl border border-slate-800">
+      <div>
+        <span class="text-slate-400">เจ้าชะตา:</span>
+        <span data-field="username" class="text-amber-200 font-semibold ml-1"></span>
+      </div>
+      <div>
+        <span class="text-slate-400">วันเวลาเกิด:</span>
+        <span data-field="birthSummary" class="text-slate-200 font-medium ml-1"></span>
+      </div>
+      <div>
+        <span class="text-slate-400">ลัคนากำเนิด:</span>
+        <span data-field="ascendantSummary" class="text-purple-300 font-semibold ml-1"></span>
+      </div>
+    </div>
+
+    <p class="text-xs text-slate-300 leading-relaxed">
+      กดปุ่มดูดวงรายเดือนตามลำดับเริ่มต้นจาก <strong class="text-amber-300">เดือนมกราคม 2570</strong> เมื่อระบบแสดงผลคำทำนายของเดือนนั้นเสร็จเรียบร้อยแล้ว ปุ่มของเดือนถัดไปจะปรากฏขึ้นตามลำดับจนครบทั้ง 12 เดือนครับ
+    </p>
+  </div>
+
+  <!-- พื้นที่แสดงผลคำพยากรณ์รายเดือน (เดือน 1 - 12) -->
+  <div id="transitResultsList" class="space-y-4"></div>
+
+  <!-- กล่องควบคุมปุ่มกดทำนายทั้ง 12 เดือน (เตรียมรอไว้ครบ 12 ปุ่ม แสดงทีละเดือนตามลำดับ) -->
+  <div id="transitButtonsContainer" class="bg-slate-900/80 border border-purple-500/20 p-4 rounded-2xl shadow-lg space-y-3">
+    <div id="transitErrorBox" class="hidden text-xs text-rose-300 bg-rose-500/10 border border-rose-500/30 p-3 rounded-xl"></div>
+
+    <!-- สถานะกำลังประมวลผล API -->
+    <div id="transitLoadingBox" class="hidden flex items-center justify-center gap-2.5 text-xs text-amber-300 py-2">
+      <div class="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin"></div>
+      <span id="transitLoadingText">กำลังคำนวณดาวจรและพยากรณ์ดวงชะตา...</span>
+    </div>
+
+    <!-- ปุ่มทั้ง 12 เดือน (เริ่มต้นแสดงเฉพาะเดือนที่ 1 มกราคม 2570 ส่วนเดือน 2-12 ซ่อนรอไว้) -->
+    <div id="monthButtonsGroup" class="space-y-2">
+      <button id="transitBtnMonth1" type="button" data-month="1" onclick="predictTransitMonth(1)" class="w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนมกราคม 2570 (เดือนที่ 1/12)</span>
+      </button>
+
+      <button id="transitBtnMonth2" type="button" data-month="2" onclick="predictTransitMonth(2)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนกุมภาพันธ์ 2570 (เดือนที่ 2/12)</span>
+      </button>
+
+      <button id="transitBtnMonth3" type="button" data-month="3" onclick="predictTransitMonth(3)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนมีนาคม 2570 (เดือนที่ 3/12)</span>
+      </button>
+
+      <button id="transitBtnMonth4" type="button" data-month="4" onclick="predictTransitMonth(4)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนเมษายน 2570 (เดือนที่ 4/12)</span>
+      </button>
+
+      <button id="transitBtnMonth5" type="button" data-month="5" onclick="predictTransitMonth(5)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนพฤษภาคม 2570 (เดือนที่ 5/12)</span>
+      </button>
+
+      <button id="transitBtnMonth6" type="button" data-month="6" onclick="predictTransitMonth(6)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนมิถุนายน 2570 (เดือนที่ 6/12)</span>
+      </button>
+
+      <button id="transitBtnMonth7" type="button" data-month="7" onclick="predictTransitMonth(7)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนกรกฎาคม 2570 (เดือนที่ 7/12)</span>
+      </button>
+
+      <button id="transitBtnMonth8" type="button" data-month="8" onclick="predictTransitMonth(8)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนสิงหาคม 2570 (เดือนที่ 8/12)</span>
+      </button>
+
+      <button id="transitBtnMonth9" type="button" data-month="9" onclick="predictTransitMonth(9)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนกันยายน 2570 (เดือนที่ 9/12)</span>
+      </button>
+
+      <button id="transitBtnMonth10" type="button" data-month="10" onclick="predictTransitMonth(10)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนตุลาคม 2570 (เดือนที่ 10/12)</span>
+      </button>
+
+      <button id="transitBtnMonth11" type="button" data-month="11" onclick="predictTransitMonth(11)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนพฤศจิกายน 2570 (เดือนที่ 11/12)</span>
+      </button>
+
+      <button id="transitBtnMonth12" type="button" data-month="12" onclick="predictTransitMonth(12)" class="hidden w-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-md shadow-purple-500/20 flex items-center justify-center gap-2">
+        <span>🔮</span>
+        <span>ดูดวงเดือนธันวาคม 2570 (เดือนที่ 12/12)</span>
+      </button>
+    </div>
+
+    <!-- ข้อความแสดงเมื่อพยากรณ์ครบทั้ง 12 เดือนแล้ว -->
+    <div id="transitAllCompletedBanner" class="hidden bg-emerald-500/10 border border-emerald-500/30 p-3.5 rounded-xl text-center space-y-1">
+      <p class="text-xs sm:text-sm font-semibold text-emerald-300">
+        ✅ พยากรณ์ดวงชะตารายเดือนประจำปี พ.ศ. 2570 ครบทั้ง 12 เดือนเรียบร้อยแล้ว
+      </p>
+      <p class="text-[11px] text-slate-400">
+        คุณสามารถเลื่อนดูผลคำพยากรณ์ตั้งแต่เดือนมกราคมถึงเดือนธันวาคม 2570 ได้ด้านบนครับ
+      </p>
+    </div>
+  </div>
+</template>
+
+<!-- 2. Template การ์ดแสดงผลคำทำนายของแต่ละเดือน -->
+<template id="transitMonthCardTemplate">
+  <div class="flex items-start gap-3">
+    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-500 to-purple-600 flex items-center justify-center text-xs font-bold shadow shrink-0">
+      <span data-field="monthNumberBadge"></span>
+    </div>
+    <div class="bg-slate-900/90 border border-purple-500/30 p-4 md:p-5 rounded-2xl rounded-tl-none max-w-3xl shadow-xl w-full text-xs text-slate-200 leading-relaxed space-y-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2.5 border-b border-purple-500/20">
+        <div>
+          <h3 class="font-bold text-amber-300 text-sm flex items-center gap-2">
+            <span>🌟</span>
+            <span data-field="monthTitle"></span>
+          </h3>
+          <p data-field="monthSubtitle" class="text-[11px] text-slate-400 mt-0.5"></p>
+        </div>
+        <span class="self-start sm:self-auto text-[10px] bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-lg">
+          ✅ พยากรณ์สำเร็จ (Mock API)
+        </span>
+      </div>
+
+      <!-- เนื้อหาคำพยากรณ์ของเดือนนั้น -->
+      <div data-field="monthPredictionBody" class="transit-markdown text-xs text-slate-200 leading-relaxed space-y-1.5"></div>
+
+      <!-- ไฮไลท์ดาวจรประจำเดือน -->
+      <div class="bg-slate-950/70 p-3 rounded-xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px]">
+        <div>
+          <span class="text-purple-300 font-semibold">🪐 ดาวจรสำคัญ:</span>
+          <span data-field="transitHighlight" class="text-slate-300 ml-1"></span>
+        </div>
+        <span data-field="luckyHint" class="text-amber-300 font-medium"></span>
+      </div>
+    </div>
+  </div>
+</template>

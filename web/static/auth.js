@@ -14,6 +14,7 @@ async function checkAuthWithBackend() {
 
     const data = await res.json();
     if (data.username) {
+      sessionStorage.setItem('user_username', data.username);
       const userInfoEl = document.getElementById('userInfo');
       if (userInfoEl) {
         userInfoEl.textContent = `ผู้ใช้งาน: ${data.username}`;

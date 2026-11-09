@@ -40,6 +40,7 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) error {
 	mux.HandleFunc("GET /{$}", h.HandleIndex)
 	mux.HandleFunc("GET /index.html", h.HandleIndex)
 	mux.HandleFunc("GET /chat.html", h.HandleChat)
+	mux.HandleFunc("GET /transit.html", h.HandleTransit)
 
 	// 2. API Routes สำหรับคำนวณดวงชะตาโหราศาสตร์พระเวทและวิมโสตรีทศา (เชื่อม lahiri-api)
 	// รองรับทั้ง /api/v1/hora/... และ /hora/... (เผื่อกรณี Nginx ดัก /api/ ไปที่ Auth Service)
@@ -49,6 +50,8 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) error {
 	mux.HandleFunc("POST /hora/dasha", h.HandleHoraDasha)
 	mux.HandleFunc("POST /api/v1/hora/predict", h.HandleHoraPredict)
 	mux.HandleFunc("POST /hora/predict", h.HandleHoraPredict)
+	mux.HandleFunc("POST /api/v1/hora/transit", h.HandleHoraTransitMock)
+	mux.HandleFunc("POST /hora/transit", h.HandleHoraTransitMock)
 
 	// 3. Route สำหรับเสิร์ฟไฟล์ Static โค้ดหลักจาก embed.FS (web/static/) ใน RAM
 	staticFS, err := fs.Sub(web.Assets, "static")
@@ -88,10 +91,19 @@ func (h *Handler) HandleIndex(w http.ResponseWriter, r *http.Request) {
 
 // HandleChat ตรวจสอบสิทธิ์ผ่าน Auth Microservice ก่อนเสิร์ฟหน้า chat.html
 func (h *Handler) HandleChat(w http.ResponseWriter, r *http.Request) {
+	h.verifyAuthAndServeHTML(w, r, "chat.html")
+}
+
+// HandleTransit ตรวจสอบสิทธิ์ผ่าน Auth Microservice ก่อนเสิร์ฟหน้า transit.html (ทำนายดวงชะตา พ.ศ. 2570)
+func (h *Handler) HandleTransit(w http.ResponseWriter, r *http.Request) {
+	h.verifyAuthAndServeHTML(w, r, "transit.html")
+}
+
+func (h *Handler) verifyAuthAndServeHTML(w http.ResponseWriter, r *http.Request, pageName string) {
 	// 1. ตรวจสอบเบื้องต้นว่ามี Cookie หรือไม่
 	cookie, err := r.Cookie("auth_token")
 	if err != nil || cookie.Value == "" {
-		log.Printf("🚫 [Auth] เข้าหน้า /chat.html โดยไม่มี Cookie auth_token -> Redirect ไป /index.html")
+		log.Printf("🚫 [Auth] เข้าหน้า /%s โดยไม่มี Cookie auth_token -> Redirect ไป /index.html", pageName)
 		http.Redirect(w, r, "/index.html", http.StatusSeeOther)
 		return
 	}
@@ -128,8 +140,8 @@ func (h *Handler) HandleChat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 5. หากผ่านทุกขั้นตอน เสิร์ฟหน้า chat.html จาก embed.FS
-	h.serveEmbeddedHTML(w, "chat.html")
+	// 5. หากผ่านทุกขั้นตอน เสิร์ฟหน้า HTML จาก embed.FS
+	h.serveEmbeddedHTML(w, pageName)
 }
 
 // clearAuthCookie ล้าง Cookie auth_token ที่หมดอายุหรือไม่ถูกต้อง เพื่อป้องกัน Redirect Loop ระหว่าง /index.html กับ /chat.html

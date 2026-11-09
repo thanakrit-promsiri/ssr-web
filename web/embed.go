@@ -4,5 +4,5 @@ import "embed"
 
 // Assets ฝังไฟล์หน้าเว็บ HTML และโฟลเดอร์ static ทั้งหมดเข้าสู่ Binary ของ Go
 //
-//go:embed index.html chat.html static
+//go:embed index.html chat.html transit.html static
 var Assets embed.FS

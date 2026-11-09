@@ -14,8 +14,9 @@
 
 ### 2.1 Standard Go Project Layout
 โครงสร้างโปรเจกต์จัดระเบียบตามมาตรฐาน Go อย่างเคร่งครัด:
-- `cmd/server/main.go`: Entry point ตั้งค่า Logging, Config, Routes, Middleware, และ HTTP Server พร้อม Timeouts
+- `cmd/server/main.go`: Entry point ตั้งค่า Daily Log Rotation, Config, Routes, Middleware, และ HTTP Server พร้อม Timeouts
 - `internal/config/config.go`: โหลดค่า Environment Variable จากไฟล์ `.env` พร้อมตั้งค่า Default
+- `internal/logger/logger.go`: ระบบ Daily Log Rotation หมุนไฟล์อัตโนมัติทุกวันลง `logs/app-YYYY-MM-DD.log` พร้อมเขียนออก Console และลบไฟล์เก่าเกิน 7 วัน
 - `internal/handler/`: Business Logic และ HTTP Handlers แยกเป็นโมดูลชัดเจน
   - `handler.go`: SSR Routing, Auth Verification, Static/Public Serving
   - `hora.go`: Proxy ไปยัง `lahiri-api` (`/api/v1/hora/calculate`, `/hora/calculate`, `/hora/dasha`)
@@ -34,11 +35,19 @@
 
 ### 2.3 ความปลอดภัยและความเป็นส่วนตัว (Security & Privacy)
 - **HttpOnly Cookie**: ส่งและตรวจสอบ Cookie `auth_token` ผ่าน Backend โดยเบราว์เซอร์ไม่สามารถเข้าถึง Token โดยตรงได้
-- **Session-Only Storage**: ชื่อผู้ใช้ (`user_username` บันทึกเมื่อใช้ซีเรียลสำเร็จที่หน้า index), ข้อมูลวันเกิด (`user_birth_info`) และผลลัพธ์คำนวณดาว (`user_hora_result`) จัดเก็บใน `sessionStorage` เท่านั้น เมื่อปิดแท็บหรือเบราว์เซอร์ ข้อมูลจะถูกลบทันที
-- **Validation**:
+- **Session-Only Storage**: ชื่อผู้ใช้ (`user_username`), ข้อมูลวันเกิด (`user_birth_info`), ผลลัพธ์คำนวณดาว (`user_hora_result`) และผลลัพธ์คำทำนาย (`user_predict_result`) จัดเก็บใน `sessionStorage` เท่านั้น เมื่อปิดแท็บหรือเบราว์เซอร์ ข้อมูลจะถูกลบทันที
+- **Validation & Locking State**:
   - หน้า Login บังคับชื่อผู้ใช้เป็นตัวอักษรโรมันหรือตัวเลขเท่านั้น (`/^[A-Za-z0-9]+$/`)
   - หน้าคำนวณบังคับปี พ.ศ. ตั้งแต่ 2500 ขึ้นไป
-  - ล็อกฟังก์ชันและซ่อนปุ่มแก้ไขข้อมูลทันทีที่คำนวณตำแหน่งดาวสำเร็จ
+  - ซ่อนปุ่มแก้ไขข้อมูลวันเกิดทันทีที่คำนวณตำแหน่งดาวสำเร็จ
+  - ซ่อนปุ่มทำนายดวงชะตา (AI Predict) ทันทีที่พยากรณ์พื้นดวงชะตาสำเร็จและบันทึกลง `sessionStorage` แล้ว
+- **DOM XSS Prevention & Template Isolation**:
+  - แยกโครงสร้าง HTML ออกจากไฟล์ JS ไว้ใน `result-template.html` และ `astrology-template.html`
+  - ห้ามเขียนผลลัพธ์จาก `fetch()` ลง `innerHTML` โดยตรง ต้องแปลงผ่าน `DOMParser` คัดกรองแท็กอันตรายออก และใช้ `replaceChildren` / `document.importNode` หรือผูกข้อมูลด้วย `textContent` เสมอ
+
+### 2.4 Nginx Upstream และระบบ Log Rotation
+- **Nginx Upstream บน Windows**: ต้องใช้ `proxy_pass http://127.0.0.1:8081/;` เสมอ ห้ามใช้ `localhost` เพื่อป้องกันปัญหา IPv6 `[::1]` Timeout (Error 10060) นาน 21 วินาที
+- **Daily Log Rotation (`internal/logger`)**: บันทึก Log รายวันลง `logs/app-YYYY-MM-DD.log` แบบ Dual Output (Console + File) และลบไฟล์สำรองเก่าเกิน 7 วันอัตโนมัติ
 
 ---
 
@@ -55,6 +64,9 @@ ssr-web/
 ├── internal/
 │   ├── config/
 │   │   └── config.go            # โหลดค่าจาก .env และ Default settings
+│   ├── logger/
+│   │   ├── logger.go            # Daily Log Rotation (Console + File) และลบไฟล์เก่าเกิน 7 วัน
+│   │   └── logger_test.go       # Unit Tests สำหรับตรวจสอบการหมุนไฟล์และลบ Log เก่า
 │   └── handler/
 │       ├── handler.go           # Handlers สำหรับ SSR, Auth Check, Cookie Management
 │       ├── hora.go              # Proxy Service เชื่อมต่อไปยัง lahiri-api
@@ -115,6 +127,9 @@ ssr-web/
   - รองรับ Whole Sign (W), ละติจูด/ลองจิจูด, เวลาไทย (hour_thai)
 - `POST /hora/dasha` และ `POST /api/v1/hora/dasha`:
   - ส่งต่อคำขอคำนวณวิมโสตรีทศาไปยัง `$HORA_SERVICE_URL/api/v1/hora/dasha`
+- `POST /hora/predict` และ `POST /api/v1/hora/predict`:
+  - ส่งต่อคำขอทำนายดวงชะตาไปยัง `$HORA_SERVICE_URL/api/v1/hora/predict`
+  - รองรับผลลัพธ์ทั้งกรณี AI สำเร็จ (คำพยากรณ์ Markdown) และกรณีระบบ AI ไม่พร้อมใช้งาน (Warning + ข้อมูล Prompt)
 
 ### 5.3 Static & Public Assets
 - `GET /static/*`: เสิร์ฟไฟล์จาก `embed.FS` (`web/static/`)
@@ -146,6 +161,9 @@ flowchart TD
     M --> N["ยิง POST /hora/calculate ไปยัง lahiri-api"]
     N --> O["บันทึก user_hora_result ใน sessionStorage"]
     O --> P["แสดงตารางสมผุสดาวพระเวท และซ่อนปุ่มแก้ไขข้อมูล"]
+    P --> Q["กดทำนายดวงชะตา: ยิง POST /hora/predict"]
+    Q -- "AI สำเร็จ (มีคำพยากรณ์)" --> R["บันทึก user_predict_result แสดงคำทำนาย และซ่อนปุ่มทำนาย"]
+    Q -- "AI ไม่พร้อม (Warning)" --> S["แสดง Warning + Prompt ผูกดวง และคงปุ่มให้กดลองใหม่ได้"]
 ```
 
 ---

@@ -7,10 +7,17 @@ import (
 
 	"ssr-web/internal/config"
 	"ssr-web/internal/handler"
+	"ssr-web/internal/logger"
 )
 
 func main() {
-	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds)
+	// เริ่มต้นระบบ Daily Log Rotation (บันทึกลง logs/app-YYYY-MM-DD.log ย้อนหลัง 7 วัน พร้อมแสดงผลบน Console)
+	_, closeLogger, err := logger.InitDailyLogger("logs", "app", 7)
+	if err != nil {
+		log.Printf("⚠️ ไม่สามารถเปิดระบบ Daily Log Rotation ได้: %v (ใช้งาน Console มาตรฐานแทน)", err)
+	} else {
+		defer closeLogger()
+	}
 
 	cfg := config.Load()
 

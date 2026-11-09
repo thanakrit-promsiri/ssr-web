@@ -461,6 +461,7 @@ function resetBirthInfo() {
     storage.removeItem(HORA_STORAGE_KEY);
     storage.removeItem('user_predict_result');
     storage.removeItem('user_predict_prompt');
+    storage.removeItem('user_transit_2570');
   });
 
   // ลบ bubble ของการทำนายออกถ้ามี
@@ -720,6 +721,7 @@ async function renderPredictResult(data) {
   const promptEl = frag.querySelector('[data-field="predictPromptText"]');
   const promptDesc = frag.getElementById('promptDesc');
   const statusFooter = frag.getElementById('predictStatusFooter');
+  const transit2570Area = frag.getElementById('transit2570ActionArea');
 
   const hasPrediction = Boolean(data.prediction && String(data.prediction).trim());
   const hasWarning = Boolean(data.warning && String(data.warning).trim());
@@ -729,6 +731,7 @@ async function renderPredictResult(data) {
     setHidden(warningBanner, false);
     if (warningMsg) warningMsg.textContent = data.warning;
     setHidden(predictionArea, true);
+    setHidden(transit2570Area, true);
     if (promptDesc) {
       promptDesc.textContent = 'ระบบคำนวณข้อมูลพื้นดวงชะตาสำเร็จ ได้จัดเตรียมชุด Prompt สำหรับผูกดวงดังนี้:';
     }
@@ -740,6 +743,7 @@ async function renderPredictResult(data) {
     // กรณีที่ 2: เรียก AI สำเร็จ (มีข้อความคำทำนาย)
     setHidden(warningBanner, true);
     setHidden(predictionArea, false);
+    setHidden(transit2570Area, !hasPrediction);
     if (predictionBody) {
       predictionBody.innerHTML = renderMarkdown(data.prediction);
     }
@@ -815,4 +819,29 @@ function copyPredictPrompt() {
   }).catch(err => {
     console.error('Failed to copy prompt:', err);
   });
+}
+
+// พาไปยังหน้าทำนายดวงชะตา พ.ศ. ปี 2570 (/transit.html) เมื่อข้อมูลครบถ้วน
+function goToTransit2570Page() {
+  const birthInfo = sessionStorage.getItem('user_birth_info');
+  const horaResult = sessionStorage.getItem('user_hora_result');
+  const predictResult = sessionStorage.getItem('user_predict_result');
+  const username = sessionStorage.getItem('user_username');
+
+  if (!birthInfo || !horaResult || !predictResult || !username) {
+    alert('ข้อมูลดวงชะตายังไม่ครบถ้วน กรุณาคำนวณและพยากรณ์พื้นดวงชะตาให้เสร็จสมบูรณ์ก่อนครับ');
+    return;
+  }
+
+  try {
+    const parsedPred = JSON.parse(predictResult);
+    if (!parsedPred.prediction || !String(parsedPred.prediction).trim()) {
+      alert('กรุณาพยากรณ์พื้นดวงชะตาให้สำเร็จก่อนเข้าสู่หน้าทำนายดวงชะตาปี พ.ศ. 2570');
+      return;
+    }
+  } catch (_) {
+    return;
+  }
+
+  window.location.href = '/transit.html';
 }

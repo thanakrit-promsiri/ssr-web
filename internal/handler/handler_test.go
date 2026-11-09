@@ -307,6 +307,67 @@ func TestHandleHoraPredict_AIUnavailableWarning(t *testing.T) {
 	}
 }
 
+func TestHandleTransit_NoCookie_Redirects(t *testing.T) {
+	h := New("http://localhost:8082")
+	req := httptest.NewRequest(http.MethodGet, "/transit.html", nil)
+	rec := httptest.NewRecorder()
+
+	h.HandleTransit(rec, req)
+
+	if rec.Code != http.StatusSeeOther {
+		t.Fatalf("expected status 303 redirect, got %d", rec.Code)
+	}
+	if loc := rec.Header().Get("Location"); loc != "/index.html" {
+		t.Fatalf("expected redirect location /index.html, got %s", loc)
+	}
+}
+
+func TestHandleTransit_Authorized(t *testing.T) {
+	h := newMockAuthHandler("valid-token")
+
+	req := httptest.NewRequest(http.MethodGet, "/transit.html", nil)
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: "valid-token"})
+	rec := httptest.NewRecorder()
+
+	h.HandleTransit(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d", rec.Code)
+	}
+	if !strings.Contains(rec.Body.String(), "พยากรณ์ดวงชะตาจร รายเดือน พ.ศ. 2570") {
+		t.Fatal("expected transit.html body to contain transit 2570 heading")
+	}
+}
+
+func TestHandleHoraTransitMock_All12Months(t *testing.T) {
+	h := New("http://auth-service", "http://hora-service")
+	mux := http.NewServeMux()
+	if err := h.RegisterRoutes(mux); err != nil {
+		t.Fatalf("RegisterRoutes failed: %v", err)
+	}
+
+	reqBody := `{"year_be":2570,"month":1,"username":"Somchai99","ascendant":"ราศีกุมภ์"}`
+	req := httptest.NewRequest(http.MethodPost, "/hora/transit", strings.NewReader(reqBody))
+	rec := httptest.NewRecorder()
+	mux.ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d", rec.Code)
+	}
+
+	var got map[string]any
+	if err := json.Unmarshal(rec.Body.Bytes(), &got); err != nil {
+		t.Fatalf("failed to unmarshal response: %v", err)
+	}
+	if got["success"] != true {
+		t.Fatalf("expected success true, got %v", got["success"])
+	}
+	data, ok := got["data"].(map[string]any)
+	if !ok || data["monthName"] != "มกราคม" {
+		t.Fatalf("expected monthName มกราคม, got %v", got["data"])
+	}
+}
+
 // ==========================================
 // 2. Load / Benchmark Tests (ทดสอบยิงพร้อมกันแบบ Parallel)
 // ==========================================
