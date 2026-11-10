@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"context"
 	"encoding/json"
 	"io"
 	"log"
@@ -14,7 +15,10 @@ func (h *Handler) HandleAuthSerialKeys(w http.ResponseWriter, r *http.Request) {
 	setNoCacheHeaders(w)
 
 	targetURL := h.authServiceURL + "/api/v1/auth/serial-keys"
-	req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, targetURL, nil)
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, targetURL, nil)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		_ = json.NewEncoder(w).Encode(map[string]any{
@@ -60,7 +64,10 @@ func (h *Handler) verifyAuthAndServeHTML(w http.ResponseWriter, r *http.Request,
 	}
 
 	verifyURL := h.authServiceURL + "/api/v1/auth/verify"
-	req, err := http.NewRequestWithContext(r.Context(), http.MethodGet, verifyURL, nil)
+	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, verifyURL, nil)
 	if err != nil {
 		log.Printf("❌ [Auth] สร้าง Request ไปยัง %s ล้มเหลว: %v", verifyURL, err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)

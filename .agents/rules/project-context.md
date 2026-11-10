@@ -19,10 +19,12 @@
 - `internal/logger/logger.go`: ระบบ Daily Log Rotation หมุนไฟล์อัตโนมัติทุกวันลง `logs/app-YYYY-MM-DD.log` พร้อมเขียนออก Console และลบไฟล์เก่าเกิน 7 วัน
 - `internal/handler/`: Business Logic และ HTTP Handlers แยกเป็นโมดูลชัดเจน
   - `handler.go`: SSR Routing, Auth Verification, Static/Public Serving
-  - `hora.go`: Proxy ไปยัง `lahiri-api` (`/api/v1/hora/calculate`, `/hora/calculate`, `/hora/dasha`)
-  - `middleware.go`: Logging Middleware บันทึก Method, Path, Status Code, Bytes, Latency, Cookie, Remote IP
+  - `hora.go`: Proxy ไปยัง `lahiri-api` (`/api/v1/hora/calculate`, `/hora/calculate`, `/hora/dasha`, `/hora/predict`, `/hora/transitpredict_1`..`12`) พร้อมระบบจำกัดขนาด Body 1 MB (`http.MaxBytesReader`)
+  - `middleware.go`: Logging Middleware บันทึก Method, Path, Status Code, Bytes, Latency, Cookie, Remote IP พร้อมทำความสะอาด CRLF ป้องกัน Log Injection
   - `handler_test.go`: Unit Tests และ Parallel Load Benchmarks
 - `web/`: ไฟล์ฝั่งหน้าบ้านที่ถูกฝังลงใน Binary ด้วย `embed.FS`
+  - `index.html`, `chat.html`, `transit.html`
+  - `static/`: `auth.js`, `hora-common.js` (ฟังก์ชันแปลง Markdown กลาง `renderMarkdown`), `birth.js`, `astrology.js`, `transit.js`, `district.js`, `district.json` และ Templates
 - `public/`: ไฟล์รูปภาพบน Disk ที่ไม่อยู่ใน Binary
 
 ### 2.2 สถาปัตยกรรมไฮบริดสำหรับไฟล์ Static (Hybrid Asset Model)

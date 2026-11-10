@@ -23,12 +23,12 @@ func Load() *Config {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "6666"
+		port = "8081"
 	}
 
 	authURL := strings.TrimRight(os.Getenv("AUTH_SERVICE_URL"), "/")
 	if authURL == "" {
-		authURL = "http://localhost:7777"
+		authURL = "http://localhost:8082"
 	}
 
 	horaURL := strings.TrimRight(os.Getenv("HORA_SERVICE_URL"), "/")

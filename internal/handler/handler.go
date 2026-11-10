@@ -29,7 +29,7 @@ func New(authServiceURL string, horaServiceURL ...string) *Handler {
 		authServiceURL: authServiceURL,
 		horaServiceURL: horaURL,
 		httpClient: &http.Client{
-			Timeout: 10 * time.Second,
+			Timeout: 45 * time.Second,
 		},
 	}
 }

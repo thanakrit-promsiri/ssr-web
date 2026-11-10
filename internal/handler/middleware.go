@@ -46,15 +46,19 @@ func (h *Handler) LoggingMiddleware(next http.Handler) http.Handler {
 		next.ServeHTTP(rec, r)
 
 		duration := time.Since(start)
+		safeMethod := sanitizeLogString(r.Method)
+		safeURI := sanitizeLogString(r.URL.RequestURI())
+		safeIP := sanitizeLogString(clientIP)
+
 		log.Printf(
 			"🌐 [HTTP] %s %s | Status: %d | Size: %dB | Time: %v | Cookie(auth_token): %s | IP: %s",
-			r.Method,
-			r.URL.RequestURI(),
+			safeMethod,
+			safeURI,
 			rec.statusCode,
 			rec.bytesSent,
 			duration.Round(time.Microsecond),
 			hasCookie,
-			clientIP,
+			safeIP,
 		)
 	})
 }

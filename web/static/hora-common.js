@@ -85,3 +85,107 @@ async function postHoraAPI(endpoint, payload) {
 
   return response;
 }
+
+// ==========================================
+// ฟังก์ชันแปลงข้อความ Markdown เป็น HTML แบบ Zero-Dependency
+// ทำงานเร็วระดับไมโครวินาที (Linear O(n) ปลอด Regex Backtracking)
+// ป้องกัน XSS ด้วยการ Escape HTML ก่อนสร้าง Element เสมอ
+// ==========================================
+
+function renderMarkdown(mdText) {
+  if (!mdText) return '';
+
+  const rawLines = String(mdText).split('\n');
+  const out = [];
+  let inList = false;
+
+  for (let i = 0; i < rawLines.length; i++) {
+    let line = rawLines[i];
+    const trimmedStart = line.trimStart();
+    const trimmed = trimmedStart.trimEnd();
+
+    // กรณีบรรทัดมีแค่สัญลักษณ์ "•" เดี่ยว ๆ ให้รวมเข้ากับบรรทัดถัดไป
+    if (trimmed === '•' && i + 1 < rawLines.length) {
+      const nextLine = rawLines[i + 1].trim();
+      if (nextLine) {
+        line = '• ' + nextLine;
+        i++;
+      }
+    }
+
+    // เส้นคั่น ---
+    if (trimmed === '---') {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push('<hr class="border-purple-500/20 my-3">');
+      continue;
+    }
+
+    // หัวข้อ ###, ##, #
+    if (trimmedStart.startsWith('### ')) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(`<h3 class="text-amber-300 font-semibold text-sm mt-3 mb-1">${formatInlineMarkdown(trimmed.slice(4).trimStart())}</h3>`);
+      continue;
+    }
+    if (trimmedStart.startsWith('## ')) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(`<h2 class="text-amber-200 font-bold text-base mt-4 mb-2">${formatInlineMarkdown(trimmed.slice(3).trimStart())}</h2>`);
+      continue;
+    }
+    if (trimmedStart.startsWith('# ')) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(`<h1 class="text-amber-100 font-bold text-lg mt-5 mb-2">${formatInlineMarkdown(trimmed.slice(2).trimStart())}</h1>`);
+      continue;
+    }
+
+    // ข้อความไฮไลต์ไอคอนดาวหรือประกาย (🪐 หรือ ✨)
+    if (trimmedStart.startsWith('🪐') || trimmedStart.startsWith('✨')) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(`<p class="text-amber-300 font-semibold text-xs sm:text-sm mt-2.5 mb-1 leading-relaxed">${formatInlineMarkdown(trimmed)}</p>`);
+      continue;
+    }
+
+    // รายการแบบ Bullet (* หรือ - หรือ •) พร้อมตรวจจับการเยื้องหน้า (Indentation)
+    if (trimmedStart.startsWith('* ') || trimmedStart.startsWith('- ') || trimmedStart.startsWith('• ')) {
+      if (!inList) { out.push('<ul class="space-y-1.5 my-2">'); inList = true; }
+      const indent = line.length - trimmedStart.length;
+      const marginClass = indent >= 4 ? 'ml-6 list-[circle] text-slate-300' : 'ml-3 list-disc text-slate-200';
+      out.push(`<li class="${marginClass}">${formatInlineMarkdown(trimmedStart.slice(2).trim())}</li>`);
+      continue;
+    }
+
+    // รายการแบบตัวเลข (1. 2.) แบบ Linear Scan
+    const dotIdx = trimmedStart.indexOf('. ');
+    if (dotIdx > 0 && /^\d+$/.test(trimmedStart.slice(0, dotIdx))) {
+      if (inList) { out.push('</ul>'); inList = false; }
+      const itemContent = trimmedStart.slice(dotIdx + 2).trim();
+      out.push(`<li class="ml-4 list-decimal text-slate-200 my-1">${formatInlineMarkdown(itemContent)}</li>`);
+      continue;
+    }
+
+    if (inList) { out.push('</ul>'); inList = false; }
+
+    // บรรทัดว่าง
+    if (!trimmed) {
+      out.push('<div class="h-2"></div>');
+      continue;
+    }
+
+    // ย่อหน้าทั่วไป
+    out.push(`<p class="leading-relaxed text-slate-200 mb-1">${formatInlineMarkdown(line)}</p>`);
+  }
+
+  if (inList) out.push('</ul>');
+
+  return out.join('');
+}
+
+// แปลงรูปแบบตัวหนา/ตัวเอียง และ escape HTML เพื่อความปลอดภัย XSS
+function formatInlineMarkdown(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/\*\*\*(.*?)\*\*\*/g, '<strong class="text-amber-300 font-bold"><em>$1</em></strong>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-amber-300 font-semibold">$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em class="text-purple-300 font-normal">$1</em>');
+}

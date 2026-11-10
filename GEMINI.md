@@ -28,21 +28,24 @@
    - ไม่ถูกฝังใน Binary เพื่อป้องกันขนาดไฟล์บวม และสามารถเปลี่ยนรูปได้ทันทีโดยไม่ต้อง Rebuild
 3. **Zero-Dependency Markdown & Fast Rendering**:
    - ไม่โหลดไลบรารีภายนอกผ่าน CDN (เช่น `marked.js`) ใน `<head>` เพื่อป้องกันปัญหา Render-Blocking และ Network Latency
-   - ใช้ Internal Markdown Renderer (`renderMarkdown()` ใน `astrology.js`) ประมวลผลใน RAM ระดับไมโครวินาที
+   - ใช้ Internal Markdown Renderer (`renderMarkdown()` ใน `web/static/hora-common.js`) ประมวลผลใน RAM ระดับไมโครวินาที รองรับทั้งหน้าดวงกำเนิดและหน้าทำนายดาวจร 12 เดือน
 
 ---
 
 ## กฎความปลอดภัยและความเป็นส่วนตัว (Privacy & Storage Rules)
 
 1. **Session Storage Only (Zero-Persistence)**:
-   - ข้อมูลวันเกิด (`user_birth_info`), ผลลัพธ์ตำแหน่งดาว (`user_hora_result`) และผลลัพธ์คำทำนาย (`user_predict_result`) จะต้องจัดเก็บใน `sessionStorage` เท่านั้น (ห้ามบันทึกถาวรลงฐานข้อมูลหรือ `localStorage`)
+   - ข้อมูลวันเกิด (`user_birth_info`), ผลลัพธ์ตำแหน่งดาว (`user_hora_result`), ผลลัพธ์คำทำนาย (`user_predict_result`) และดวงจร 12 เดือน (`user_transit_2570`) จะต้องจัดเก็บใน `sessionStorage` เท่านั้น (ห้ามบันทึกถาวรลงฐานข้อมูลหรือ `localStorage`)
    - เมื่อผู้ใช้ปิดแท็บหรือเบราว์เซอร์ ข้อมูลส่วนตัวจะถูกล้างทิ้งอัตโนมัติ
 2. **Locking State**:
    - เมื่อคำนวณตำแหน่งดาวและแสดงผลสำเร็จ: ซ่อนปุ่มแก้ไขข้อมูลวันเกิด
    - เมื่อพยากรณ์พื้นดวงชะตาสำเร็จ (`data.prediction` สำเร็จและบันทึกลง `sessionStorage` แล้ว): **ซ่อนปุ่มทำนายดวงชะตา (AI Predict) ทันที** เพื่อป้องกันการส่งคำขอทำนายซ้ำซ้อน
-3. **DOM XSS Prevention (SonarCloud Compliance)**:
+   - เมื่อพยากรณ์ดวงจรเดือนใดสำเร็จแล้ว: ซ่อนปุ่มของเดือนนั้น และเปิดแสดงเฉพาะปุ่มของเดือนถัดไปตามลำดับ
+3. **DOM XSS & DoS Prevention (SonarCloud Compliance)**:
    - ห้ามนำ HTML ที่โหลดจาก `fetch()` มาใส่ `innerHTML` โดยตรง ให้ใช้ `DOMParser` ร่วมกับ `replaceChildren` และ `document.importNode` เสมอ
    - การเติมข้อมูลลงใน `<template>` ให้ใช้ `textContent` ผ่าน helper เช่น `fillFields()`
+   - ครอบ `http.MaxBytesReader` จำกัดขนาด Request Body ไว้ที่ 1 MB บนทุก Endpoint ของ `/hora/*` เพื่อป้องกัน Denial of Service (OOM)
+   - ฟังก์ชัน Log ทุกจุดต้องผ่าน `sanitizeLogString()` เพื่อตัดอักขระ `\r\n` ป้องกัน Log Injection (CWE-117)
 
 ---
 
@@ -53,6 +56,8 @@
 - `POST /hora/predict` และ `POST /api/v1/hora/predict`: Proxy คำนวณข้อมูลพื้นดวงและทำนายด้วย AI
   - **กรณี AI สำเร็จ (`data.prediction` มีข้อความ)**: แสดงคำพยากรณ์จัดรูปเล่มสวยงาม พร้อมปุ่มคัดลอกคำทำนาย แสดง Prompt ด้านล่าง และซ่อนปุ่มทำนายทันที
   - **กรณี AI ไม่พร้อมใช้งาน (`data.prediction: ""` หรือมี `warning`)**: แสดง Warning Banner ชัดเจน แสดง Prompt สำหรับนำไปผูกดวง และคงปุ่มให้สามารถกดลองใหม่ได้
+- `POST /hora/{transitEndpoint}` และ `POST /api/v1/hora/{transitEndpoint}`: Proxy คำนวณดาวจรและพยากรณ์ดวงชะตารายเดือนปี 2570 (`transitpredict_1` ถึง `transitpredict_12`)
+- `GET /transit.html`: หน้าพยากรณ์ดวงชะตารายเดือน พ.ศ. 2570 (ตรวจสอบสิทธิ์ `auth_token` และเงื่อนไขข้อมูล 4 ตัวก่อนเข้าใช้งาน)
 
 ---
 

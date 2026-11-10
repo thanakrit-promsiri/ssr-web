@@ -2,6 +2,7 @@ package handler
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -89,10 +90,14 @@ func writeInvalidTransitMonthError(w http.ResponseWriter) {
 	})
 }
 
+// maxHoraBodyBytes กำหนดขนาดสูงสุดของ Request Body ที่ยอมรับได้ (1 MB) เพื่อป้องกัน DoS/OOM
+const maxHoraBodyBytes = 1 << 20 // 1 MB
+
 func (h *Handler) proxyRawToHoraService(w http.ResponseWriter, r *http.Request, endpointPath string) {
+	r.Body = http.MaxBytesReader(w, r.Body, maxHoraBodyBytes)
 	bodyBytes, err := io.ReadAll(r.Body)
 	if err != nil {
-		log.Printf("❌ [Hora] Read request body failed for endpoint %s", sanitizeLogString(endpointPath))
+		log.Printf("❌ [Hora] Read request body failed for endpoint %s: %v", sanitizeLogString(endpointPath), err)
 		writeJSONError(w, http.StatusBadRequest, map[string]string{
 			"status":  "error",
 			"message": "ไม่สามารถอ่านข้อมูลคำขอได้: " + err.Error(),
@@ -104,9 +109,10 @@ func (h *Handler) proxyRawToHoraService(w http.ResponseWriter, r *http.Request, 
 }
 
 func (h *Handler) proxyToHoraService(w http.ResponseWriter, r *http.Request, endpointPath string) {
+	r.Body = http.MaxBytesReader(w, r.Body, maxHoraBodyBytes)
 	var payload HoraCalculatePayload
 	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-		log.Printf("❌ [Hora] Invalid JSON request payload for endpoint %s", sanitizeLogString(endpointPath))
+		log.Printf("❌ [Hora] Invalid JSON request payload for endpoint %s: %v", sanitizeLogString(endpointPath), err)
 		writeJSONError(w, http.StatusBadRequest, map[string]string{
 			"status":  "error",
 			"message": "รูปแบบข้อมูลคำขอไม่ถูกต้อง: " + err.Error(),
@@ -142,7 +148,11 @@ func (h *Handler) forwardJSONToHora(w http.ResponseWriter, r *http.Request, endp
 	targetURL := h.horaServiceURL + safeEndpoint
 	log.Printf("🔮 [Hora] ส่งคำขอไปยัง %s (Payload: %dB)", targetURL, len(bodyBytes))
 
-	req, err := http.NewRequestWithContext(r.Context(), http.MethodPost, targetURL, bytes.NewReader(bodyBytes))
+	// กำหนด Context Timeout สูงสุด 45 วินาทีสำหรับการคำนวณและพยากรณ์ด้วย AI
+	ctx, cancel := context.WithTimeout(r.Context(), 45*time.Second)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost, targetURL, bytes.NewReader(bodyBytes))
 	if err != nil {
 		writeJSONError(w, http.StatusInternalServerError, map[string]string{
 			"status":  "error",

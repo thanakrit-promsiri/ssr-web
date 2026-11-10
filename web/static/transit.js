@@ -91,69 +91,6 @@ function extractAscendantSummary(horaResult) {
   return `ราศี${signThai}${nakThai ? ` (ฤกษ์${nakThai})` : ''}`;
 }
 
-// แปลงข้อความคำพยากรณ์เป็น DOM Nodes อย่างปลอดภัย (รองรับหัวข้อ, Bullet •, -, * และย่อหน้า)
-function buildMarkdownNodes(mdText) {
-  const fragment = document.createDocumentFragment();
-  const rawLines = String(mdText || '').split('\n');
-
-  for (let i = 0; i < rawLines.length; i++) {
-    const line = rawLines[i].trim();
-    if (!line) continue;
-
-    // กรณีบรรทัดมีแค่สัญลักษณ์ "•" เดี่ยว ๆ ให้รวมเข้ากับบรรทัดถัดไป
-    if (line === '•' && i + 1 < rawLines.length) {
-      const nextLine = rawLines[i + 1].trim();
-      if (nextLine) {
-        appendBulletNode(fragment, nextLine);
-        i++;
-        continue;
-      }
-    }
-
-    if (line.startsWith('### ') || line.startsWith('## ') || line.startsWith('# ')) {
-      const h3 = document.createElement('h3');
-      h3.className = 'text-amber-300 font-semibold text-xs sm:text-sm mt-2.5 mb-1';
-      h3.textContent = line.replace(/^#{1,3}\s+/, '');
-      fragment.appendChild(h3);
-      continue;
-    }
-
-    if (line.startsWith('🪐') || line.startsWith('✨')) {
-      const highlightP = document.createElement('p');
-      highlightP.className = 'text-amber-300 font-semibold text-xs mt-2.5 mb-1 leading-relaxed';
-      highlightP.textContent = line;
-      fragment.appendChild(highlightP);
-      continue;
-    }
-
-    if (line.startsWith('- ') || line.startsWith('* ') || line.startsWith('• ')) {
-      appendBulletNode(fragment, line.replace(/^[-*•]\s+/, ''));
-      continue;
-    }
-
-    const p = document.createElement('p');
-    p.className = 'leading-relaxed text-slate-200 mb-1.5';
-    p.textContent = line;
-    fragment.appendChild(p);
-  }
-
-  return fragment;
-}
-
-function appendBulletNode(fragment, text) {
-  const div = document.createElement('div');
-  div.className = 'flex items-start gap-2 ml-2 text-slate-200 my-1';
-  const bullet = document.createElement('span');
-  bullet.className = 'text-amber-400 font-bold shrink-0';
-  bullet.textContent = '•';
-  const textSpan = document.createElement('span');
-  textSpan.className = 'leading-relaxed';
-  textSpan.textContent = text;
-  div.appendChild(bullet);
-  div.appendChild(textSpan);
-  fragment.appendChild(div);
-}
-
 // เริ่มต้นหน้า /transit.html: ตรวจสอบทั้ง 5 เงื่อนไขก่อนอนุญาตให้เข้าใช้งาน
 async function initTransitPage() {
   // 1. ตรวจสอบ auth_token กับ Backend (และอัปเดต user_username หากมี)
@@ -291,7 +228,7 @@ function appendMonthResultCard(monthData, shouldScroll = true) {
     setHidden(predictionSection, false);
     const bodyEl = cardFrag.querySelector('[data-field="monthPredictionBody"]');
     if (bodyEl) {
-      bodyEl.replaceChildren(buildMarkdownNodes(monthData.prediction));
+      bodyEl.innerHTML = renderMarkdown(monthData.prediction);
     }
     if (statusFooter) {
       statusFooter.className = 'text-emerald-400';

@@ -20,6 +20,13 @@
     #predictionBody strong { color: #fde047; font-weight: 600; }
     #predictionBody hr { border-color: rgba(168, 85, 247, 0.25); margin: 1rem 0; }
   </style>
+
+  <!-- โหลดสคริปต์แบบขนาน (Parallel Loading) ด้วย defer ตามลำดับการทำงานที่ถูกต้อง -->
+  <script defer src="/static/auth.js"></script>
+  <script defer src="/static/hora-common.js"></script>
+  <script defer src="/static/district.js"></script>
+  <script defer src="/static/birth.js"></script>
+  <script defer src="/static/astrology.js"></script>
 </head>
 <body class="h-screen bg-slate-950 text-slate-100 flex flex-col relative overflow-hidden">
 
@@ -104,32 +111,13 @@
     <div id="resultContainer" class="hidden"></div>
   </main>
 
-  <!-- บังคับโหลดไฟล์ JavaScript ใหม่เสมอทุกครั้ง (ไม่ใช้ Cache) -->
+  <!-- เริ่มต้นการทำงานของหน้าเว็บเมื่อโหลด DOM และ Deferred Scripts ครบถ้วน -->
   <script>
-    (async () => {
-      const ts = Date.now();
-      const scripts = [
-        '/static/auth.js',
-        '/static/hora-common.js',
-        '/static/district.js',
-        '/static/birth.js',
-        '/static/astrology.js'
-      ];
-
-      for (const src of scripts) {
-        await new Promise((resolve, reject) => {
-          const s = document.createElement('script');
-          s.src = `${src}?t=${ts}`;
-          s.async = false;
-          s.onload = resolve;
-          s.onerror = reject;
-          document.body.appendChild(s);
-        });
-      }
-
+    document.addEventListener('DOMContentLoaded', () => {
       if (typeof checkAuthWithBackend === 'function') checkAuthWithBackend();
       if (typeof loadDistrictData === 'function') loadDistrictData();
-    })();
+      if (typeof initBirthInfo === 'function') initBirthInfo();
+    });
   </script>
 </body>
 </html>

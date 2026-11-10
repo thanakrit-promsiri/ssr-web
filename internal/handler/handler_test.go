@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -520,6 +521,53 @@ func TestLoggingMiddleware_And_AdditionalHandlers(t *testing.T) {
 	hErr.HandleHoraPredict(recHoraErr, reqHoraErr)
 	if recHoraErr.Code != http.StatusBadGateway {
 		t.Fatalf("expected 502 on hora upstream error, got %d", recHoraErr.Code)
+	}
+}
+
+// TestHandleHora_MaxBytesReader_RejectsOversizedPayload ทดสอบป้องกัน DoS เมื่อมี Payload ขนาดเกิน 1 MB
+func TestHandleHora_MaxBytesReader_RejectsOversizedPayload(t *testing.T) {
+	h := New("http://localhost:8082", "http://localhost:8083")
+	mux := http.NewServeMux()
+	if err := h.RegisterRoutes(mux); err != nil {
+		t.Fatalf("RegisterRoutes failed: %v", err)
+	}
+
+	// สร้าง Payload ขนาด 1.5 MB (เกิน Limit 1 MB)
+	oversizedBody := bytes.Repeat([]byte("A"), (1<<20)+512*1024)
+
+	// 1. ทดสอบกับ /hora/predict (proxyRawToHoraService)
+	reqPredict := httptest.NewRequest(http.MethodPost, "/hora/predict", bytes.NewReader(oversizedBody))
+	recPredict := httptest.NewRecorder()
+	mux.ServeHTTP(recPredict, reqPredict)
+	if recPredict.Code != http.StatusBadRequest {
+		t.Fatalf("expected 400 BadRequest for oversized body on /hora/predict, got %d", recPredict.Code)
+	}
+
+	// 2. ทดสอบกับ /hora/calculate (proxyToHoraService)
+	reqCalc := httptest.NewRequest(http.MethodPost, "/hora/calculate", bytes.NewReader(oversizedBody))
+	recCalc := httptest.NewRecorder()
+	mux.ServeHTTP(recCalc, reqCalc)
+	if recCalc.Code != http.StatusBadRequest {
+		t.Fatalf("expected 400 BadRequest for oversized body on /hora/calculate, got %d", recCalc.Code)
+	}
+}
+
+// TestLoggingMiddleware_SanitizesCRLF ทดสอบการตัด CRLF ออกจาก Header เพื่อป้องกัน Log Injection (CWE-117)
+func TestLoggingMiddleware_SanitizesCRLF(t *testing.T) {
+	h := New("http://localhost:8082")
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /test-crlf", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
+	wrapped := h.LoggingMiddleware(mux)
+	req := httptest.NewRequest(http.MethodGet, "/test-crlf", nil)
+	req.Header.Set("X-Forwarded-For", "127.0.0.1\r\nFAKE_LOG_ENTRY")
+
+	rec := httptest.NewRecorder()
+	wrapped.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK, got %d", rec.Code)
 	}
 }
 

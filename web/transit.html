@@ -20,6 +20,11 @@
     .transit-markdown strong { color: #fde047; font-weight: 600; }
     .transit-markdown hr { border-color: rgba(168, 85, 247, 0.25); margin: 0.85rem 0; }
   </style>
+
+  <!-- โหลดสคริปต์แบบขนาน (Parallel Loading) ด้วย defer ตามลำดับการทำงานที่ถูกต้อง -->
+  <script defer src="/static/auth.js"></script>
+  <script defer src="/static/hora-common.js"></script>
+  <script defer src="/static/transit.js"></script>
 </head>
 <body class="h-screen bg-slate-950 text-slate-100 flex flex-col relative overflow-hidden">
 
@@ -59,31 +64,13 @@
     <!-- เนื้อหาหลักและปุ่มทั้ง 12 เดือนจะถูกแทรกจาก transit-template.html โดย transit.js -->
   </main>
 
-  <!-- โหลดสคริปต์แบบป้องกัน Cache -->
+  <!-- เริ่มต้นการทำงานของหน้าเว็บเมื่อโหลด DOM และ Deferred Scripts ครบถ้วน -->
   <script>
-    (async () => {
-      const ts = Date.now();
-      const scripts = [
-        '/static/auth.js',
-        '/static/hora-common.js',
-        '/static/transit.js'
-      ];
-
-      for (const src of scripts) {
-        await new Promise((resolve, reject) => {
-          const s = document.createElement('script');
-          s.src = `${src}?t=${ts}`;
-          s.async = false;
-          s.onload = resolve;
-          s.onerror = reject;
-          document.body.appendChild(s);
-        });
-      }
-
+    document.addEventListener('DOMContentLoaded', () => {
       if (typeof initTransitPage === 'function') {
         initTransitPage();
       }
-    })();
+    });
   </script>
 </body>
 </html>
