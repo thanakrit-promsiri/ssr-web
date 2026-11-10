@@ -148,8 +148,8 @@ func (h *Handler) forwardJSONToHora(w http.ResponseWriter, r *http.Request, endp
 	targetURL := h.horaServiceURL + safeEndpoint
 	log.Printf("🔮 [Hora] ส่งคำขอไปยัง %s (Payload: %dB)", targetURL, len(bodyBytes))
 
-	// กำหนด Context Timeout สูงสุด 45 วินาทีสำหรับการคำนวณและพยากรณ์ด้วย AI
-	ctx, cancel := context.WithTimeout(r.Context(), 45*time.Second)
+	// กำหนด Context Timeout สูงสุด 300 วินาทีสำหรับการคำนวณและพยากรณ์ด้วย AI (รองรับโมเดล DeepSeek)
+	ctx, cancel := context.WithTimeout(r.Context(), 300*time.Second)
 	defer cancel()
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, targetURL, bytes.NewReader(bodyBytes))

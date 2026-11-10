@@ -30,9 +30,9 @@ func main() {
 	server := &http.Server{
 		Addr:         ":" + cfg.Port,
 		Handler:      h.LoggingMiddleware(mux),
-		ReadTimeout:  15 * time.Second,
-		WriteTimeout: 60 * time.Second,
-		IdleTimeout:  60 * time.Second,
+		ReadTimeout:  30 * time.Second,
+		WriteTimeout: 360 * time.Second,
+		IdleTimeout:  120 * time.Second,
 	}
 
 	log.Println("==========================================================")
