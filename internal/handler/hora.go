@@ -7,6 +7,8 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -29,6 +31,22 @@ type CalculateReq struct {
 	HouseSystem string  `json:"house_system"`
 }
 
+// รายการ Endpoint คงที่สำหรับทำนายดวงจร 12 เดือน (ป้องกัน Taint / Log Injection และ Path Traversal)
+var validTransitEndpointPaths = [12]string{
+	"/api/v1/hora/transitpredict_1",
+	"/api/v1/hora/transitpredict_2",
+	"/api/v1/hora/transitpredict_3",
+	"/api/v1/hora/transitpredict_4",
+	"/api/v1/hora/transitpredict_5",
+	"/api/v1/hora/transitpredict_6",
+	"/api/v1/hora/transitpredict_7",
+	"/api/v1/hora/transitpredict_8",
+	"/api/v1/hora/transitpredict_9",
+	"/api/v1/hora/transitpredict_10",
+	"/api/v1/hora/transitpredict_11",
+	"/api/v1/hora/transitpredict_12",
+}
+
 // HandleHoraCalculate ส่งคำขอคำนวณดวงชะตาแบบเต็มไปยัง lahiri-api (/api/v1/hora/calculate)
 func (h *Handler) HandleHoraCalculate(w http.ResponseWriter, r *http.Request) {
 	h.proxyToHoraService(w, r, "/api/v1/hora/calculate")
@@ -47,22 +65,34 @@ func (h *Handler) HandleHoraPredict(w http.ResponseWriter, r *http.Request) {
 // HandleHoraTransitPredict ส่งคำขอทำนายดวงชะตาดาวจรรายเดือนไปยัง lahiri-api (/api/v1/hora/transitpredict_1 ถึง /api/v1/hora/transitpredict_12)
 func (h *Handler) HandleHoraTransitPredict(w http.ResponseWriter, r *http.Request) {
 	transitEndpoint := r.PathValue("transitEndpoint")
-	var month int
-	if _, err := fmt.Sscanf(transitEndpoint, "transitpredict_%d", &month); err != nil || month < 1 || month > 12 || transitEndpoint != fmt.Sprintf("transitpredict_%d", month) {
-		writeJSONError(w, http.StatusBadRequest, map[string]any{
-			"success": false,
-			"message": "กรุณาระบุ endpoint ระหว่าง transitpredict_1 ถึง transitpredict_12",
-		})
+	const prefix = "transitpredict_"
+	if !strings.HasPrefix(transitEndpoint, prefix) {
+		writeInvalidTransitMonthError(w)
 		return
 	}
 
-	h.proxyRawToHoraService(w, r, fmt.Sprintf("/api/v1/hora/transitpredict_%d", month))
+	month, err := strconv.Atoi(strings.TrimPrefix(transitEndpoint, prefix))
+	if err != nil || month < 1 || month > 12 {
+		writeInvalidTransitMonthError(w)
+		return
+	}
+
+	// ใช้ค่าคงที่จาก Array ที่ผ่านการตรวจสอบช่วง 1..12 แล้วเท่านั้น
+	safeEndpointPath := validTransitEndpointPaths[month-1]
+	h.proxyRawToHoraService(w, r, safeEndpointPath)
+}
+
+func writeInvalidTransitMonthError(w http.ResponseWriter) {
+	writeJSONError(w, http.StatusBadRequest, map[string]any{
+		"success": false,
+		"message": "กรุณาระบุ endpoint ระหว่าง transitpredict_1 ถึง transitpredict_12",
+	})
 }
 
 func (h *Handler) proxyRawToHoraService(w http.ResponseWriter, r *http.Request, endpointPath string) {
 	bodyBytes, err := io.ReadAll(r.Body)
 	if err != nil {
-		log.Printf("❌ [Hora] Read body error (%s): %v", endpointPath, err)
+		log.Printf("❌ [Hora] Read request body failed for endpoint %s", sanitizeLogString(endpointPath))
 		writeJSONError(w, http.StatusBadRequest, map[string]string{
 			"status":  "error",
 			"message": "ไม่สามารถอ่านข้อมูลคำขอได้: " + err.Error(),
@@ -76,7 +106,7 @@ func (h *Handler) proxyRawToHoraService(w http.ResponseWriter, r *http.Request, 
 func (h *Handler) proxyToHoraService(w http.ResponseWriter, r *http.Request, endpointPath string) {
 	var payload HoraCalculatePayload
 	if err := json.NewDecoder(r.Body).Decode(&payload); err != nil {
-		log.Printf("❌ [Hora] Decode request error (%s): %v", endpointPath, err)
+		log.Printf("❌ [Hora] Invalid JSON request payload for endpoint %s", sanitizeLogString(endpointPath))
 		writeJSONError(w, http.StatusBadRequest, map[string]string{
 			"status":  "error",
 			"message": "รูปแบบข้อมูลคำขอไม่ถูกต้อง: " + err.Error(),
@@ -93,7 +123,7 @@ func (h *Handler) proxyToHoraService(w http.ResponseWriter, r *http.Request, end
 
 	bodyBytes, err := json.Marshal(payload)
 	if err != nil {
-		log.Printf("❌ [Hora] Marshal payload error: %v", err)
+		log.Println("❌ [Hora] Marshal payload error")
 		writeJSONError(w, http.StatusInternalServerError, map[string]string{
 			"status":  "error",
 			"message": "ไม่สามารถสร้างคำขอได้",
@@ -108,8 +138,9 @@ func (h *Handler) proxyToHoraService(w http.ResponseWriter, r *http.Request, end
 func (h *Handler) forwardJSONToHora(w http.ResponseWriter, r *http.Request, endpointPath string, bodyBytes []byte, forwardCookies bool) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-	targetURL := h.horaServiceURL + endpointPath
-	log.Printf("🔮 [Hora] ส่งคำขอไปยัง %s: %s", targetURL, string(bodyBytes))
+	safeEndpoint := sanitizeLogString(endpointPath)
+	targetURL := h.horaServiceURL + safeEndpoint
+	log.Printf("🔮 [Hora] ส่งคำขอไปยัง %s (Payload: %dB)", targetURL, len(bodyBytes))
 
 	req, err := http.NewRequestWithContext(r.Context(), http.MethodPost, targetURL, bytes.NewReader(bodyBytes))
 	if err != nil {
@@ -129,7 +160,7 @@ func (h *Handler) forwardJSONToHora(w http.ResponseWriter, r *http.Request, endp
 	start := time.Now()
 	resp, err := h.httpClient.Do(req)
 	if err != nil {
-		log.Printf("❌ [Hora] เชื่อมต่อ lahiri-api (%s) ล้มเหลว (%v): %v", targetURL, time.Since(start).Round(time.Millisecond), err)
+		log.Printf("❌ [Hora] เชื่อมต่อ lahiri-api (%s) ล้มเหลว (%v)", targetURL, time.Since(start).Round(time.Millisecond))
 		writeJSONError(w, http.StatusBadGateway, map[string]string{
 			"status":  "error",
 			"message": fmt.Sprintf("ไม่สามารถเชื่อมต่อ lahiri-api (%s) ได้: %v", targetURL, err),
@@ -156,6 +187,12 @@ func (h *Handler) forwardJSONToHora(w http.ResponseWriter, r *http.Request, endp
 
 	w.WriteHeader(resp.StatusCode)
 	_, _ = w.Write(respBody)
+}
+
+// sanitizeLogString ลบอักขระขึ้นบรรทัดใหม่ (\r, \n) เพื่อป้องกัน Log Injection (CWE-117)
+func sanitizeLogString(s string) string {
+	cleaned := strings.ReplaceAll(s, "\r", "")
+	return strings.ReplaceAll(cleaned, "\n", "")
 }
 
 func writeJSONError(w http.ResponseWriter, statusCode int, payload any) {
