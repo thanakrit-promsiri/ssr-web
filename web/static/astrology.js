@@ -25,25 +25,6 @@ async function loadAstrologyTemplates() {
   return astroTemplateCache;
 }
 
-// เติมค่าลงใน Element ที่มี data-field ตรงกับ key (ใช้ textContent ป้องกัน XSS)
-function fillFields(root, values) {
-  Object.entries(values).forEach(([field, value]) => {
-    root.querySelectorAll(`[data-field="${field}"]`).forEach(el => {
-      el.textContent = String(value ?? '');
-    });
-  });
-}
-
-// แปลงเวลา "10:35" เป็นรูปแบบทศนิยม hour_thai 10.35 ตามที่ lahiri-api กำหนด
-function parseHourThai(timeStr) {
-  if (!timeStr) return 0;
-  const parts = String(timeStr).trim().split(':');
-  if (parts.length < 2) return parseFloat(timeStr) || 0;
-  const hour = parseInt(parts[0], 10) || 0;
-  const minute = parseInt(parts[1], 10) || 0;
-  return parseFloat(`${hour}.${String(minute).padStart(2, '0')}`);
-}
-
 // เลือกสีป้ายกำกับตามมาตรฐานดาวพระเวท (Dignity)
 function getDignityBadgeClass(dignity, dignityThai) {
   const key = `${dignity || ''} ${dignityThai || ''}`.toLowerCase();
@@ -89,11 +70,6 @@ function getAstroElements() {
     output: document.getElementById('astroOutput'),
     editBtn: document.getElementById('editBirthBtn')
   };
-}
-
-// แสดงหรือซ่อน Element (ปลอดภัยเมื่อ el เป็น null)
-function setHidden(el, hidden) {
-  if (el) el.classList.toggle('hidden', hidden);
 }
 
 // แสดงข้อความ error ในพื้นที่ผลลัพธ์ (ใช้ textContent ป้องกัน XSS)
@@ -612,24 +588,7 @@ async function predictAstrology() {
 
   try {
     console.log('🔮 [DEBUG:Predict] กำลังส่งคำขอทำนายไปยัง API:', payload);
-
-    let response;
-    try {
-      response = await fetch('https://hora.garbagecollection.info/api/v1/hora/predict', {
-        method: 'POST',
-        credentials: 'include', // ส่ง Cookie auth_token ไปด้วย
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    } catch (networkErr) {
-      console.warn('⚠️ ไม่สามารถเชื่อมต่อ https://hora.garbagecollection.info โดยตรงได้ ลองเรียกผ่าน Gateway ภายใน...', networkErr);
-      response = await fetch('/hora/predict', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-    }
+    const response = await postHoraAPI('predict', payload);
 
     if (!response.ok) {
       const errText = await response.text();
@@ -787,18 +746,12 @@ function copyPredictionText() {
   }
   if (!text) return;
 
-  navigator.clipboard.writeText(text).then(() => {
-    const textEl = document.getElementById('copyPredText');
-    const iconEl = document.getElementById('copyPredIcon');
-    if (textEl) textEl.textContent = 'คัดลอกสำเร็จ!';
-    if (iconEl) iconEl.textContent = '✅';
-    setTimeout(() => {
-      if (textEl) textEl.textContent = 'คัดลอกคำทำนาย';
-      if (iconEl) iconEl.textContent = '📋';
-    }, 2000);
-  }).catch(err => {
-    console.error('Failed to copy prediction:', err);
-  });
+  copyTextWithFeedback(
+    text,
+    document.getElementById('copyPredText'),
+    document.getElementById('copyPredIcon'),
+    'คัดลอกคำทำนาย'
+  );
 }
 
 // คัดลอก Prompt ไปยัง Clipboard พร้อมแสดงผลลัพธ์ชั่วคราว
@@ -806,19 +759,12 @@ function copyPredictPrompt() {
   const promptEl = document.querySelector('[data-field="predictPromptText"]');
   if (!promptEl) return;
 
-  const text = promptEl.textContent || '';
-  navigator.clipboard.writeText(text).then(() => {
-    const textEl = document.getElementById('copyPromptText');
-    const iconEl = document.getElementById('copyPromptIcon');
-    if (textEl) textEl.textContent = 'คัดลอกสำเร็จ!';
-    if (iconEl) iconEl.textContent = '✅';
-    setTimeout(() => {
-      if (textEl) textEl.textContent = 'คัดลอก Prompt';
-      if (iconEl) iconEl.textContent = '📋';
-    }, 2000);
-  }).catch(err => {
-    console.error('Failed to copy prompt:', err);
-  });
+  copyTextWithFeedback(
+    promptEl.textContent || '',
+    document.getElementById('copyPromptText'),
+    document.getElementById('copyPromptIcon'),
+    'คัดลอก Prompt'
+  );
 }
 
 // พาไปยังหน้าทำนายดวงชะตา พ.ศ. ปี 2570 (/transit.html) เมื่อข้อมูลครบถ้วน

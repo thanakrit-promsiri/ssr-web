@@ -15,26 +15,6 @@ if (document.readyState === 'loading') {
   initBirthInfo();
 }
 
-const THAI_MONTHS = [
-  'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
-  'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
-];
-
-// แปลงวันที่ "2003-04-25" เป็นรูปแบบวันที่ไทย เช่น "25 เมษายน พ.ศ. 2546"
-function formatThaiDateBE(birthDateCE, birthYearBE) {
-  if (!birthDateCE) return `พ.ศ. ${birthYearBE}`;
-  const parts = String(birthDateCE).split('-');
-  if (parts.length !== 3) return `พ.ศ. ${birthYearBE}`;
-
-  const yearCE = parseInt(parts[0], 10);
-  const monthIdx = parseInt(parts[1], 10) - 1;
-  const day = parseInt(parts[2], 10);
-  const yearBE = birthYearBE || (yearCE + 543);
-  const monthName = THAI_MONTHS[monthIdx] || parts[1];
-
-  return `${day} ${monthName} พ.ศ. ${yearBE}`;
-}
-
 // ฟังก์ชันกลางสำหรับโหลด Template และแสดงผลข้อมูลวันเกิด
 async function renderBirthResult(birthData) {
   const response = await fetch(`/static/result-template.html?t=${Date.now()}`, { cache: 'no-store' });
@@ -105,18 +85,27 @@ async function submitBirthInfo() {
     return;
   }
 
-  // 2. ดึงปีที่ผู้ใช้กรอกมา (ซึ่งเป็น พ.ศ.)
-  const parts = birthDateStr.split('-'); // [ปีพศ, เดือน, วัน]
+  // 2. ดึงปีจากค่า input type="date"
+  // หมายเหตุ: บน iOS Safari / Facebook In-App Browser ที่ตั้งปฏิทินเครื่องเป็น พ.ศ.
+  // หน้าจอจะให้ผู้ใช้เลือกเป็น "2538" แต่ค่า .value ที่เบราว์เซอร์คืนมาจะเป็น ค.ศ. "1995-MM-DD" เสมอ
+  // ส่วนบน Desktop หากผู้ใช้พิมพ์ "2538" ตรง ๆ ค่า .value จะเป็น "2538-MM-DD"
+  const parts = birthDateStr.split('-'); // [ปี, เดือน, วัน]
   const inputYear = parseInt(parts[0], 10);
 
-  // 3. ตรวจสอบเงื่อนไข: ต้องเป็น พ.ศ. 2500 ขึ้นไป (>= 2500)
-  if (isNaN(inputYear) || inputYear < 2500) {
+  if (isNaN(inputYear)) {
     alert('กรุณากรอกปีเกิดตั้งแต่ พ.ศ. 2500 ขึ้นไปเท่านั้น');
     return;
   }
 
-  const yearBE = inputYear;        // เก็บปี พ.ศ. ไว้ (เช่น 2538)
-  const yearCE = inputYear - 543;  // แปลงเป็น ค.ศ. สำหรับเก็บ (เช่น 1995)
+  // แยกแยะอัตโนมัติว่าค่าปีที่ได้จาก input.value เป็น พ.ศ. (>= 2400) หรือ ค.ศ. (< 2400)
+  const yearBE = inputYear >= 2400 ? inputYear : inputYear + 543;
+  const yearCE = inputYear >= 2400 ? inputYear - 543 : inputYear;
+
+  // 3. ตรวจสอบเงื่อนไข: ต้องเป็น พ.ศ. 2500 (ค.ศ. 1957) ขึ้นไป
+  if (yearBE < 2500) {
+    alert('กรุณากรอกปีเกิดตั้งแต่ พ.ศ. 2500 ขึ้นไปเท่านั้น');
+    return;
+  }
 
   // เปลี่ยนปีในวันที่ให้เป็น ค.ศ. เพื่อความถูกต้องเวลาเอาไปใช้งานต่อ
   parts[0] = String(yearCE);

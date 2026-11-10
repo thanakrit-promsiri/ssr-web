@@ -123,7 +123,16 @@
         <div id="predictionBody" class="text-xs text-slate-200 leading-relaxed space-y-2"></div>
       </div>
 
-      <!-- ส่วนแสดงผลข้อมูล Prompt พื้นดวงชะตา (Lahiri Sidereal) -->
+      <!-- ปุ่มทำนายดวงชะตา พ.ศ. ปี 2570 (แสดงเฉพาะเมื่อ ✅ พยากรณ์พื้นดวงชะตาสำเร็จ และอยู่ก่อนกล่อง Prompt) -->
+      <div id="transit2570ActionArea" class="hidden pt-3 border-t border-purple-500/20">
+        <button id="goToTransit2570Btn" type="button" onclick="goToTransit2570Page()" class="w-full bg-gradient-to-r from-amber-500 via-purple-600 to-indigo-600 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 border border-amber-400/30">
+          <span>🌟</span>
+          <span>ทำนายดวงชะตา พ.ศ. ปี 2570 (รายเดือน 12 เดือน)</span>
+          <span>➔</span>
+        </button>
+      </div>
+
+      <!-- ส่วนแสดงผลข้อมูล Prompt พื้นดวงชะตา (Lahiri Sidereal) อยู่ด้านล่างสุด -->
       <div id="promptSection" class="bg-slate-950/70 p-3.5 rounded-xl border border-purple-500/20 space-y-2.5">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -150,15 +159,6 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] text-slate-400 pt-2 border-t border-slate-800">
         <span id="predictStatusFooter" class="text-emerald-400">✅ คำนวณข้อมูลพื้นดวงชะตาสำเร็จ</span>
         <span class="text-slate-500">API: hora.garbagecollection.info</span>
-      </div>
-
-      <!-- ปุ่มทำนายดวงชะตา พ.ศ. ปี 2570 (แสดงเฉพาะเมื่อ ✅ พยากรณ์พื้นดวงชะตาสำเร็จ) -->
-      <div id="transit2570ActionArea" class="hidden pt-3 border-t border-purple-500/20">
-        <button id="goToTransit2570Btn" type="button" onclick="goToTransit2570Page()" class="w-full bg-gradient-to-r from-amber-500 via-purple-600 to-indigo-600 hover:opacity-95 text-white font-semibold py-3 px-4 rounded-xl text-xs sm:text-sm transition cursor-pointer shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 border border-amber-400/30">
-          <span>🌟</span>
-          <span>ทำนายดวงชะตา พ.ศ. ปี 2570 (รายเดือน 12 เดือน)</span>
-          <span>➔</span>
-        </button>
       </div>
     </div>
   </div>

@@ -42,8 +42,20 @@
             <!-- ช่องกรอก Serial Key -->
             <div>
                 <label for="serialKey" class="block text-xs font-medium text-slate-300 mb-1.5 ml-1">รหัสซีเรียลทดสอบ (Serial Key)</label>
-                <input type="text" id="serialKey" name="serialKey" autocomplete="off" placeholder="MALIN-VIP-XXXX" required
+                <input type="text" id="serialKey" name="serialKey" autocomplete="off" placeholder="BOOM-VIP-XXXX" required
                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-center tracking-widest uppercase text-amber-300 font-mono text-sm focus:outline-none focus:border-purple-500 transition placeholder-slate-600">
+
+                <!-- แสดงสถานะ Serial Key ด้านใต้ช่องกรอก -->
+                <div id="serialKeysStatusBox" class="mt-2.5 bg-slate-950/90 border border-slate-800/90 rounded-xl p-3 space-y-2">
+                    <div class="flex items-center justify-between text-[11px]">
+                        <span class="text-slate-300 font-medium flex items-center gap-1.5">
+                            <span>🔑</span>
+                            <span>สถานะ Serial Key</span>
+                        </span>
+                        <span id="serialKeySummaryBadge" class="text-slate-400">กำลังโหลดข้อมูล...</span>
+                    </div>
+                    <div id="serialKeysList" class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto pt-1"></div>
+                </div>
             </div>
             
             <button type="submit" class="w-full mt-2 bg-gradient-to-r from-purple-600 to-amber-500 hover:opacity-90 text-white font-medium py-3.5 px-4 rounded-xl transition duration-200 shadow-lg shadow-purple-600/30 cursor-pointer text-sm text-center">
@@ -60,54 +72,6 @@
         </p>
     </div>
 
-<!-- Script สำหรับส่ง Username และ Serial Key ไปที่ Backend Golang -->
-    <script>
-        function handleRegister(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value.trim();
-            const key = document.getElementById('serialKey').value.trim();
-            const errorBox = document.getElementById('errorMsg');
-            
-            errorBox.classList.add('hidden');
-
-            // ตรวจสอบว่าชื่อผู้ใช้เป็นตัวอักษรโรมัน (a-z, A-Z) หรือตัวเลข (0-9) เท่านั้นก่อนส่ง API
-            const usernameRegex = /^[A-Za-z0-9]+$/;
-            if (!usernameRegex.test(username)) {
-                errorBox.textContent = 'ชื่อผู้ใช้ต้องเป็นตัวอักษรภาษาอังกฤษ (a-z, A-Z) หรือตัวเลข (0-9) เท่านั้น ห้ามเว้นวรรคหรือใช้อักขระพิเศษ';
-                errorBox.classList.remove('hidden');
-                return;
-            }
-
-            fetch('/api/v1/auth/register-serial', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include', // สำคัญ: เพื่อให้เบราว์เซอร์รับ HttpOnly Cookie ที่เซิร์ฟเวอร์ส่งกลับมา
-                body: JSON.stringify({ 
-                    username: username,
-                    serial_key: key 
-                })
-            })
-            .then(async res => {
-                const data = await res.json();
-                if (!res.ok) {
-                    throw new Error(data.message || 'เกิดข้อผิดพลาด กรุณาตรวจสอบรหัสซีเรียลอีกครั้ง');
-                }
-                return data;
-            })
-            .then(data => {
-                // บันทึก Username ลง sessionStorage (ใช้ค่าจาก Backend ถ้ามี) — ถูกล้างเมื่อปิดแท็บหรือออกจากระบบ
-                sessionStorage.setItem('user_username', (data && data.username) || username);
-
-                // สำเร็จ: Token ถูกเก็บใน HttpOnly Cookie อัตโนมัติแล้ว พาไปหน้าแชทได้ทันที
-                window.location.href = '/chat.html';
-            })
-            .catch(error => {
-                errorBox.textContent = error.message;
-                errorBox.classList.remove('hidden');
-            });
-        }
-    </script>
+    <script src="/static/login.js"></script>
 </body>
 </html>

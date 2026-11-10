@@ -1,30 +1,12 @@
 // ==========================================
 // transit.js - จัดการหน้าทำนายดวงชะตารายเดือน พ.ศ. 2570 (/transit.html)
+// เชื่อมต่อ API: /api/v1/hora/transitpredict_1 ถึง /api/v1/hora/transitpredict_12
 // ==========================================
 
 const TRANSIT_STORAGE_KEY = 'user_transit_2570';
 const TRANSIT_TEMPLATE_URL = '/static/transit-template.html';
 
-const THAI_MONTH_NAMES = [
-  'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
-  'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'
-];
-
 let transitTemplateCache = null;
-
-// เติมค่าลงใน Element ที่มี data-field ตรงกับ key (ใช้ textContent ป้องกัน DOM XSS)
-function fillTransitFields(root, values) {
-  Object.entries(values).forEach(([field, value]) => {
-    root.querySelectorAll(`[data-field="${field}"]`).forEach(el => {
-      el.textContent = String(value ?? '');
-    });
-  });
-}
-
-// แสดงหรือซ่อน Element
-function setTransitHidden(el, hidden) {
-  if (el) el.classList.toggle('hidden', hidden);
-}
 
 // ตรวจสอบว่าข้อมูลทั้ง 4 ตัวใน sessionStorage ไม่ว่างและถูกต้องครบถ้วน
 function validateSessionPrerequisites() {
@@ -87,16 +69,11 @@ async function loadTransitTemplates() {
   return transitTemplateCache;
 }
 
-// แปลงวันที่ ค.ศ. เป็นข้อความภาษาไทย
+// แปลงวันที่ ค.ศ. เป็นข้อความภาษาไทยพร้อมเวลาและจังหวัด
 function formatBirthSummary(birthInfo) {
   if (!birthInfo) return '-';
-  const parts = String(birthInfo.birthDateCE || '').split('-');
-  if (parts.length !== 3) return `${birthInfo.birthYearBE || ''} เวลา ${birthInfo.birthTime || ''} น.`;
-  const monthIdx = parseInt(parts[1], 10) - 1;
-  const day = parseInt(parts[2], 10);
-  const yearBE = birthInfo.birthYearBE || (parseInt(parts[0], 10) + 543);
-  const monthName = THAI_MONTH_NAMES[monthIdx] || parts[1];
-  return `${day} ${monthName} พ.ศ. ${yearBE} เวลา ${birthInfo.birthTime} น. (${birthInfo.province || ''})`;
+  const thaiDate = formatThaiDateBE(birthInfo.birthDateCE, birthInfo.birthYearBE);
+  return `${thaiDate} เวลา ${birthInfo.birthTime || ''} น. (${birthInfo.province || ''})`;
 }
 
 // ดึงราศีลัคนาจากผลคำนวณสมผุสดาว
@@ -105,7 +82,8 @@ function extractAscendantSummary(horaResult) {
   const asc = horaResult.planets.find(p =>
     p.name === 'Ascendant' ||
     String(p.name_thai || '').includes('ลัคนา') ||
-    p.symbol === 'ล'
+    p.symbol === 'ล' ||
+    p.symbol === 'ลั'
   );
   if (!asc) return 'ลัคนาตามเวลาเกิด';
   const signThai = asc.position?.sign_thai || '';
@@ -113,44 +91,67 @@ function extractAscendantSummary(horaResult) {
   return `ราศี${signThai}${nakThai ? ` (ฤกษ์${nakThai})` : ''}`;
 }
 
-// แปลง Markdown เบื้องต้นเป็น DOM Element อย่างปลอดภัย (ไม่ใช้ innerHTML กับข้อมูลดิบ)
+// แปลงข้อความคำพยากรณ์เป็น DOM Nodes อย่างปลอดภัย (รองรับหัวข้อ, Bullet •, -, * และย่อหน้า)
 function buildMarkdownNodes(mdText) {
   const fragment = document.createDocumentFragment();
-  const lines = String(mdText || '').split('\n');
+  const rawLines = String(mdText || '').split('\n');
 
-  lines.forEach(rawLine => {
-    const line = rawLine.trim();
-    if (!line) return;
+  for (let i = 0; i < rawLines.length; i++) {
+    const line = rawLines[i].trim();
+    if (!line) continue;
 
-    if (line.startsWith('### ')) {
-      const h3 = document.createElement('h3');
-      h3.className = 'text-amber-300 font-semibold text-xs sm:text-sm mt-2 mb-1';
-      h3.textContent = line.replace(/^###\s+/, '');
-      fragment.appendChild(h3);
-      return;
+    // กรณีบรรทัดมีแค่สัญลักษณ์ "•" เดี่ยว ๆ ให้รวมเข้ากับบรรทัดถัดไป
+    if (line === '•' && i + 1 < rawLines.length) {
+      const nextLine = rawLines[i + 1].trim();
+      if (nextLine) {
+        appendBulletNode(fragment, nextLine);
+        i++;
+        continue;
+      }
     }
 
-    if (line.startsWith('- ') || line.startsWith('* ')) {
-      const div = document.createElement('div');
-      div.className = 'flex items-start gap-2 ml-2 text-slate-200 my-1';
-      const bullet = document.createElement('span');
-      bullet.className = 'text-amber-400 font-bold';
-      bullet.textContent = '•';
-      const textSpan = document.createElement('span');
-      textSpan.textContent = line.replace(/^[*-]\s+/, '');
-      div.appendChild(bullet);
-      div.appendChild(textSpan);
-      fragment.appendChild(div);
-      return;
+    if (line.startsWith('### ') || line.startsWith('## ') || line.startsWith('# ')) {
+      const h3 = document.createElement('h3');
+      h3.className = 'text-amber-300 font-semibold text-xs sm:text-sm mt-2.5 mb-1';
+      h3.textContent = line.replace(/^#{1,3}\s+/, '');
+      fragment.appendChild(h3);
+      continue;
+    }
+
+    if (line.startsWith('🪐') || line.startsWith('✨')) {
+      const highlightP = document.createElement('p');
+      highlightP.className = 'text-amber-300 font-semibold text-xs mt-2.5 mb-1 leading-relaxed';
+      highlightP.textContent = line;
+      fragment.appendChild(highlightP);
+      continue;
+    }
+
+    if (line.startsWith('- ') || line.startsWith('* ') || line.startsWith('• ')) {
+      appendBulletNode(fragment, line.replace(/^[-*•]\s+/, ''));
+      continue;
     }
 
     const p = document.createElement('p');
     p.className = 'leading-relaxed text-slate-200 mb-1.5';
     p.textContent = line;
     fragment.appendChild(p);
-  });
+  }
 
   return fragment;
+}
+
+function appendBulletNode(fragment, text) {
+  const div = document.createElement('div');
+  div.className = 'flex items-start gap-2 ml-2 text-slate-200 my-1';
+  const bullet = document.createElement('span');
+  bullet.className = 'text-amber-400 font-bold shrink-0';
+  bullet.textContent = '•';
+  const textSpan = document.createElement('span');
+  textSpan.className = 'leading-relaxed';
+  textSpan.textContent = text;
+  div.appendChild(bullet);
+  div.appendChild(textSpan);
+  fragment.appendChild(div);
 }
 
 // เริ่มต้นหน้า /transit.html: ตรวจสอบทั้ง 5 เงื่อนไขก่อนอนุญาตให้เข้าใช้งาน
@@ -173,7 +174,7 @@ async function initTransitPage() {
     if (!mainEl) return;
 
     const boardFrag = document.importNode(templates.boardTemplate.content, true);
-    fillTransitFields(boardFrag, {
+    fillFields(boardFrag, {
       username: sessionData.username,
       birthSummary: formatBirthSummary(sessionData.birthInfo),
       ascendantSummary: extractAscendantSummary(sessionData.horaResult)
@@ -214,8 +215,10 @@ function restoreTransitProgress() {
 
   for (let m = 1; m <= 12; m++) {
     const item = savedMonths[String(m)];
-    if (item && item.prediction) {
-      appendMonthResultCard(item, false);
+    if (!item) break;
+
+    appendMonthResultCard(item, false);
+    if (item.prediction && String(item.prediction).trim()) {
       highestCompletedMonth = m;
     } else {
       break;
@@ -226,7 +229,7 @@ function restoreTransitProgress() {
 }
 
 // อัปเดตการแสดงผลของปุ่มทั้ง 12 เดือน:
-// ซ่อนปุ่มเดือนที่ดูเสร็จแล้ว และเปิดเฉพาะปุ่มของเดือนถัดไป (highestCompletedMonth + 1)
+// ซ่อนปุ่มเดือนที่พยากรณ์สำเร็จแล้ว และแสดงเฉพาะปุ่มของเดือนถัดไป (highestCompletedMonth + 1)
 function updateButtonVisibility(highestCompletedMonth) {
   const badge = document.getElementById('transitProgressBadge');
   if (badge) {
@@ -238,13 +241,12 @@ function updateButtonVisibility(highestCompletedMonth) {
   for (let m = 1; m <= 12; m++) {
     const btn = document.getElementById(`transitBtnMonth${m}`);
     if (!btn) continue;
-    // แสดงเฉพาะปุ่มของเดือนถัดไปที่ต้องกดเท่านั้น
-    setTransitHidden(btn, m !== nextMonth);
+    setHidden(btn, m !== nextMonth);
     btn.disabled = false;
   }
 
   const allCompletedBanner = document.getElementById('transitAllCompletedBanner');
-  setTransitHidden(allCompletedBanner, highestCompletedMonth < 12);
+  setHidden(allCompletedBanner, highestCompletedMonth < 12);
 }
 
 // สร้างการ์ดผลลัพธ์ของเดือนที่ทำนายเสร็จแล้วใส่ลงใน #transitResultsList
@@ -254,7 +256,6 @@ function appendMonthResultCard(monthData, shouldScroll = true) {
   const listEl = document.getElementById('transitResultsList');
   if (!listEl) return;
 
-  // ป้องกันการสร้างการ์ดซ้ำหากมีอยู่แล้ว
   const cardId = `transitResultCardMonth${monthData.month}`;
   const existing = document.getElementById(cardId);
   if (existing) existing.remove();
@@ -263,17 +264,49 @@ function appendMonthResultCard(monthData, shouldScroll = true) {
   const wrapper = cardFrag.firstElementChild;
   if (wrapper) wrapper.id = cardId;
 
-  fillTransitFields(cardFrag, {
+  const monthThaiLabel = monthData.transit_month_thai || `เดือน${THAI_MONTHS[monthData.month - 1] || monthData.month} พ.ศ. 2570`;
+  const hasPrediction = Boolean(monthData.prediction && String(monthData.prediction).trim());
+  const hasWarning = Boolean(monthData.warning && String(monthData.warning).trim());
+
+  fillFields(cardFrag, {
     monthNumberBadge: `${monthData.month}`,
-    monthTitle: monthData.title || `คำพยากรณ์ประจำเดือน${monthData.monthName} พ.ศ. 2570`,
-    monthSubtitle: monthData.subtitle || `ดวงชะตาจรประจำเดือนที่ ${monthData.month} ของปี พ.ศ. 2570`,
-    transitHighlight: monthData.transitHighlight || '-',
-    luckyHint: monthData.luckyHint || ''
+    monthTitle: `คำพยากรณ์ดวงชะตาประจำ${monthThaiLabel}`,
+    monthSubtitle: `Vedic Transit (Lahiri) / Whole Sign (W) • เดือนที่ ${monthData.month} จาก 12 เดือน`,
+    warningText: monthData.warning || ''
   });
 
-  const bodyEl = cardFrag.querySelector('[data-field="monthPredictionBody"]');
-  if (bodyEl) {
-    bodyEl.replaceChildren(buildMarkdownNodes(monthData.prediction));
+  const warningBanner = cardFrag.querySelector('[data-role="warningBanner"]');
+  const predictionSection = cardFrag.querySelector('[data-role="predictionSection"]');
+  const statusFooter = cardFrag.querySelector('[data-field="statusFooterText"]');
+
+  if (!hasPrediction && hasWarning) {
+    setHidden(warningBanner, false);
+    setHidden(predictionSection, true);
+    if (statusFooter) {
+      statusFooter.className = 'text-amber-300';
+      statusFooter.textContent = `⚠️ คำนวณดาวจร${monthThaiLabel}สำเร็จ (ระบบ AI ไม่พร้อมใช้งานชั่วคราว)`;
+    }
+  } else {
+    setHidden(warningBanner, true);
+    setHidden(predictionSection, false);
+    const bodyEl = cardFrag.querySelector('[data-field="monthPredictionBody"]');
+    if (bodyEl) {
+      bodyEl.replaceChildren(buildMarkdownNodes(monthData.prediction));
+    }
+    if (statusFooter) {
+      statusFooter.className = 'text-emerald-400';
+      statusFooter.textContent = `✅ พยากรณ์ดวงชะตาดาวจร${monthThaiLabel}สำเร็จ`;
+    }
+  }
+
+  // ผูกปุ่มคัดลอกคำทำนาย
+  const copyPredBtn = cardFrag.querySelector('[data-role="copyPredBtn"]');
+  const copyPredIcon = cardFrag.querySelector('[data-role="copyPredIcon"]');
+  const copyPredLabel = cardFrag.querySelector('[data-role="copyPredLabel"]');
+  if (copyPredBtn) {
+    copyPredBtn.addEventListener('click', () => {
+      copyTextWithFeedback(monthData.prediction, copyPredLabel, copyPredIcon, 'คัดลอกคำทำนาย');
+    });
   }
 
   listEl.appendChild(cardFrag);
@@ -281,29 +314,6 @@ function appendMonthResultCard(monthData, shouldScroll = true) {
   if (shouldScroll && wrapper) {
     wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-}
-
-// สร้างข้อมูลจำลอง (Fallback Mock) กรณีออฟไลน์
-function buildClientMockTransit(monthNumber, sessionData) {
-  const monthName = THAI_MONTH_NAMES[monthNumber - 1] || `เดือนที่ ${monthNumber}`;
-  const ascText = extractAscendantSummary(sessionData?.horaResult);
-
-  return {
-    month: monthNumber,
-    yearBE: 2570,
-    monthName,
-    title: `คำพยากรณ์ดวงชะตาประจำเดือน${monthName} พ.ศ. 2570`,
-    subtitle: `วิเคราะห์ดาวจรเทียบ${ascText} • เดือนที่ ${monthNumber} จาก 12 เดือน`,
-    prediction: [
-      `### ภาพรวมดวงชะตาเดือน${monthName} 2570`,
-      `ในช่วงเดือน${monthName} พ.ศ. 2570 ดาวอาทิตย์และดาวศุกร์โคจรทำมุมส่งเสริม${ascText} ส่งผลให้จังหวะชีวิตมีความก้าวหน้าอย่างชัดเจน`,
-      `- การงาน: มีเกณฑ์ได้รับมอบหมายภารกิจสำคัญ หรือขยับขยายโครงการที่วางแผนไว้สำเร็จลุล่วง`,
-      `- การเงิน: สภาพคล่องทางการเงินหมุนเวียนดี มีโอกาสได้รับผลตอบแทนจากผลงานที่ผ่านมา`,
-      `- ความสัมพันธ์และสุขภาพ: คนรอบข้างให้การสนับสนุนดี ควรพักผ่อนให้เพียงพอในช่วงกลางเดือน`
-    ].join('\n'),
-    transitHighlight: `ดาวพฤหัสบดีและดาวเสาร์ทำมุมส่งกระแสถึงเรือนชะตาสำคัญในเดือน${monthName}`,
-    luckyHint: `✨ สีมงคลประจำเดือน${monthName}: สีม่วงไวโอเลต และสีทองอำพัน`
-  };
 }
 
 // ฟังก์ชันเมื่อผู้ใช้กดปุ่มดูดวงของแต่ละเดือน (1 ถึง 12)
@@ -314,73 +324,101 @@ async function predictTransitMonth(monthNumber) {
     return;
   }
 
-  // ตรวจสอบลำดับ: ต้องกดเรียงตามลำดับเดือนเท่านั้น
+  // ตรวจสอบลำดับ: ต้องพยากรณ์เดือนก่อนหน้าสำเร็จครบแล้วจึงจะกดเดือนนี้ได้
   const savedMonths = getSavedTransitMonths();
-  const completedCount = Object.keys(savedMonths).length;
-  if (monthNumber !== completedCount + 1) {
-    return;
+  for (let m = 1; m < monthNumber; m++) {
+    const prev = savedMonths[String(m)];
+    if (!prev || !prev.prediction || !String(prev.prediction).trim()) {
+      return;
+    }
   }
 
-  const monthName = THAI_MONTH_NAMES[monthNumber - 1] || `เดือนที่ ${monthNumber}`;
+  const monthName = THAI_MONTHS[monthNumber - 1] || `เดือนที่ ${monthNumber}`;
   const btn = document.getElementById(`transitBtnMonth${monthNumber}`);
+  const btnLabel = btn ? btn.querySelector(`[data-field="btnText${monthNumber}"]`) : null;
   const loadingBox = document.getElementById('transitLoadingBox');
   const loadingText = document.getElementById('transitLoadingText');
   const errorBox = document.getElementById('transitErrorBox');
 
+  const birthInfo = sessionData.birthInfo;
+  const [yearStr, monthStr, dayStr] = String(birthInfo.birthDateCE || '').split('-');
+
+  const payload = {
+    year: parseInt(yearStr, 10),
+    month: parseInt(monthStr, 10),
+    day: parseInt(dayStr, 10),
+    hour_thai: parseHourThai(birthInfo.birthTime),
+    time_zone: 7.0,
+    latitude: parseFloat(birthInfo.latitude),
+    longitude: parseFloat(birthInfo.longitude)
+  };
+
   if (btn) btn.disabled = true;
   if (loadingText) {
-    loadingText.textContent = `กำลังเรียก API พยากรณ์ดวงชะตาเดือน${monthName} 2570...`;
+    loadingText.textContent = `กำลังคำนวณดาวจรและพยากรณ์เดือน${monthName} พ.ศ. 2570 ด้วย AI...`;
   }
-  setTransitHidden(loadingBox, false);
-  setTransitHidden(errorBox, true);
+  setHidden(loadingBox, false);
+  setHidden(errorBox, true);
 
   try {
-    let monthData = null;
+    const response = await postHoraAPI(`transitpredict_${monthNumber}`, payload);
 
-    try {
-      const response = await fetch('/hora/transit', {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          year_be: 2570,
-          month: monthNumber,
-          username: sessionData.username,
-          ascendant: extractAscendantSummary(sessionData.horaResult)
-        })
-      });
+    if (!response.ok) {
+      const errText = await response.text();
+      let errMsg = `เกิดข้อผิดพลาดในการพยากรณ์เดือน${monthName} (HTTP ${response.status})`;
+      try {
+        const errJson = JSON.parse(errText);
+        if (errJson.message) errMsg = errJson.message;
+      } catch (_) {}
+      throw new Error(errMsg);
+    }
 
-      if (response.ok) {
-        const resJson = await response.json();
-        if (resJson && resJson.data) {
-          monthData = resJson.data;
-        }
+    const result = await response.json();
+    const apiData = result.data || {};
+    const predictionText = String(apiData.prediction || '').trim();
+    const transitPromptText = String(apiData.transit_prompt || '').trim();
+    const natalPromptText = String(apiData.natal_prompt || '').trim();
+    const warningText = apiData.warning || (!predictionText ? (result.message || '') : '');
+
+    if (!predictionText && !transitPromptText) {
+      throw new Error(result.message || `ไม่พบข้อมูลคำพยากรณ์เดือน${monthName} 2570 จากระบบ`);
+    }
+
+    const monthRecord = {
+      month: monthNumber,
+      transit_month: apiData.transit_month || monthNumber,
+      transit_year: apiData.transit_year || 2027,
+      transit_month_thai: apiData.transit_month_thai || `เดือน${monthName} พ.ศ. 2570`,
+      natal_prompt: natalPromptText,
+      transit_prompt: transitPromptText,
+      prediction: predictionText,
+      warning: warningText,
+      message: result.message || ''
+    };
+
+    // 1. บันทึกลง sessionStorage
+    saveTransitMonthResult(monthNumber, monthRecord);
+
+    // 2. แสดงการ์ดผลลัพธ์ของเดือนนี้
+    appendMonthResultCard(monthRecord, true);
+
+    // 3. หากพยากรณ์สำเร็จ (มี predictionText) ให้ซ่อนปุ่มเดือนนี้และเปิดปุ่มเดือนถัดไปทันที
+    if (predictionText) {
+      updateButtonVisibility(monthNumber);
+    } else {
+      if (btnLabel) {
+        btnLabel.textContent = `ลองทำนายเดือน${monthName} 2570 ใหม่อีกครั้ง (Retry)`;
       }
-    } catch (_) {
-      // หากเรียกไม่ได้ ใช้ Client Mock แทน
+      if (btn) btn.disabled = false;
     }
-
-    if (!monthData) {
-      await new Promise(resolve => setTimeout(resolve, 500));
-      monthData = buildClientMockTransit(monthNumber, sessionData);
-    }
-
-    // 1. บันทึกผลลัพธ์ของเดือนนี้ลง sessionStorage
-    saveTransitMonthResult(monthNumber, monthData);
-
-    // 2. แสดงผลคำทำนายของเดือนนี้
-    appendMonthResultCard(monthData, true);
-
-    // 3. ซ่อนปุ่มเดือนปัจจุบัน และเปิดปุ่มเดือนถัดไป (เช่น กดมกราคมเสร็จ -> ปุ่มกุมภาพันธ์จึงจะขึ้น)
-    updateButtonVisibility(monthNumber);
   } catch (err) {
-    console.error(`Error predicting month ${monthNumber}:`, err);
+    console.error(`❌ Error predicting transit month ${monthNumber}:`, err);
     if (errorBox) {
-      errorBox.textContent = `❌ เกิดข้อผิดพลาดในการดูดวงเดือน${monthName} 2570 กรุณาลองใหม่อีกครั้ง`;
-      setTransitHidden(errorBox, false);
+      errorBox.textContent = `❌ ${err.message || `ไม่สามารถพยากรณ์ดวงชะตาเดือน${monthName} 2570 ได้`}`;
+      setHidden(errorBox, false);
     }
     if (btn) btn.disabled = false;
   } finally {
-    setTransitHidden(loadingBox, true);
+    setHidden(loadingBox, true);
   }
 }

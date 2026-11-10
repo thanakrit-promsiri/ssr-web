@@ -339,15 +339,42 @@ func TestHandleTransit_Authorized(t *testing.T) {
 	}
 }
 
-func TestHandleHoraTransitMock_All12Months(t *testing.T) {
+func TestHandleHoraTransitPredict_ProxiesAll12Months(t *testing.T) {
+	sampleTransitJSON := `{
+		"success": true,
+		"message": "พยากรณ์ดวงชะตาดาวจรประจำเดือนสำเร็จ",
+		"data": {
+			"status": "success",
+			"natal_prompt": "[Vedic Sidereal(Lahiri)/WholeSign]\nASC:Aq 03°39'23\"",
+			"transit_prompt": "[Vedic Transit(Lahiri)/WholeSign | Date:2027-12-23]",
+			"transit_month": 12,
+			"transit_year": 2027,
+			"transit_month_thai": "เดือนธันวาคม พ.ศ. 2570",
+			"prediction": "คำพยากรณ์ดวงชะตาประจำเดือนธันวาคม พ.ศ. 2570...",
+			"workspace_slug": "testuser01",
+			"thread_slug": "testuser01-hora"
+		}
+	}`
+
 	h := New("http://auth-service", "http://hora-service")
+	h.httpClient.Transport = roundTripFunc(func(req *http.Request) (*http.Response, error) {
+		if req.URL.Path != "/api/v1/hora/transitpredict_12" {
+			t.Fatalf("unexpected upstream path: %s", req.URL.Path)
+		}
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(strings.NewReader(sampleTransitJSON)),
+			Header:     make(http.Header),
+		}, nil
+	})
+
 	mux := http.NewServeMux()
 	if err := h.RegisterRoutes(mux); err != nil {
 		t.Fatalf("RegisterRoutes failed: %v", err)
 	}
 
-	reqBody := `{"year_be":2570,"month":1,"username":"Somchai99","ascendant":"ราศีกุมภ์"}`
-	req := httptest.NewRequest(http.MethodPost, "/hora/transit", strings.NewReader(reqBody))
+	reqBody := `{"year":1988,"month":12,"day":23,"hour_thai":10.35,"time_zone":7.0,"latitude":13.7563,"longitude":100.5018}`
+	req := httptest.NewRequest(http.MethodPost, "/api/v1/hora/transitpredict_12", strings.NewReader(reqBody))
 	rec := httptest.NewRecorder()
 	mux.ServeHTTP(rec, req)
 
@@ -363,8 +390,67 @@ func TestHandleHoraTransitMock_All12Months(t *testing.T) {
 		t.Fatalf("expected success true, got %v", got["success"])
 	}
 	data, ok := got["data"].(map[string]any)
-	if !ok || data["monthName"] != "มกราคม" {
-		t.Fatalf("expected monthName มกราคม, got %v", got["data"])
+	if !ok || data["transit_month_thai"] != "เดือนธันวาคม พ.ศ. 2570" {
+		t.Fatalf("expected transit_month_thai เดือนธันวาคม พ.ศ. 2570, got %v", got["data"])
+	}
+
+	// ทดสอบกรณีระบุเดือนนอกช่วง 1-12 ต้องได้ 400 Bad Request
+	badReq := httptest.NewRequest(http.MethodPost, "/hora/transitpredict_13", strings.NewReader(reqBody))
+	badRec := httptest.NewRecorder()
+	mux.ServeHTTP(badRec, badReq)
+	if badRec.Code != http.StatusBadRequest {
+		t.Fatalf("expected status 400 for invalid transit month, got %d", badRec.Code)
+	}
+}
+
+func TestHandleAuthSerialKeys_ProxiesAuthService(t *testing.T) {
+	sampleSerialKeysJSON := `{
+		"success": true,
+		"message": "ดึงข้อมูลสถานะ Serial Key สำเร็จ",
+		"data": {
+			"total_keys": 2,
+			"available_count": 1,
+			"used_count": 1,
+			"available_keys": ["BOOM-VIP-002"],
+			"used_keys": ["BOOM-VIP-001"],
+			"keys": [
+				{"id": 1, "key_code": "BOOM-VIP-001", "is_used": true, "status": "used", "user_id": 38},
+				{"id": 2, "key_code": "BOOM-VIP-002", "is_used": false, "status": "available", "user_id": null}
+			]
+		}
+	}`
+
+	h := New("http://auth-service", "http://hora-service")
+	h.httpClient.Transport = roundTripFunc(func(req *http.Request) (*http.Response, error) {
+		if req.URL.Path != "/api/v1/auth/serial-keys" {
+			t.Fatalf("unexpected upstream path: %s", req.URL.Path)
+		}
+		return &http.Response{
+			StatusCode: http.StatusOK,
+			Body:       io.NopCloser(strings.NewReader(sampleSerialKeysJSON)),
+			Header:     make(http.Header),
+		}, nil
+	})
+
+	mux := http.NewServeMux()
+	if err := h.RegisterRoutes(mux); err != nil {
+		t.Fatalf("RegisterRoutes failed: %v", err)
+	}
+
+	req := httptest.NewRequest(http.MethodGet, "/api/v1/auth/serial-keys", nil)
+	rec := httptest.NewRecorder()
+	mux.ServeHTTP(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected status 200, got %d", rec.Code)
+	}
+
+	var got map[string]any
+	if err := json.Unmarshal(rec.Body.Bytes(), &got); err != nil {
+		t.Fatalf("failed to unmarshal response: %v", err)
+	}
+	if got["success"] != true {
+		t.Fatalf("expected success true, got %v", got["success"])
 	}
 }
 
