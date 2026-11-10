@@ -598,6 +598,10 @@ async function renderPredictResult(data) {
   const promptDesc = frag.getElementById('promptDesc');
   const statusFooter = frag.getElementById('predictStatusFooter');
   const transit2570Area = frag.getElementById('transit2570ActionArea');
+  const promptSection = frag.getElementById('promptSection');
+
+  // ซ่อนกล่องข้อมูล Prompt พื้นดวงชะตาชั่วคราว
+  setHidden(promptSection, true);
 
   const hasPrediction = Boolean(data.prediction && String(data.prediction).trim());
   const hasWarning = Boolean(data.warning && String(data.warning).trim());
