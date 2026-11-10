@@ -344,13 +344,13 @@ async function predictTransitMonth(monthNumber) {
   const [yearStr, monthStr, dayStr] = String(birthInfo.birthDateCE || '').split('-');
 
   const payload = {
-    year: parseInt(yearStr, 10),
-    month: parseInt(monthStr, 10),
-    day: parseInt(dayStr, 10),
+    year: Number.parseInt(yearStr, 10),
+    month: Number.parseInt(monthStr, 10),
+    day: Number.parseInt(dayStr, 10),
     hour_thai: parseHourThai(birthInfo.birthTime),
     time_zone: 7.0,
-    latitude: parseFloat(birthInfo.latitude),
-    longitude: parseFloat(birthInfo.longitude)
+    latitude: Number.parseFloat(birthInfo.latitude),
+    longitude: Number.parseFloat(birthInfo.longitude)
   };
 
   if (btn) btn.disabled = true;

@@ -124,12 +124,14 @@ function handleRegister(event) {
     .catch(error => {
       errorBox.textContent = error.message;
       errorBox.classList.remove('hidden');
-      loadSerialKeysStatus();
+      void loadSerialKeysStatus();
     });
 }
 
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadSerialKeysStatus);
+  document.addEventListener('DOMContentLoaded', () => {
+    void loadSerialKeysStatus();
+  });
 } else {
-  loadSerialKeysStatus();
+  void loadSerialKeysStatus();
 }

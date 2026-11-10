@@ -6,7 +6,7 @@
 function initBirthInfo() {
   localStorage.removeItem('user_birth_info');
   localStorage.removeItem('user_hora_result');
-  checkExistingBirthInfo();
+  void checkExistingBirthInfo();
 }
 
 if (document.readyState === 'loading') {
@@ -28,7 +28,7 @@ async function renderBirthResult(birthData) {
   const container = document.getElementById('resultContainer');
   container.replaceChildren(...Array.from(doc.body.childNodes).map(node => document.importNode(node, true)));
 
-  const yearCE = parseInt(birthData.birthYearBE, 10) - 543;
+  const yearCE = Number.parseInt(birthData.birthYearBE, 10) - 543;
   document.getElementById('resYearBE').textContent = formatThaiDateBE(birthData.birthDateCE, birthData.birthYearBE);
   document.getElementById('resYearCE').textContent = yearCE;
   document.getElementById('resTime').textContent = birthData.birthTime;
@@ -44,9 +44,9 @@ async function renderBirthResult(birthData) {
 
   container.classList.remove('hidden');
 
-  // หากมีผลลัพธ์ตำแหน่งดาวใน localStorage อยู่แล้ว ให้แสดงตารางตำแหน่งดาวทันที
+  // หากมีผลลัพธ์ตำแหน่งดาวใน sessionStorage อยู่แล้ว ให้แสดงตารางตำแหน่งดาวทันที
   if (typeof checkExistingHoraResult === 'function') {
-    checkExistingHoraResult(birthData);
+    await checkExistingHoraResult(birthData);
   }
 }
 
@@ -90,9 +90,9 @@ async function submitBirthInfo() {
   // หน้าจอจะให้ผู้ใช้เลือกเป็น "2538" แต่ค่า .value ที่เบราว์เซอร์คืนมาจะเป็น ค.ศ. "1995-MM-DD" เสมอ
   // ส่วนบน Desktop หากผู้ใช้พิมพ์ "2538" ตรง ๆ ค่า .value จะเป็น "2538-MM-DD"
   const parts = birthDateStr.split('-'); // [ปี, เดือน, วัน]
-  const inputYear = parseInt(parts[0], 10);
+  const inputYear = Number.parseInt(parts[0], 10);
 
-  if (isNaN(inputYear)) {
+  if (Number.isNaN(inputYear)) {
     alert('กรุณากรอกปีเกิดตั้งแต่ พ.ศ. 2500 ขึ้นไปเท่านั้น');
     return;
   }

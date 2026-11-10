@@ -14,9 +14,9 @@ function formatThaiDateBE(birthDateCE, birthYearBE) {
   const parts = String(birthDateCE).split('-');
   if (parts.length !== 3) return `พ.ศ. ${birthYearBE}`;
 
-  const yearCE = parseInt(parts[0], 10);
-  const monthIdx = parseInt(parts[1], 10) - 1;
-  const day = parseInt(parts[2], 10);
+  const yearCE = Number.parseInt(parts[0], 10);
+  const monthIdx = Number.parseInt(parts[1], 10) - 1;
+  const day = Number.parseInt(parts[2], 10);
   const yearBE = birthYearBE || (yearCE + 543);
   const monthName = THAI_MONTHS[monthIdx] || parts[1];
 
@@ -27,10 +27,10 @@ function formatThaiDateBE(birthDateCE, birthYearBE) {
 function parseHourThai(timeStr) {
   if (!timeStr) return 0;
   const parts = String(timeStr).trim().split(':');
-  if (parts.length < 2) return parseFloat(timeStr) || 0;
-  const hour = parseInt(parts[0], 10) || 0;
-  const minute = parseInt(parts[1], 10) || 0;
-  return parseFloat(`${hour}.${String(minute).padStart(2, '0')}`);
+  if (parts.length < 2) return Number.parseFloat(timeStr) || 0;
+  const hour = Number.parseInt(parts[0], 10) || 0;
+  const minute = Number.parseInt(parts[1], 10) || 0;
+  return Number.parseFloat(`${hour}.${String(minute).padStart(2, '0')}`);
 }
 
 // เติมค่าลงใน Element ที่มี data-field ตรงกับ key (ใช้ textContent ป้องกัน DOM XSS)

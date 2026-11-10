@@ -196,7 +196,7 @@ function buildDashaSummary(calc) {
 function buildBirthSummary(birthData) {
   if (!birthData) return { birthDateText: '', locationText: '', coordText: '' };
 
-  const yearCE = parseInt(birthData.birthYearBE, 10) - 543;
+  const yearCE = Number.parseInt(birthData.birthYearBE, 10) - 543;
   const thaiDateText = typeof formatThaiDateBE === 'function'
     ? formatThaiDateBE(birthData.birthDateCE, birthData.birthYearBE)
     : `พ.ศ. ${birthData.birthYearBE}`;
@@ -328,13 +328,13 @@ function buildCalculatePayload(birthData) {
   const [yearStr, monthStr, dayStr] = String(birthData.birthDateCE || '').split('-');
   return {
     calculateReq: {
-      year: parseInt(yearStr, 10),
-      month: parseInt(monthStr, 10),
-      day: parseInt(dayStr, 10),
+      year: Number.parseInt(yearStr, 10),
+      month: Number.parseInt(monthStr, 10),
+      day: Number.parseInt(dayStr, 10),
       hour_thai: parseHourThai(birthData.birthTime),
       time_zone: 7.0,
-      latitude: parseFloat(birthData.latitude),
-      longitude: parseFloat(birthData.longitude),
+      latitude: Number.parseFloat(birthData.latitude),
+      longitude: Number.parseFloat(birthData.longitude),
       house_system: 'W'
     }
   };
@@ -472,7 +472,7 @@ function resetBirthInfo() {
 // 3. ฟังก์ชันการทำนายดวงชะตา (Predict) และแสดงผลคำทำนาย / Prompt
 // ------------------------------------------
 
-// ฟังก์ชันแปลงข้อความ Markdown เป็น HTML แบบ Zero-Dependency ทำงานเร็วระดับไมโครวินาที
+// ฟังก์ชันแปลงข้อความ Markdown เป็น HTML แบบ Zero-Dependency ทำงานเร็วระดับไมโครวินาที (Linear O(n) ปลอด Regex Backtracking)
 function renderMarkdown(mdText) {
   if (!mdText) return '';
 
@@ -482,56 +482,55 @@ function renderMarkdown(mdText) {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+    const trimmedStart = line.trimStart();
+    const trimmed = trimmedStart.trimEnd();
 
     // เส้นคั่น ---
-    if (/^\s*---\s*$/.test(line)) {
+    if (trimmed === '---') {
       if (inList) { out.push('</ul>'); inList = false; }
       out.push('<hr class="border-purple-500/20 my-3">');
       continue;
     }
 
     // หัวข้อ ###, ##, #
-    const h3Match = line.match(/^\s*###\s+(.*)$/);
-    if (h3Match) {
+    if (trimmedStart.startsWith('### ')) {
       if (inList) { out.push('</ul>'); inList = false; }
-      out.push(`<h3 class="text-amber-300 font-semibold text-sm mt-3 mb-1">${formatInlineMarkdown(h3Match[1])}</h3>`);
+      out.push(`<h3 class="text-amber-300 font-semibold text-sm mt-3 mb-1">${formatInlineMarkdown(trimmed.slice(4).trimStart())}</h3>`);
       continue;
     }
-    const h2Match = line.match(/^\s*##\s+(.*)$/);
-    if (h2Match) {
+    if (trimmedStart.startsWith('## ')) {
       if (inList) { out.push('</ul>'); inList = false; }
-      out.push(`<h2 class="text-amber-200 font-bold text-base mt-4 mb-2">${formatInlineMarkdown(h2Match[1])}</h2>`);
+      out.push(`<h2 class="text-amber-200 font-bold text-base mt-4 mb-2">${formatInlineMarkdown(trimmed.slice(3).trimStart())}</h2>`);
       continue;
     }
-    const h1Match = line.match(/^\s*#\s+(.*)$/);
-    if (h1Match) {
+    if (trimmedStart.startsWith('# ')) {
       if (inList) { out.push('</ul>'); inList = false; }
-      out.push(`<h1 class="text-amber-100 font-bold text-lg mt-5 mb-2">${formatInlineMarkdown(h1Match[1])}</h1>`);
+      out.push(`<h1 class="text-amber-100 font-bold text-lg mt-5 mb-2">${formatInlineMarkdown(trimmed.slice(2).trimStart())}</h1>`);
       continue;
     }
 
     // รายการแบบ Bullet (* หรือ -) พร้อมตรวจจับการเยื้องหน้า (Indentation)
-    const listMatch = line.match(/^(\s*)[*-]\s+(.*)$/);
-    if (listMatch) {
+    if (trimmedStart.startsWith('* ') || trimmedStart.startsWith('- ')) {
       if (!inList) { out.push('<ul class="space-y-1.5 my-2">'); inList = true; }
-      const indent = listMatch[1].length;
+      const indent = line.length - trimmedStart.length;
       const marginClass = indent >= 4 ? 'ml-6 list-[circle] text-slate-300' : 'ml-3 list-disc text-slate-200';
-      out.push(`<li class="${marginClass}">${formatInlineMarkdown(listMatch[2])}</li>`);
+      out.push(`<li class="${marginClass}">${formatInlineMarkdown(trimmedStart.slice(2).trim())}</li>`);
       continue;
     }
 
-    // รายการแบบตัวเลข (1. 2.)
-    const numMatch = line.match(/^(\s*)\d+\.\s+(.*)$/);
-    if (numMatch) {
+    // รายการแบบตัวเลข (1. 2.) แบบ Linear Scan
+    const dotIdx = trimmedStart.indexOf('. ');
+    if (dotIdx > 0 && /^\d+$/.test(trimmedStart.slice(0, dotIdx))) {
       if (inList) { out.push('</ul>'); inList = false; }
-      out.push(`<li class="ml-4 list-decimal text-slate-200 my-1">${formatInlineMarkdown(numMatch[2])}</li>`);
+      const itemContent = trimmedStart.slice(dotIdx + 2).trim();
+      out.push(`<li class="ml-4 list-decimal text-slate-200 my-1">${formatInlineMarkdown(itemContent)}</li>`);
       continue;
     }
 
     if (inList) { out.push('</ul>'); inList = false; }
 
     // บรรทัดว่าง
-    if (!line.trim()) {
+    if (!trimmed) {
       out.push('<div class="h-2"></div>');
       continue;
     }
@@ -568,12 +567,12 @@ async function predictAstrology() {
   const [yearStr, monthStr, dayStr] = String(birthData.birthDateCE || '').split('-');
 
   const payload = {
-    year: parseInt(yearStr, 10),
-    month: parseInt(monthStr, 10),
-    day: parseInt(dayStr, 10),
+    year: Number.parseInt(yearStr, 10),
+    month: Number.parseInt(monthStr, 10),
+    day: Number.parseInt(dayStr, 10),
     hour_thai: parseHourThai(birthData.birthTime),
-    latitude: parseFloat(birthData.latitude),
-    longitude: parseFloat(birthData.longitude)
+    latitude: Number.parseFloat(birthData.latitude),
+    longitude: Number.parseFloat(birthData.longitude)
   };
 
   const predictBtn = document.getElementById('predictAstroBtn');
