@@ -157,3 +157,23 @@ func TestDailyRotatingWriter_ConcurrentWrites(t *testing.T) {
 		t.Fatalf("expected non-empty log file, size: %v, err: %v", info.Size(), err)
 	}
 }
+
+func TestInitDailyLogger_And_Defaults(t *testing.T) {
+	tempDir, err := os.MkdirTemp("", "log_test_init_*")
+	if err != nil {
+		t.Fatalf("failed to create temp dir: %v", err)
+	}
+	defer os.RemoveAll(tempDir)
+
+	// ทดสอบค่า Default เมื่อส่ง prefix ว่าง และ maxAgeDays <= 0
+	w, cleanup, err := InitDailyLogger(tempDir, "", 0)
+	if err != nil {
+		t.Fatalf("InitDailyLogger failed: %v", err)
+	}
+	if w.prefix != "app" || w.maxAgeDays != 7 {
+		t.Fatalf("expected default prefix=app, maxAgeDays=7, got %s, %d", w.prefix, w.maxAgeDays)
+	}
+	cleanup()
+	// เรียก Close ซ้ำเมื่อปิดไปแล้ว
+	_ = w.Close()
+}

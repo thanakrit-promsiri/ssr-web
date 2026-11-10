@@ -454,6 +454,75 @@ func TestHandleAuthSerialKeys_ProxiesAuthService(t *testing.T) {
 	}
 }
 
+func TestLoggingMiddleware_And_AdditionalHandlers(t *testing.T) {
+	h := newMockAuthHandler("valid-token")
+	mux := http.NewServeMux()
+	if err := h.RegisterRoutes(mux); err != nil {
+		t.Fatalf("RegisterRoutes failed: %v", err)
+	}
+	wrapped := h.LoggingMiddleware(mux)
+
+	// 1. ทดสอบ LoggingMiddleware พร้อม X-Forwarded-For และ Cookie
+	req1 := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
+	req1.Header.Set("X-Forwarded-For", "127.0.0.1")
+	req1.AddCookie(&http.Cookie{Name: "auth_token", Value: "valid-token"})
+	rec1 := httptest.NewRecorder()
+	wrapped.ServeHTTP(rec1, req1)
+	if rec1.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK, got %d", rec1.Code)
+	}
+
+	// 2. ทดสอบ Token ไม่ถูกต้อง (เรียก clearAuthCookie)
+	reqInvalid := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
+	reqInvalid.AddCookie(&http.Cookie{Name: "auth_token", Value: "wrong-token"})
+	recInvalid := httptest.NewRecorder()
+	wrapped.ServeHTTP(recInvalid, reqInvalid)
+	if recInvalid.Code != http.StatusSeeOther {
+		t.Fatalf("expected 303 SeeOther for invalid token, got %d", recInvalid.Code)
+	}
+
+	// 3. ทดสอบ HandleHoraDasha และ Invalid JSON
+	reqBadJSON := httptest.NewRequest(http.MethodPost, "/hora/dasha", strings.NewReader(`{invalid-json`))
+	recBadJSON := httptest.NewRecorder()
+	wrapped.ServeHTTP(recBadJSON, reqBadJSON)
+	if recBadJSON.Code != http.StatusBadRequest {
+		t.Fatalf("expected 400 BadRequest for invalid JSON, got %d", recBadJSON.Code)
+	}
+
+	// 4. ทดสอบ HandleFavicon
+	reqFav := httptest.NewRequest(http.MethodGet, "/favicon.ico", nil)
+	recFav := httptest.NewRecorder()
+	wrapped.ServeHTTP(recFav, reqFav)
+
+	// 5. ทดสอบกรณี Upstream Network Error (502 Bad Gateway / Redirect)
+	hErr := New("http://auth-down", "http://hora-down")
+	hErr.httpClient.Transport = roundTripFunc(func(req *http.Request) (*http.Response, error) {
+		return nil, io.EOF
+	})
+
+	reqAuthErr := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
+	reqAuthErr.AddCookie(&http.Cookie{Name: "auth_token", Value: "any"})
+	recAuthErr := httptest.NewRecorder()
+	hErr.HandleChat(recAuthErr, reqAuthErr)
+	if recAuthErr.Code != http.StatusSeeOther {
+		t.Fatalf("expected 303 on auth upstream error, got %d", recAuthErr.Code)
+	}
+
+	reqSerialErr := httptest.NewRequest(http.MethodGet, "/api/v1/auth/serial-keys", nil)
+	recSerialErr := httptest.NewRecorder()
+	hErr.HandleAuthSerialKeys(recSerialErr, reqSerialErr)
+	if recSerialErr.Code != http.StatusBadGateway {
+		t.Fatalf("expected 502 on serial-keys upstream error, got %d", recSerialErr.Code)
+	}
+
+	reqHoraErr := httptest.NewRequest(http.MethodPost, "/hora/predict", strings.NewReader(`{}`))
+	recHoraErr := httptest.NewRecorder()
+	hErr.HandleHoraPredict(recHoraErr, reqHoraErr)
+	if recHoraErr.Code != http.StatusBadGateway {
+		t.Fatalf("expected 502 on hora upstream error, got %d", recHoraErr.Code)
+	}
+}
+
 // ==========================================
 // 2. Load / Benchmark Tests (ทดสอบยิงพร้อมกันแบบ Parallel)
 // ==========================================
