@@ -84,19 +84,26 @@
 ## คำสั่งสำคัญสำหรับรันและทดสอบ
 
 ```bash
-# รันเซิร์ฟเวอร์แบบ Production Binary (WSL / Linux)
+# ตรวจสอบโค้ด (go mod verify + go vet) -> รัน Unit Tests + Coverage -> Build -> รัน Binary ทันที
 ./run.sh
 
-# รันในโหมด Development (go run)
+# รันในโหมด Development (ตรวจสอบ go mod verify + go vet แล้วรันด้วย go run)
 ./run.sh dev
 
-# Build Binary สำหรับ Windows
+# ตรวจสอบโค้ด + รัน Unit Tests ทั้งหมด + แสดงรายงาน Test Coverage
+./run.sh test
+
+# รัน Tests พร้อมสร้างรายงาน Coverage HTML (coverage.html)
+./run.sh cover
+
+# รัน Test + Coverage แล้ว Build Binary (ค่าเริ่มต้น: linux -> ./ssr-web, รองรับ win/native/all)
+./run.sh build
+./run.sh build-win
+
+# Build Binary สำหรับ Windows ด้วย go build โดยตรง
 go build -o server.exe ./cmd/server
 
-# รัน Unit Tests ทั้งหมด
-go test -v ./...
-
-# รัน Parallel Load Benchmark
+# รัน Unit Tests + Coverage + Parallel Load Benchmark
 ./run.sh bench
 ```
 
