@@ -34,9 +34,10 @@
 
 ## กฎความปลอดภัยและความเป็นส่วนตัว (Privacy & Storage Rules)
 
-1. **Session Storage Only (Zero-Persistence)**:
+1. **Session Storage Only & 15-Minute Expiry (Zero-Persistence)**:
    - ข้อมูลวันเกิด (`user_birth_info`), ผลลัพธ์ตำแหน่งดาว (`user_hora_result`), ผลลัพธ์คำทำนาย (`user_predict_result`) และดวงจร 12 เดือน (`user_transit_2570`) จะต้องจัดเก็บใน `sessionStorage` เท่านั้น (ห้ามบันทึกถาวรลงฐานข้อมูลหรือ `localStorage`)
    - เมื่อผู้ใช้ปิดแท็บหรือเบราว์เซอร์ ข้อมูลส่วนตัวจะถูกล้างทิ้งอัตโนมัติ
+   - **อายุ 15 นาที (900 วินาที)**: ทั้ง Cookie (`ssr_session_exp` จาก BFF ที่ `Max-Age=900`, `HttpOnly`, `Secure`) และข้อมูลใน `sessionStorage` (`user_session_expires_at`) มีอายุใช้งาน **15 นาที** เมื่อครบกำหนดระบบจะล้าง `sessionStorage`, ล้าง Cookie และเรียก `/api/v1/auth/logout` พร้อมนำกลับไปหน้า `/index.html?expired=1` อัตโนมัติ (หมายเหตุ: `auth_token` ต้นทางถูกออกโดย Auth Microservice ที่พอร์ต `8082` ผ่าน `/api/v1/auth/register-serial`)
 2. **Locking State**:
    - เมื่อคำนวณตำแหน่งดาวและแสดงผลสำเร็จ: ซ่อนปุ่มแก้ไขข้อมูลวันเกิด
    - เมื่อพยากรณ์พื้นดวงชะตาสำเร็จ (`data.prediction` สำเร็จและบันทึกลง `sessionStorage` แล้ว): **ซ่อนปุ่มทำนายดวงชะตา (AI Predict) ทันที** เพื่อป้องกันการส่งคำขอทำนายซ้ำซ้อน

@@ -6,8 +6,10 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"strings"
 	"testing"
+	"time"
 )
 
 // roundTripFunc ใช้จำลองการทำงานของ Auth Microservice ในระดับ HTTP Transport
@@ -568,6 +570,138 @@ func TestLoggingMiddleware_SanitizesCRLF(t *testing.T) {
 	wrapped.ServeHTTP(rec, req)
 	if rec.Code != http.StatusOK {
 		t.Fatalf("expected 200 OK, got %d", rec.Code)
+	}
+}
+
+func TestHandleChat_Sets15MinSessionCookie(t *testing.T) {
+	h := newMockAuthHandler("valid-token")
+
+	req := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: "valid-token"})
+	rec := httptest.NewRecorder()
+
+	h.HandleChat(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK, got %d", rec.Code)
+	}
+
+	var sessionCookie *http.Cookie
+	for _, c := range rec.Result().Cookies() {
+		if c.Name == sessionExpiryCookieName {
+			sessionCookie = c
+			break
+		}
+	}
+	if sessionCookie == nil {
+		t.Fatalf("expected %s cookie to be set", sessionExpiryCookieName)
+	}
+	if sessionCookie.MaxAge != 900 {
+		t.Fatalf("expected MaxAge=900 (15m), got %d", sessionCookie.MaxAge)
+	}
+	if !sessionCookie.HttpOnly || !sessionCookie.Secure {
+		t.Fatalf("expected HttpOnly and Secure cookie flags, got HttpOnly=%v Secure=%v", sessionCookie.HttpOnly, sessionCookie.Secure)
+	}
+}
+
+func TestHandleChat_ExpiredSessionCookie_ClearsAndRedirects(t *testing.T) {
+	h := newMockAuthHandler("valid-token")
+
+	req := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: "valid-token"})
+	req.AddCookie(&http.Cookie{Name: sessionExpiryCookieName, Value: strconv.FormatInt(time.Now().Add(-1*time.Minute).Unix(), 10)})
+	rec := httptest.NewRecorder()
+
+	h.HandleChat(rec, req)
+
+	if rec.Code != http.StatusSeeOther {
+		t.Fatalf("expected 303 redirect on expired session cookie, got %d", rec.Code)
+	}
+	if loc := rec.Header().Get("Location"); loc != "/index.html?expired=1" {
+		t.Fatalf("expected redirect to /index.html?expired=1, got %s", loc)
+	}
+
+	cleared := map[string]int{}
+	for _, c := range rec.Result().Cookies() {
+		cleared[c.Name] = c.MaxAge
+	}
+	if cleared["auth_token"] != -1 || cleared[sessionExpiryCookieName] != -1 {
+		t.Fatalf("expected both cookies to be cleared (MaxAge=-1), got %+v", cleared)
+	}
+}
+
+func TestHandleChat_ValidSessionCookie_DoesNotExtend(t *testing.T) {
+	h := newMockAuthHandler("valid-token")
+
+	req := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: "valid-token"})
+	req.AddCookie(&http.Cookie{Name: sessionExpiryCookieName, Value: strconv.FormatInt(time.Now().Add(5*time.Minute).Unix(), 10)})
+	rec := httptest.NewRecorder()
+
+	h.HandleChat(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK, got %d", rec.Code)
+	}
+	for _, c := range rec.Result().Cookies() {
+		if c.Name == sessionExpiryCookieName {
+			t.Fatalf("did not expect %s cookie to be re-issued before expiration", sessionExpiryCookieName)
+		}
+	}
+}
+
+func TestHandleIndex_WithExpiredSessionCookie_ClearsAndServesLogin(t *testing.T) {
+	h := New("http://localhost:8082")
+	req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: "some-token"})
+	req.AddCookie(&http.Cookie{Name: sessionExpiryCookieName, Value: strconv.FormatInt(time.Now().Add(-5*time.Second).Unix(), 10)})
+	rec := httptest.NewRecorder()
+
+	h.HandleIndex(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK serving login page when session cookie expired, got %d", rec.Code)
+	}
+	cleared := map[string]int{}
+	for _, c := range rec.Result().Cookies() {
+		cleared[c.Name] = c.MaxAge
+	}
+	if cleared["auth_token"] != -1 || cleared[sessionExpiryCookieName] != -1 {
+		t.Fatalf("expected expired cookies to be cleared, got %+v", cleared)
+	}
+}
+
+func TestHandleIndex_WithLogoutQuery_ClearsCookies(t *testing.T) {
+	h := New("http://localhost:8082")
+	req := httptest.NewRequest(http.MethodGet, "/index.html?logout=1", nil)
+	req.AddCookie(&http.Cookie{Name: "auth_token", Value: "some-token"})
+	rec := httptest.NewRecorder()
+
+	h.HandleIndex(rec, req)
+
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK, got %d", rec.Code)
+	}
+	cleared := map[string]int{}
+	for _, c := range rec.Result().Cookies() {
+		cleared[c.Name] = c.MaxAge
+	}
+	if cleared["auth_token"] != -1 || cleared[sessionExpiryCookieName] != -1 {
+		t.Fatalf("expected logout query to clear both cookies, got %+v", cleared)
+	}
+}
+
+func TestHandleHoraCalculate_ExpiredSessionCookie_Returns401(t *testing.T) {
+	h := New("http://auth-service", "http://hora-service")
+	body := `{"calculateReq":{"year":1990,"month":1,"day":1,"hour_thai":10.3,"latitude":13.75,"longitude":100.5}}`
+	req := httptest.NewRequest(http.MethodPost, "/hora/calculate", strings.NewReader(body))
+	req.AddCookie(&http.Cookie{Name: sessionExpiryCookieName, Value: "invalid-or-expired"})
+	rec := httptest.NewRecorder()
+
+	h.HandleHoraCalculate(rec, req)
+
+	if rec.Code != http.StatusUnauthorized {
+		t.Fatalf("expected 401 Unauthorized on expired session cookie, got %d", rec.Code)
 	}
 }
 

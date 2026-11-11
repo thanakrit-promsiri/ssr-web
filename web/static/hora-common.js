@@ -65,6 +65,10 @@ function copyTextWithFeedback(text, labelEl, iconEl, defaultLabel) {
 
 // ส่งคำขอ POST ไปยัง Hora API ผ่าน BFF Gateway (/api/v1/hora/<endpoint> พร้อม Fallback /hora/<endpoint>)
 async function postHoraAPI(endpoint, payload) {
+  if (typeof enforceActiveSessionOrLogout === 'function' && !enforceActiveSessionOrLogout()) {
+    throw new Error('เซสชันหมดอายุ (ครบ 15 นาที) กรุณาเข้าสู่ระบบใหม่อีกครั้ง');
+  }
+
   const cleanEndpoint = String(endpoint || '').replace(/^\/+/, '');
   const reqOptions = {
     method: 'POST',
@@ -81,6 +85,11 @@ async function postHoraAPI(endpoint, payload) {
     }
   } catch (_) {
     response = await fetch(`/hora/${cleanEndpoint}`, reqOptions);
+  }
+
+  if (response && response.status === 401 && typeof handleLogout === 'function') {
+    void handleLogout({ expired: true });
+    throw new Error('เซสชันหมดอายุ (ครบ 15 นาที) กรุณาเข้าสู่ระบบใหม่อีกครั้ง');
   }
 
   return response;

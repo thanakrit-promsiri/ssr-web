@@ -83,12 +83,29 @@ func (h *Handler) HandleFavicon(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, filepath.Join("public", "favicon.png"))
 }
 
-// HandleIndex เสิร์ฟหน้าลงทะเบียน/เข้าสู่ระบบ (index.html) หรือ Redirect ไป /chat.html หากมี Cookie auth_token
+// HandleIndex เสิร์ฟหน้าลงทะเบียน/เข้าสู่ระบบ (index.html) หรือ Redirect ไป /chat.html หากมี Cookie auth_token ที่ยังไม่หมดอายุ
 func (h *Handler) HandleIndex(w http.ResponseWriter, r *http.Request) {
+	q := r.URL.Query()
+	if q.Get("logout") == "1" || q.Get("expired") == "1" {
+		clearAuthCookie(w)
+		h.serveEmbeddedHTML(w, "index.html")
+		return
+	}
+
 	if cookie, err := r.Cookie("auth_token"); err == nil && cookie.Value != "" {
-		log.Printf("🔑 [Auth] พบ Cookie auth_token ที่หน้า %s -> Redirect ไป /chat.html", r.URL.Path)
+		if _, expired := hasSessionExpiryCookieAndExpired(r, time.Now()); expired {
+			log.Printf("⏰ [Auth] พบ Cookie หมดอายุที่หน้า %s -> ล้าง Cookie และเสิร์ฟหน้า Login", sanitizeLogString(r.URL.Path))
+			clearAuthCookie(w)
+			h.serveEmbeddedHTML(w, "index.html")
+			return
+		}
+		log.Printf("🔑 [Auth] พบ Cookie auth_token ที่หน้า %s -> Redirect ไป /chat.html", sanitizeLogString(r.URL.Path))
 		http.Redirect(w, r, "/chat.html", http.StatusSeeOther)
 		return
+	}
+
+	if _, err := r.Cookie(sessionExpiryCookieName); err == nil {
+		clearSessionExpiryCookie(w)
 	}
 	h.serveEmbeddedHTML(w, "index.html")
 }

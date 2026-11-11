@@ -144,6 +144,15 @@ func (h *Handler) proxyToHoraService(w http.ResponseWriter, r *http.Request, end
 func (h *Handler) forwardJSONToHora(w http.ResponseWriter, r *http.Request, endpointPath string, bodyBytes []byte, forwardCookies bool) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
+	if _, expired := hasSessionExpiryCookieAndExpired(r, time.Now()); expired {
+		clearAuthCookie(w)
+		writeJSONError(w, http.StatusUnauthorized, map[string]string{
+			"status":  "error",
+			"message": "เซสชันหมดอายุ (ครบ 15 นาที) กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+		})
+		return
+	}
+
 	safeEndpoint := sanitizeLogString(endpointPath)
 	targetURL := h.horaServiceURL + safeEndpoint
 	log.Printf("🔮 [Hora] ส่งคำขอไปยัง %s (Payload: %dB)", targetURL, len(bodyBytes))

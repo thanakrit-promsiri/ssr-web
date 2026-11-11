@@ -2,6 +2,29 @@
 // login.js - จัดการหน้าลงทะเบียนและตรวจสอบสถานะ Serial Key (/index.html)
 // ==========================================
 
+const SESSION_TTL_MS = 15 * 60 * 1000; // อายุ sessionStorage สูงสุด 15 นาที
+const SESSION_EXPIRES_AT_KEY = 'user_session_expires_at';
+
+function initLoginPageState() {
+  const params = new URLSearchParams(window.location.search);
+  const expired = params.get('expired') === '1';
+  const loggedOut = params.get('logout') === '1';
+
+  const rawExpiresAt = sessionStorage.getItem(SESSION_EXPIRES_AT_KEY);
+  const expiresAt = rawExpiresAt ? Number.parseInt(rawExpiresAt, 10) : null;
+  if (expired || loggedOut || (expiresAt !== null && (!Number.isFinite(expiresAt) || Date.now() >= expiresAt))) {
+    sessionStorage.clear();
+  }
+
+  if (expired) {
+    const errorBox = document.getElementById('errorMsg');
+    if (errorBox) {
+      errorBox.textContent = 'เซสชันหมดอายุ (ครบ 15 นาที) กรุณาเข้าสู่ระบบใหม่อีกครั้ง';
+      errorBox.classList.remove('hidden');
+    }
+  }
+}
+
 // ดึงสถานะ Serial Key จาก /api/v1/auth/serial-keys มาแสดงใต้ช่องกรอก
 async function loadSerialKeysStatus() {
   const summaryBadge = document.getElementById('serialKeySummaryBadge');
@@ -118,7 +141,10 @@ function handleRegister(event) {
       return data;
     })
     .then(data => {
+      // ล้างข้อมูลค้างจากเซสชันเดิม (ถ้ามี) แล้วเริ่มนับอายุ sessionStorage 15 นาที
+      sessionStorage.clear();
       sessionStorage.setItem('user_username', (data && data.username) || username);
+      sessionStorage.setItem(SESSION_EXPIRES_AT_KEY, String(Date.now() + SESSION_TTL_MS));
       window.location.href = '/chat.html';
     })
     .catch(error => {
@@ -130,8 +156,10 @@ function handleRegister(event) {
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
+    initLoginPageState();
     void loadSerialKeysStatus();
   });
 } else {
+  initLoginPageState();
   void loadSerialKeysStatus();
 }

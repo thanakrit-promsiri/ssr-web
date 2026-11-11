@@ -95,7 +95,8 @@ function extractAscendantSummary(horaResult) {
 async function initTransitPage() {
   // 1. ตรวจสอบ auth_token กับ Backend (และอัปเดต user_username หากมี)
   if (typeof checkAuthWithBackend === 'function') {
-    await checkAuthWithBackend();
+    const authOk = await checkAuthWithBackend();
+    if (authOk === false) return;
   }
 
   // 2. ตรวจสอบข้อมูลทั้ง 4 ตัวใน sessionStorage (user_birth_info, user_hora_result, user_predict_result, user_username)
