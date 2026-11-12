@@ -573,7 +573,7 @@ func TestLoggingMiddleware_SanitizesCRLF(t *testing.T) {
 	}
 }
 
-func TestHandleChat_Sets15MinSessionCookie(t *testing.T) {
+func TestHandleChat_Sets30MinSessionCookie(t *testing.T) {
 	h := newMockAuthHandler("valid-token")
 
 	req := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
@@ -596,8 +596,8 @@ func TestHandleChat_Sets15MinSessionCookie(t *testing.T) {
 	if sessionCookie == nil {
 		t.Fatalf("expected %s cookie to be set", sessionExpiryCookieName)
 	}
-	if sessionCookie.MaxAge != 900 {
-		t.Fatalf("expected MaxAge=900 (15m), got %d", sessionCookie.MaxAge)
+	if sessionCookie.MaxAge != 1800 {
+		t.Fatalf("expected MaxAge=1800 (30m), got %d", sessionCookie.MaxAge)
 	}
 	if !sessionCookie.HttpOnly || !sessionCookie.Secure {
 		t.Fatalf("expected HttpOnly and Secure cookie flags, got HttpOnly=%v Secure=%v", sessionCookie.HttpOnly, sessionCookie.Secure)

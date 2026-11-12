@@ -1,8 +1,8 @@
 // ==========================================
-// auth.js - จัดการระบบสิทธิ์ผู้ใช้งานและอายุ sessionStorage (15 นาที)
+// auth.js - จัดการระบบสิทธิ์ผู้ใช้งานและอายุ sessionStorage (30 นาที)
 // ==========================================
 
-const SESSION_TTL_MS = 15 * 60 * 1000; // อายุ sessionStorage สูงสุด 15 นาที (900,000 ms)
+const SESSION_TTL_MS = 30 * 60 * 1000; // อายุ sessionStorage สูงสุด 30 นาที (1,800,000 ms)
 const SESSION_EXPIRES_AT_KEY = 'user_session_expires_at';
 
 let sessionExpiryTimerId = null;
@@ -15,7 +15,7 @@ function getSessionExpiresAt() {
   return Number.isFinite(ts) && ts > 0 ? ts : null;
 }
 
-// ตรวจสอบว่า sessionStorage หมดอายุครบ 15 นาทีแล้วหรือไม่
+// ตรวจสอบว่า sessionStorage หมดอายุครบ 30 นาทีแล้วหรือไม่
 function isSessionStorageExpired() {
   const raw = sessionStorage.getItem(SESSION_EXPIRES_AT_KEY);
   if (raw === null) return false;
@@ -40,7 +40,7 @@ if (sessionExpiredOnLoad) {
   sessionStorage.clear();
 }
 
-// ตรวจสอบและสั่งออกจากระบบอัตโนมัติเมื่อครบกำหนด 15 นาที
+// ตรวจสอบและสั่งออกจากระบบอัตโนมัติเมื่อครบกำหนด 30 นาที
 function enforceActiveSessionOrLogout() {
   if (sessionExpiredOnLoad || isSessionStorageExpired()) {
     if (!isLoggingOut) {
@@ -51,7 +51,7 @@ function enforceActiveSessionOrLogout() {
   return true;
 }
 
-// ตั้งเวลาถอยหลังเพื่อล้าง sessionStorage และ Cookie ทันทีเมื่อครบ 15 นาที
+// ตั้งเวลาถอยหลังเพื่อล้าง sessionStorage และ Cookie ทันทีเมื่อครบ 30 นาที
 function scheduleSessionExpiryCheck() {
   if (sessionExpiryTimerId !== null) {
     clearTimeout(sessionExpiryTimerId);

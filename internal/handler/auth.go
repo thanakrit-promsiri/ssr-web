@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	// sessionCookieTTL กำหนดอายุสูงสุดของ Session Cookie (15 นาที = 900 วินาที)
-	sessionCookieTTL        = 15 * time.Minute
+	// sessionCookieTTL กำหนดอายุสูงสุดของ Session Cookie (30 นาที = 1800 วินาที)
+	sessionCookieTTL        = 30 * time.Minute
 	sessionExpiryCookieName = "ssr_session_exp"
 	sessionCookieMaxAge     = int(sessionCookieTTL / time.Second)
 )
@@ -63,7 +63,7 @@ func (h *Handler) HandleAuthSerialKeys(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(body)
 }
 
-// verifyAuthAndServeHTML ตรวจสอบ Cookie auth_token และอายุเซสชัน 15 นาที ก่อนเสิร์ฟหน้า HTML ที่ต้องใช้สิทธิ์
+// verifyAuthAndServeHTML ตรวจสอบ Cookie auth_token และอายุเซสชัน 30 นาที ก่อนเสิร์ฟหน้า HTML ที่ต้องใช้สิทธิ์
 func (h *Handler) verifyAuthAndServeHTML(w http.ResponseWriter, r *http.Request, pageName string) {
 	cookie, err := r.Cookie("auth_token")
 	if err != nil || cookie.Value == "" {
@@ -76,7 +76,7 @@ func (h *Handler) verifyAuthAndServeHTML(w http.ResponseWriter, r *http.Request,
 	now := time.Now()
 	hasExpiryCookie, expired := hasSessionExpiryCookieAndExpired(r, now)
 	if expired {
-		log.Printf("⏰ [Auth] เซสชันหมดอายุ (ครบ 15 นาที) ที่หน้า /%s -> ล้าง Cookie และ Redirect ไป /index.html?expired=1", pageName)
+		log.Printf("⏰ [Auth] เซสชันหมดอายุ (ครบ 30 นาที) ที่หน้า /%s -> ล้าง Cookie และ Redirect ไป /index.html?expired=1", pageName)
 		clearAuthCookie(w)
 		http.Redirect(w, r, "/index.html?expired=1", http.StatusSeeOther)
 		return
@@ -136,13 +136,13 @@ func newSessionCookie(name, value string, maxAge int, expires time.Time) *http.C
 	return c
 }
 
-// setSessionExpiryCookie กำหนด Cookie ssr_session_exp ให้มีอายุ 15 นาที (Max-Age=900)
+// setSessionExpiryCookie กำหนด Cookie ssr_session_exp ให้มีอายุ 30 นาที (Max-Age=1800)
 func setSessionExpiryCookie(w http.ResponseWriter, now time.Time) {
 	exp := now.Add(sessionCookieTTL)
 	http.SetCookie(w, newSessionCookie(sessionExpiryCookieName, strconv.FormatInt(exp.Unix(), 10), sessionCookieMaxAge, exp))
 }
 
-// clearSessionExpiryCookie ลบ Cookie ssr_session_exp เพื่อให้การเข้าสู่ระบบรอบใหม่เริ่มนับอายุ 15 นาทีใหม่
+// clearSessionExpiryCookie ลบ Cookie ssr_session_exp เพื่อให้การเข้าสู่ระบบรอบใหม่เริ่มนับอายุ 30 นาทีใหม่
 func clearSessionExpiryCookie(w http.ResponseWriter) {
 	http.SetCookie(w, newSessionCookie(sessionExpiryCookieName, "", -1, time.Time{}))
 }

@@ -148,7 +148,7 @@ func (h *Handler) forwardJSONToHora(w http.ResponseWriter, r *http.Request, endp
 		clearAuthCookie(w)
 		writeJSONError(w, http.StatusUnauthorized, map[string]string{
 			"status":  "error",
-			"message": "เซสชันหมดอายุ (ครบ 15 นาที) กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
+			"message": "เซสชันหมดอายุ (ครบ 30 นาที) กรุณาเข้าสู่ระบบใหม่อีกครั้ง",
 		})
 		return
 	}

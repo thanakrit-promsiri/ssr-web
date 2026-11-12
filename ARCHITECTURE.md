@@ -13,7 +13,7 @@ architecture-beta
     group ssr_tier(server)[SSR Web Go BFF 8081]
     group backend_tier(cloud)[Downstream Microservices]
 
-    service browser(internet)[Web Browser SessionStorage 15m] in client_tier
+    service browser(internet)[Web Browser SessionStorage 30m] in client_tier
     service nginx(server)[Nginx Reverse Proxy IPv4] in edge_tier
 
     service router(server)[Mux Router Middleware 8081] in ssr_tier
@@ -21,7 +21,7 @@ architecture-beta
     service disk_public(disk)[Public Images Disk] in ssr_tier
     service daily_logs(disk)[Daily Log Rotation 7d] in ssr_tier
     service hora_proxy(server)[Hora Proxy 1MB 300s] in ssr_tier
-    service auth_guard(server)[Auth Guard Cookie 15m] in ssr_tier
+    service auth_guard(server)[Auth Guard Cookie 30m] in ssr_tier
 
     junction j_ssr in ssr_tier
     junction j_assets in ssr_tier
@@ -59,9 +59,9 @@ architecture-beta
 
 ### 2.1 Client Layer (`Web Browser`)
 * **หน้าที่หลัก**: แสดงผลหน้าเว็บ SSR (`index.html`, `chat.html`, `transit.html`) และทำงานร่วมกับไฟล์ JavaScript ใน `web/static/`
-* **Zero-Persistence Privacy (`sessionStorage` 15 นาที)**:
+* **Zero-Persistence Privacy (`sessionStorage` 30 นาที)**:
   * ข้อมูลส่วนตัวผู้ใช้ (`user_username`, `user_birth_info`, `user_hora_result`, `user_predict_result`, `user_transit_2570`) และ `user_session_expires_at` ถูกจัดเก็บเฉพาะใน `sessionStorage` เท่านั้น (ไม่ใช้ `localStorage` หรือฐานข้อมูลถาวรฝั่ง Client)
-  * `web/static/login.js` และ `web/static/auth.js` ควบคุมอายุข้อมูลให้ครบ **15 นาที (`900,000 ms`)** ด้วยตัวจับเวลา `setTimeout` และตรวจสอบซ้ำเมื่อหน้าต่างกลับมาโฟกัส (`visibilitychange`, `focus`, `pageshow`) เมื่อหมดเวลาหรือปิดแท็บ ข้อมูลจะถูกล้างทิ้งและเรียก `POST /api/v1/auth/logout` พร้อมพาไป `/index.html?expired=1`
+  * `web/static/login.js` และ `web/static/auth.js` ควบคุมอายุข้อมูลให้ครบ **30 นาที (`1,800,000 ms`)** ด้วยตัวจับเวลา `setTimeout` และตรวจสอบซ้ำเมื่อหน้าต่างกลับมาโฟกัส (`visibilitychange`, `focus`, `pageshow`) เมื่อหมดเวลาหรือปิดแท็บ ข้อมูลจะถูกล้างทิ้งและเรียก `POST /api/v1/auth/logout` พร้อมพาไป `/index.html?expired=1`
 * **DOM XSS Prevention & Markdown**:
   * โหลด HTML Templates (`result-template.html`, `astrology-template.html`, `transit-template.html`) ผ่าน `DOMParser` และผูกข้อมูลผ่าน `textContent` (`fillFields()`)
   * ประมวลผลคำทำนาย Markdown ผ่าน `renderMarkdown()` ใน `web/static/hora-common.js` แบบ Linear Scan `O(n)` โดยไม่พึ่งพา CDN ภายนอก
@@ -83,7 +83,7 @@ architecture-beta
 | :--- | :--- | :--- |
 | **HTTP Server & Config** | `cmd/server/main.go`, `internal/config/config.go` | โหลดค่า `.env` (`PORT=8081`, `AUTH_SERVICE_URL`, `HORA_SERVICE_URL`) และตั้งค่า `ReadTimeout: 30s`, `WriteTimeout: 360s`, `IdleTimeout: 120s` |
 | **Mux Router & Middleware** | `internal/handler/handler.go`, `internal/handler/middleware.go` | กระจาย Route SSR/Proxy, ตั้ง Header `Cache-Control: no-store` สำหรับไฟล์ `.js` และบันทึก Request Log พร้อมตัดอักขระ `\r\n` (`sanitizeLogString`) ป้องกัน Log Injection (CWE-117) |
-| **Auth Guard & Cookie 15m** | `internal/handler/auth.go` | ตรวจสอบ Cookie `auth_token` กับ `AUTH_SERVICE_URL/api/v1/auth/verify` (Timeout `5s`) ก่อนเสิร์ฟ `/chat.html` และ `/transit.html`, ออกและบังคับใช้ Cookie `ssr_session_exp` (`Max-Age=900`, `HttpOnly`, `Secure`, `SameSite=Lax`) และ Proxy เส้นทาง `/api/v1/auth/serial-keys`, `/auth/serial-keys` |
+| **Auth Guard & Cookie 30m** | `internal/handler/auth.go` | ตรวจสอบ Cookie `auth_token` กับ `AUTH_SERVICE_URL/api/v1/auth/verify` (Timeout `5s`) ก่อนเสิร์ฟ `/chat.html` และ `/transit.html`, ออกและบังคับใช้ Cookie `ssr_session_exp` (`Max-Age=1800`, `HttpOnly`, `Secure`, `SameSite=Lax`) และ Proxy เส้นทาง `/api/v1/auth/serial-keys`, `/auth/serial-keys` |
 | **Hora Proxy** | `internal/handler/hora.go` | รับคำขอ `POST` สำหรับ `/api/v1/hora/*` และ `/hora/*` (`calculate`, `dasha`, `predict`, `transitpredict_1`..`12`), จำกัดขนาด Request Body สูงสุด **1 MB** (`http.MaxBytesReader`), ตรวจสอบอายุ `ssr_session_exp` (คืน `401` หากหมดอายุ) และตั้ง Context Timeout **`300s`** |
 | **Embedded Web Assets (`embed.FS`)** | `web/embed.go`, `web/` | ฝังไฟล์ HTML, JS, Templates และฐานข้อมูลพิกัดอำเภอ/จังหวัด (`district.json`) ไว้ใน Binary เสิร์ฟจาก RAM ระดับไมโครวินาที (ต้อง Rebuild Binary ทุกครั้งที่แก้ไฟล์ใน `web/`) |
 | **Public Disk Assets** | `public/` | เสิร์ฟไฟล์รูปภาพ (`favicon.png`, `avatar.jpg`) จาก Disk โดยตรง เพื่อไม่ให้ Binary บวมและเปลี่ยนรูปได้ทันทีโดยไม่ต้อง Build ใหม่ |
@@ -103,11 +103,11 @@ architecture-beta
 
 ## 3. สรุปลำดับการทำงานหลัก (End-to-End Flows)
 
-1. **การเข้าสู่ระบบและควบคุมอายุเซสชัน 15 นาที**:
+1. **การเข้าสู่ระบบและควบคุมอายุเซสชัน 30 นาที**:
    * ผู้ใช้เปิด `/index.html` → กรอก Username + Serial Key → ส่ง `POST /api/v1/auth/register-serial` ผ่าน Nginx ไปยัง **Auth Service (`:8082`)** เพื่อรับ `auth_token`
-   * `login.js` ตั้งค่า `user_session_expires_at` (`+15 นาที`) ใน `sessionStorage` แล้วนำทางไป `/chat.html`
-   * `ssr-web` (`HandleChat` / `HandleTransit`) ตรวจสอบ `auth_token` กับ Auth Service แล้วออก Cookie `ssr_session_exp` (`Max-Age=900`) คู่กัน
-   * เมื่อครบ 15 นาที (หรือกดออกจากระบบ) ทั้ง Backend (`auth_guard`, `hora_proxy`, `HandleIndex`) และ Frontend (`auth.js`, `postHoraAPI`) จะล้าง `sessionStorage`, ล้าง Cookie และเรียก `/api/v1/auth/logout` อัตโนมัติ
+   * `login.js` ตั้งค่า `user_session_expires_at` (`+30 นาที`) ใน `sessionStorage` แล้วนำทางไป `/chat.html`
+   * `ssr-web` (`HandleChat` / `HandleTransit`) ตรวจสอบ `auth_token` กับ Auth Service แล้วออก Cookie `ssr_session_exp` (`Max-Age=1800`) คู่กัน
+   * เมื่อครบ 30 นาที (หรือกดออกจากระบบ) ทั้ง Backend (`auth_guard`, `hora_proxy`, `HandleIndex`) และ Frontend (`auth.js`, `postHoraAPI`) จะล้าง `sessionStorage`, ล้าง Cookie และเรียก `/api/v1/auth/logout` อัตโนมัติ
 2. **การคำนวณดวงชะตาและพยากรณ์ (Dual-Prefix Routing)**:
    * หน้าเว็บเรียก `/api/v1/hora/*` พร้อม Fallback ไป `/hora/*` (เผื่อกรณี Nginx ส่งเส้นทาง `/api/*` ทั้งหมดไปยัง `:8082`)
    * `ssr-web` ตรวจสอบขนาด Body (`<= 1 MB`) และอายุ `ssr_session_exp` ก่อนส่งต่อไปยัง **Lahiri Hora API (`:8083`)** (และ **DeepSeek AI** สำหรับการพยากรณ์) แล้วคืน JSON ให้หน้าเว็บเรนเดอร์ผ่าน `<template>` และ `renderMarkdown()`

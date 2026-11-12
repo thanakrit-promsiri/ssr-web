@@ -2,7 +2,7 @@
 // login.js - จัดการหน้าลงทะเบียนและตรวจสอบสถานะ Serial Key (/index.html)
 // ==========================================
 
-const SESSION_TTL_MS = 15 * 60 * 1000; // อายุ sessionStorage สูงสุด 15 นาที
+const SESSION_TTL_MS = 30 * 60 * 1000; // อายุ sessionStorage สูงสุด 30 นาที
 const SESSION_EXPIRES_AT_KEY = 'user_session_expires_at';
 
 function initLoginPageState() {
@@ -19,7 +19,7 @@ function initLoginPageState() {
   if (expired) {
     const errorBox = document.getElementById('errorMsg');
     if (errorBox) {
-      errorBox.textContent = 'เซสชันหมดอายุ (ครบ 15 นาที) กรุณาเข้าสู่ระบบใหม่อีกครั้ง';
+      errorBox.textContent = 'เซสชันหมดอายุ (ครบ 30 นาที) กรุณาเข้าสู่ระบบใหม่อีกครั้ง';
       errorBox.classList.remove('hidden');
     }
   }
@@ -141,7 +141,7 @@ function handleRegister(event) {
       return data;
     })
     .then(data => {
-      // ล้างข้อมูลค้างจากเซสชันเดิม (ถ้ามี) แล้วเริ่มนับอายุ sessionStorage 15 นาที
+      // ล้างข้อมูลค้างจากเซสชันเดิม (ถ้ามี) แล้วเริ่มนับอายุ sessionStorage 30 นาที
       sessionStorage.clear();
       sessionStorage.setItem('user_username', (data && data.username) || username);
       sessionStorage.setItem(SESSION_EXPIRES_AT_KEY, String(Date.now() + SESSION_TTL_MS));
