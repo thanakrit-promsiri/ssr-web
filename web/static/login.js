@@ -4,6 +4,51 @@
 
 const SESSION_TTL_MS = 30 * 60 * 1000; // อายุ sessionStorage สูงสุด 30 นาที
 const SESSION_EXPIRES_AT_KEY = 'user_session_expires_at';
+const ACTIVE_USERS_REFRESH_MS = 15 * 1000;
+
+let activeUsersRefreshTimer = null;
+
+// ดึงจำนวนผู้ใช้งานปัจจุบันจาก BFF (/session/active-users)
+async function loadActiveUsersCount() {
+  const countEl = document.getElementById('activeUsersCount');
+  if (!countEl) return;
+
+  try {
+    const res = await fetch('/session/active-users', { cache: 'no-store' });
+    if (!res.ok) throw new Error('ไม่สามารถโหลดจำนวนผู้ใช้งานปัจจุบันได้');
+    const data = await res.json();
+    const rawCount = data && typeof data.active_users === 'number'
+      ? data.active_users
+      : Number.parseInt(data && data.active_users, 10);
+    const count = Number.isFinite(rawCount) ? Math.max(0, Math.trunc(rawCount)) : 0;
+    countEl.textContent = count.toLocaleString('th-TH');
+  } catch (_) {
+    countEl.textContent = '-';
+  }
+}
+
+function startActiveUsersPolling() {
+  void loadActiveUsersCount();
+  if (activeUsersRefreshTimer !== null) {
+    clearInterval(activeUsersRefreshTimer);
+  }
+  activeUsersRefreshTimer = setInterval(() => {
+    void loadActiveUsersCount();
+  }, ACTIVE_USERS_REFRESH_MS);
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    void loadActiveUsersCount();
+  }
+});
+
+window.addEventListener('pagehide', () => {
+  if (activeUsersRefreshTimer !== null) {
+    clearInterval(activeUsersRefreshTimer);
+    activeUsersRefreshTimer = null;
+  }
+});
 
 function initLoginPageState() {
   const params = new URLSearchParams(window.location.search);
@@ -154,12 +199,14 @@ function handleRegister(event) {
     });
 }
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    initLoginPageState();
-    void loadSerialKeysStatus();
-  });
-} else {
+function bootLoginPage() {
   initLoginPageState();
+  startActiveUsersPolling();
   void loadSerialKeysStatus();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootLoginPage);
+} else {
+  bootLoginPage();
 }

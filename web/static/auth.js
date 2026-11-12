@@ -4,8 +4,13 @@
 
 const SESSION_TTL_MS = 30 * 60 * 1000; // อายุ sessionStorage สูงสุด 30 นาที (1,800,000 ms)
 const SESSION_EXPIRES_AT_KEY = 'user_session_expires_at';
+const HEARTBEAT_INTERVAL_MS = 30 * 1000;
+const ACTIVE_TAB_ID = (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function')
+  ? crypto.randomUUID()
+  : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 
 let sessionExpiryTimerId = null;
+let heartbeatTimerId = null;
 let isLoggingOut = false;
 
 function getSessionExpiresAt() {
@@ -71,9 +76,46 @@ function scheduleSessionExpiryCheck() {
   return true;
 }
 
+// ส่ง Heartbeat เพื่อนับผู้ใช้งานออนไลน์ปัจจุบันแบบราย Tab
+async function sendSessionHeartbeat() {
+  if (isLoggingOut || sessionExpiredOnLoad || isSessionStorageExpired()) return;
+  try {
+    const res = await fetch('/session/heartbeat', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tab_id: ACTIVE_TAB_ID })
+    });
+    if (res.status === 401) {
+      await handleLogout({ expired: true });
+    }
+  } catch (_) {
+    // ละเว้นกรณีเครือข่ายสะดุดชั่วคราว
+  }
+}
+
+function startSessionHeartbeat() {
+  void sendSessionHeartbeat();
+  if (heartbeatTimerId !== null) {
+    clearInterval(heartbeatTimerId);
+  }
+  heartbeatTimerId = setInterval(() => {
+    void sendSessionHeartbeat();
+  }, HEARTBEAT_INTERVAL_MS);
+}
+
+function stopSessionHeartbeat() {
+  if (heartbeatTimerId !== null) {
+    clearInterval(heartbeatTimerId);
+    heartbeatTimerId = null;
+  }
+}
+
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
-    enforceActiveSessionOrLogout();
+    if (enforceActiveSessionOrLogout()) {
+      void sendSessionHeartbeat();
+    }
   }
 });
 
@@ -83,6 +125,15 @@ window.addEventListener('focus', () => {
 
 window.addEventListener('pageshow', () => {
   enforceActiveSessionOrLogout();
+});
+
+window.addEventListener('pagehide', () => {
+  stopSessionHeartbeat();
+  if (isLoggingOut) return;
+  if (typeof navigator !== 'undefined' && typeof navigator.sendBeacon === 'function') {
+    const blob = new Blob([JSON.stringify({ tab_id: ACTIVE_TAB_ID })], { type: 'application/json' });
+    navigator.sendBeacon('/session/leave', blob);
+  }
 });
 
 // ตรวจสอบสิทธิ์กับ Backend เมื่อเปิดหน้าเว็บ
@@ -118,15 +169,17 @@ async function checkAuthWithBackend() {
       }
     }
     
-    // ซ่อน Loading เมื่อตรวจสอบสิทธิ์ผ่าน
+    // ซ่อน Loading เมื่อตรวจสอบสิทธิ์ผ่าน และเริ่มส่ง Heartbeat นับสถานะออนไลน์
     const loadingOverlay = document.getElementById('loadingOverlay');
     if (loadingOverlay) {
       loadingOverlay.classList.add('hidden');
     }
+    startSessionHeartbeat();
 
     return true;
   } catch (err) {
     // หากไม่มีสิทธิ์หรือ Token หมดอายุ ล้างข้อมูลใน sessionStorage แล้วดีดกลับไปหน้า Login ทันที
+    stopSessionHeartbeat();
     sessionStorage.clear();
     localStorage.clear();
     window.location.replace('/index.html?logout=1');
@@ -139,17 +192,26 @@ async function handleLogout(options = {}) {
   if (isLoggingOut) return;
   isLoggingOut = true;
 
+  stopSessionHeartbeat();
   if (sessionExpiryTimerId !== null) {
     clearTimeout(sessionExpiryTimerId);
     sessionExpiryTimerId = null;
   }
 
   try {
-    // 1. เรียก API แจ้ง Backend ให้เคลียร์ HttpOnly Cookie
-    await fetch('/api/v1/auth/logout', {
-      method: 'POST',
-      credentials: 'include'
-    });
+    // 1. แจ้ง BFF ให้นำผู้ใช้งานออกจากตัวนับออนไลน์ทันที และเรียก API แจ้ง Auth Service ให้เคลียร์ HttpOnly Cookie
+    await Promise.allSettled([
+      fetch('/session/leave', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ all: true })
+      }),
+      fetch('/api/v1/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      })
+    ]);
   } catch (e) {
     console.error('Logout error:', e);
   }

@@ -145,6 +145,9 @@ func (h *Handler) forwardJSONToHora(w http.ResponseWriter, r *http.Request, endp
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
 	if _, expired := hasSessionExpiryCookieAndExpired(r, time.Now()); expired {
+		if c, err := r.Cookie("auth_token"); err == nil && c.Value != "" {
+			h.sessions.RemoveToken(c.Value)
+		}
 		clearAuthCookie(w)
 		writeJSONError(w, http.StatusUnauthorized, map[string]string{
 			"status":  "error",

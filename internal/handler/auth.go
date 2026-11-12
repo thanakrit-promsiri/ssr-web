@@ -63,6 +63,32 @@ func (h *Handler) HandleAuthSerialKeys(w http.ResponseWriter, r *http.Request) {
 	_, _ = w.Write(body)
 }
 
+// verifyAuthToken ส่งคำขอตรวจสอบ Cookie auth_token ไปยัง Auth Microservice (Timeout 5 วินาที)
+func (h *Handler) verifyAuthToken(ctx context.Context, cookie *http.Cookie) (int, error) {
+	verifyURL := h.authServiceURL + "/api/v1/auth/verify"
+	reqCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	req, err := http.NewRequestWithContext(reqCtx, http.MethodGet, verifyURL, nil)
+	if err != nil {
+		log.Printf("❌ [Auth] สร้าง Request ไปยัง %s ล้มเหลว: %v", verifyURL, err)
+		return http.StatusInternalServerError, err
+	}
+	req.AddCookie(cookie)
+
+	start := time.Now()
+	resp, err := h.httpClient.Do(req)
+	if err != nil {
+		log.Printf("❌ [Auth] เชื่อมต่อ Auth Service (%s) ล้มเหลว (%v): %v", verifyURL, time.Since(start).Round(time.Millisecond), err)
+		return http.StatusBadGateway, err
+	}
+	defer resp.Body.Close()
+	_, _ = io.Copy(io.Discard, io.LimitReader(resp.Body, 4096))
+
+	log.Printf("🔐 [Auth] ตรวจสอบสิทธิ์กับ %s -> Status: %d (ใช้เวลา %v)", verifyURL, resp.StatusCode, time.Since(start).Round(time.Millisecond))
+	return resp.StatusCode, nil
+}
+
 // verifyAuthAndServeHTML ตรวจสอบ Cookie auth_token และอายุเซสชัน 30 นาที ก่อนเสิร์ฟหน้า HTML ที่ต้องใช้สิทธิ์
 func (h *Handler) verifyAuthAndServeHTML(w http.ResponseWriter, r *http.Request, pageName string) {
 	cookie, err := r.Cookie("auth_token")
@@ -74,40 +100,31 @@ func (h *Handler) verifyAuthAndServeHTML(w http.ResponseWriter, r *http.Request,
 	}
 
 	now := time.Now()
-	hasExpiryCookie, expired := hasSessionExpiryCookieAndExpired(r, now)
+	hasExpiryCookie, sessionExp, expired := inspectSessionExpiryCookie(r, now)
 	if expired {
 		log.Printf("⏰ [Auth] เซสชันหมดอายุ (ครบ 30 นาที) ที่หน้า /%s -> ล้าง Cookie และ Redirect ไป /index.html?expired=1", pageName)
+		h.sessions.RemoveToken(cookie.Value)
 		clearAuthCookie(w)
 		http.Redirect(w, r, "/index.html?expired=1", http.StatusSeeOther)
 		return
 	}
 
-	verifyURL := h.authServiceURL + "/api/v1/auth/verify"
-	ctx, cancel := context.WithTimeout(r.Context(), 5*time.Second)
-	defer cancel()
-
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, verifyURL, nil)
-	if err != nil {
-		log.Printf("❌ [Auth] สร้าง Request ไปยัง %s ล้มเหลว: %v", verifyURL, err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
-	}
-	req.AddCookie(cookie)
-
-	start := time.Now()
-	resp, err := h.httpClient.Do(req)
-	if err != nil {
-		log.Printf("❌ [Auth] เชื่อมต่อ Auth Service (%s) ล้มเหลว (%v): %v -> ล้าง Cookie และ Redirect", verifyURL, time.Since(start).Round(time.Millisecond), err)
+	status, verifyErr := h.verifyAuthToken(r.Context(), cookie)
+	if verifyErr != nil {
+		if status == http.StatusInternalServerError {
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+			return
+		}
+		log.Printf("⚠️ [Auth] ล้าง Cookie และ Redirect หลังตรวจสอบกับ Auth Service ไม่สำเร็จ")
+		h.sessions.RemoveToken(cookie.Value)
 		clearAuthCookie(w)
 		http.Redirect(w, r, "/index.html", http.StatusSeeOther)
 		return
 	}
-	defer resp.Body.Close()
 
-	log.Printf("🔐 [Auth] ตรวจสอบสิทธิ์กับ %s -> Status: %d (ใช้เวลา %v)", verifyURL, resp.StatusCode, time.Since(start).Round(time.Millisecond))
-
-	if resp.StatusCode != http.StatusOK {
-		log.Printf("⚠️ [Auth] Token ไม่ผ่านการตรวจสอบ (Status %d) -> ล้าง Cookie และ Redirect ไป /index.html", resp.StatusCode)
+	if status != http.StatusOK {
+		log.Printf("⚠️ [Auth] Token ไม่ผ่านการตรวจสอบ (Status %d) -> ล้าง Cookie และ Redirect ไป /index.html", status)
+		h.sessions.RemoveToken(cookie.Value)
 		clearAuthCookie(w)
 		http.Redirect(w, r, "/index.html", http.StatusSeeOther)
 		return
@@ -115,7 +132,14 @@ func (h *Handler) verifyAuthAndServeHTML(w http.ResponseWriter, r *http.Request,
 
 	if !hasExpiryCookie {
 		setSessionExpiryCookie(w, now)
+		sessionExp = now.Add(sessionCookieTTL)
 	}
+
+	tabExpiresAt := now.Add(heartbeatTTL)
+	if sessionExp.Before(tabExpiresAt) {
+		tabExpiresAt = sessionExp
+	}
+	h.sessions.Touch(cookie.Value, defaultTabSlot, tabExpiresAt, now)
 
 	h.serveEmbeddedHTML(w, pageName)
 }
@@ -147,17 +171,23 @@ func clearSessionExpiryCookie(w http.ResponseWriter) {
 	http.SetCookie(w, newSessionCookie(sessionExpiryCookieName, "", -1, time.Time{}))
 }
 
-// hasSessionExpiryCookieAndExpired คืนค่า (hasCookie, expired) สำหรับตรวจสอบอายุของ ssr_session_exp
-func hasSessionExpiryCookieAndExpired(r *http.Request, now time.Time) (bool, bool) {
+// inspectSessionExpiryCookie อ่าน Cookie ssr_session_exp และคืนค่า (มี Cookie, เวลาหมดอายุ, หมดอายุหรือยัง)
+func inspectSessionExpiryCookie(r *http.Request, now time.Time) (bool, time.Time, bool) {
 	c, err := r.Cookie(sessionExpiryCookieName)
 	if err != nil {
-		return false, false
+		return false, time.Time{}, false
 	}
 	expUnix, parseErr := strconv.ParseInt(strings.TrimSpace(c.Value), 10, 64)
 	if parseErr != nil || expUnix <= 0 {
-		return true, true
+		return true, time.Time{}, true
 	}
-	return true, now.Unix() >= expUnix
+	return true, time.Unix(expUnix, 0), now.Unix() >= expUnix
+}
+
+// hasSessionExpiryCookieAndExpired คืนค่า (hasCookie, expired) สำหรับตรวจสอบอายุของ ssr_session_exp
+func hasSessionExpiryCookieAndExpired(r *http.Request, now time.Time) (bool, bool) {
+	hasCookie, _, expired := inspectSessionExpiryCookie(r, now)
+	return hasCookie, expired
 }
 
 // clearAuthCookie ล้าง Cookie auth_token และ ssr_session_exp ที่หมดอายุหรือไม่ถูกต้อง เพื่อป้องกัน Redirect Loop ระหว่าง /index.html กับ /chat.html

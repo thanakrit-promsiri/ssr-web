@@ -16,6 +16,7 @@ type Handler struct {
 	authServiceURL string
 	horaServiceURL string
 	httpClient     *http.Client
+	sessions       *activeSessionTracker
 }
 
 // New สร้าง Handler พร้อมกำหนดค่าเริ่มต้นของ HTTP Client
@@ -31,6 +32,7 @@ func New(authServiceURL string, horaServiceURL ...string) *Handler {
 		httpClient: &http.Client{
 			Timeout: 300 * time.Second,
 		},
+		sessions: newActiveSessionTracker(),
 	}
 }
 
@@ -45,6 +47,11 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux) error {
 	// 1.1 Proxy Route สำหรับดึงสถานะ Serial Key จาก Auth Service
 	mux.HandleFunc("GET /api/v1/auth/serial-keys", h.HandleAuthSerialKeys)
 	mux.HandleFunc("GET /auth/serial-keys", h.HandleAuthSerialKeys)
+
+	// 1.2 Route สำหรับนับและต่ออายุจำนวนผู้ใช้งานปัจจุบัน (ใช้ /session/* เพื่อไม่ให้ Nginx /api/ ดักไปพอร์ต 8082)
+	mux.HandleFunc("GET /session/active-users", h.HandleActiveUsers)
+	mux.HandleFunc("POST /session/heartbeat", h.HandleSessionHeartbeat)
+	mux.HandleFunc("POST /session/leave", h.HandleSessionLeave)
 
 	// 2. API Routes สำหรับคำนวณดวงชะตาโหราศาสตร์พระเวทและวิมโสตรีทศา (เชื่อม lahiri-api)
 	// รองรับทั้ง /api/v1/hora/... และ /hora/... (เผื่อกรณี Nginx ดัก /api/ ไปที่ Auth Service)
@@ -85,16 +92,23 @@ func (h *Handler) HandleFavicon(w http.ResponseWriter, r *http.Request) {
 
 // HandleIndex เสิร์ฟหน้าลงทะเบียน/เข้าสู่ระบบ (index.html) หรือ Redirect ไป /chat.html หากมี Cookie auth_token ที่ยังไม่หมดอายุ
 func (h *Handler) HandleIndex(w http.ResponseWriter, r *http.Request) {
+	cookie, cookieErr := r.Cookie("auth_token")
+	hasAuthCookie := cookieErr == nil && cookie.Value != ""
+
 	q := r.URL.Query()
 	if q.Get("logout") == "1" || q.Get("expired") == "1" {
+		if hasAuthCookie {
+			h.sessions.RemoveToken(cookie.Value)
+		}
 		clearAuthCookie(w)
 		h.serveEmbeddedHTML(w, "index.html")
 		return
 	}
 
-	if cookie, err := r.Cookie("auth_token"); err == nil && cookie.Value != "" {
+	if hasAuthCookie {
 		if _, expired := hasSessionExpiryCookieAndExpired(r, time.Now()); expired {
 			log.Printf("⏰ [Auth] พบ Cookie หมดอายุที่หน้า %s -> ล้าง Cookie และเสิร์ฟหน้า Login", sanitizeLogString(r.URL.Path))
+			h.sessions.RemoveToken(cookie.Value)
 			clearAuthCookie(w)
 			h.serveEmbeddedHTML(w, "index.html")
 			return

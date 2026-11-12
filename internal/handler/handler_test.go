@@ -705,6 +705,188 @@ func TestHandleHoraCalculate_ExpiredSessionCookie_Returns401(t *testing.T) {
 	}
 }
 
+func readActiveUsersCount(t *testing.T, mux *http.ServeMux) int {
+	t.Helper()
+	req := httptest.NewRequest(http.MethodGet, "/session/active-users", nil)
+	rec := httptest.NewRecorder()
+	mux.ServeHTTP(rec, req)
+	if rec.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK on /session/active-users, got %d", rec.Code)
+	}
+	var payload struct {
+		Success     bool `json:"success"`
+		ActiveUsers int  `json:"active_users"`
+	}
+	if err := json.Unmarshal(rec.Body.Bytes(), &payload); err != nil {
+		t.Fatalf("failed to unmarshal active users JSON: %v", err)
+	}
+	return payload.ActiveUsers
+}
+
+func TestActiveUsers_TrackingLifecycle(t *testing.T) {
+	h := newMockAuthHandler("token-a")
+	h.httpClient.Transport = roundTripFunc(func(req *http.Request) (*http.Response, error) {
+		status := http.StatusUnauthorized
+		if req.URL.Path == "/api/v1/auth/verify" {
+			if c, err := req.Cookie("auth_token"); err == nil && (c.Value == "token-a" || c.Value == "token-b") {
+				status = http.StatusOK
+			}
+		}
+		return &http.Response{
+			StatusCode: status,
+			Body:       io.NopCloser(strings.NewReader(`{"username":"tester"}`)),
+			Header:     make(http.Header),
+		}, nil
+	})
+
+	mux := http.NewServeMux()
+	if err := h.RegisterRoutes(mux); err != nil {
+		t.Fatalf("RegisterRoutes failed: %v", err)
+	}
+
+	if count := readActiveUsersCount(t, mux); count != 0 {
+		t.Fatalf("expected initial active_users=0, got %d", count)
+	}
+
+	// User A เปิด /chat.html
+	reqChat := httptest.NewRequest(http.MethodGet, "/chat.html", nil)
+	reqChat.AddCookie(&http.Cookie{Name: "auth_token", Value: "token-a"})
+	recChat := httptest.NewRecorder()
+	mux.ServeHTTP(recChat, reqChat)
+	if recChat.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK for /chat.html, got %d", recChat.Code)
+	}
+	if count := readActiveUsersCount(t, mux); count != 1 {
+		t.Fatalf("expected active_users=1 after /chat.html, got %d", count)
+	}
+
+	// User A เปิด 2 Tabs พร้อม Heartbeat -> ยังต้องนับเป็น 1 คน
+	for _, tab := range []string{"tab-a1", "tab-a2"} {
+		reqHB := httptest.NewRequest(http.MethodPost, "/session/heartbeat", strings.NewReader(`{"tab_id":"`+tab+`"}`))
+		reqHB.AddCookie(&http.Cookie{Name: "auth_token", Value: "token-a"})
+		recHB := httptest.NewRecorder()
+		mux.ServeHTTP(recHB, reqHB)
+		if recHB.Code != http.StatusOK {
+			t.Fatalf("expected 200 OK on heartbeat for %s, got %d", tab, recHB.Code)
+		}
+	}
+	if count := readActiveUsersCount(t, mux); count != 1 {
+		t.Fatalf("expected deduplicated active_users=1 for 2 tabs of user A, got %d", count)
+	}
+
+	// User B เข้าระบบผ่าน Heartbeat -> เพิ่มเป็น 2 คน
+	reqHBB := httptest.NewRequest(http.MethodPost, "/session/heartbeat", strings.NewReader(`{"tab_id":"tab-b1"}`))
+	reqHBB.AddCookie(&http.Cookie{Name: "auth_token", Value: "token-b"})
+	recHBB := httptest.NewRecorder()
+	mux.ServeHTTP(recHBB, reqHBB)
+	if recHBB.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK for user B heartbeat, got %d", recHBB.Code)
+	}
+	if count := readActiveUsersCount(t, mux); count != 2 {
+		t.Fatalf("expected active_users=2, got %d", count)
+	}
+
+	// User A ปิด tab-a1 -> tab-a2 ยังเปิดอยู่ ต้องยังนับเป็น 2 คน
+	reqLeave1 := httptest.NewRequest(http.MethodPost, "/session/leave", strings.NewReader(`{"tab_id":"tab-a1"}`))
+	reqLeave1.AddCookie(&http.Cookie{Name: "auth_token", Value: "token-a"})
+	recLeave1 := httptest.NewRecorder()
+	mux.ServeHTTP(recLeave1, reqLeave1)
+	if recLeave1.Code != http.StatusNoContent {
+		t.Fatalf("expected 204 NoContent on leave, got %d", recLeave1.Code)
+	}
+	if count := readActiveUsersCount(t, mux); count != 2 {
+		t.Fatalf("expected active_users=2 while tab-a2 remains open, got %d", count)
+	}
+
+	// User A ปิด tab-a2 -> เหลือ User B คนเดียว (1 คน)
+	reqLeave2 := httptest.NewRequest(http.MethodPost, "/session/leave", strings.NewReader(`{"tab_id":"tab-a2"}`))
+	reqLeave2.AddCookie(&http.Cookie{Name: "auth_token", Value: "token-a"})
+	recLeave2 := httptest.NewRecorder()
+	mux.ServeHTTP(recLeave2, reqLeave2)
+	if count := readActiveUsersCount(t, mux); count != 1 {
+		t.Fatalf("expected active_users=1 after user A closed all tabs, got %d", count)
+	}
+
+	// User B กดออกจากระบบ (?logout=1) -> เหลือ 0 คน
+	reqLogout := httptest.NewRequest(http.MethodGet, "/index.html?logout=1", nil)
+	reqLogout.AddCookie(&http.Cookie{Name: "auth_token", Value: "token-b"})
+	recLogout := httptest.NewRecorder()
+	mux.ServeHTTP(recLogout, reqLogout)
+	if count := readActiveUsersCount(t, mux); count != 0 {
+		t.Fatalf("expected active_users=0 after logout, got %d", count)
+	}
+}
+
+func TestHandleSessionHeartbeat_UnauthorizedAndExpired(t *testing.T) {
+	h := newMockAuthHandler("valid-token")
+	mux := http.NewServeMux()
+	if err := h.RegisterRoutes(mux); err != nil {
+		t.Fatalf("RegisterRoutes failed: %v", err)
+	}
+
+	// ไม่มี Cookie
+	reqNoCookie := httptest.NewRequest(http.MethodPost, "/session/heartbeat", nil)
+	recNoCookie := httptest.NewRecorder()
+	mux.ServeHTTP(recNoCookie, reqNoCookie)
+	if recNoCookie.Code != http.StatusUnauthorized {
+		t.Fatalf("expected 401 without cookie, got %d", recNoCookie.Code)
+	}
+
+	// Token ปลอมไม่ผ่าน Verify
+	reqBad := httptest.NewRequest(http.MethodPost, "/session/heartbeat", strings.NewReader(`{"tab_id":"t1"}`))
+	reqBad.AddCookie(&http.Cookie{Name: "auth_token", Value: "forged-token"})
+	recBad := httptest.NewRecorder()
+	mux.ServeHTTP(recBad, reqBad)
+	if recBad.Code != http.StatusUnauthorized {
+		t.Fatalf("expected 401 for forged token, got %d", recBad.Code)
+	}
+	if count := readActiveUsersCount(t, mux); count != 0 {
+		t.Fatalf("forged token must not be counted, got %d", count)
+	}
+
+	// Token ถูกต้องแล้วหมดอายุที่ ssr_session_exp -> ลบออกทันทีและคืน 401
+	reqGood := httptest.NewRequest(http.MethodPost, "/session/heartbeat", strings.NewReader(`{"tab_id":"t1"}`))
+	reqGood.AddCookie(&http.Cookie{Name: "auth_token", Value: "valid-token"})
+	recGood := httptest.NewRecorder()
+	mux.ServeHTTP(recGood, reqGood)
+	if recGood.Code != http.StatusOK {
+		t.Fatalf("expected 200 OK for valid token, got %d", recGood.Code)
+	}
+
+	reqExp := httptest.NewRequest(http.MethodPost, "/session/heartbeat", strings.NewReader(`{"tab_id":"t1"}`))
+	reqExp.AddCookie(&http.Cookie{Name: "auth_token", Value: "valid-token"})
+	reqExp.AddCookie(&http.Cookie{Name: sessionExpiryCookieName, Value: strconv.FormatInt(time.Now().Add(-10*time.Second).Unix(), 10)})
+	recExp := httptest.NewRecorder()
+	mux.ServeHTTP(recExp, reqExp)
+	if recExp.Code != http.StatusUnauthorized {
+		t.Fatalf("expected 401 when ssr_session_exp expired, got %d", recExp.Code)
+	}
+	if count := readActiveUsersCount(t, mux); count != 0 {
+		t.Fatalf("expected active_users=0 after expired heartbeat, got %d", count)
+	}
+}
+
+func TestActiveSessionTracker_PrunesExpiredEntries(t *testing.T) {
+	tracker := newActiveSessionTracker()
+	now := time.Now()
+
+	tracker.Touch("u1", "tab1", now.Add(30*time.Second), now)
+	tracker.Touch("u2", "tab2", now.Add(90*time.Second), now)
+
+	if count := tracker.Count(now); count != 2 {
+		t.Fatalf("expected 2 active sessions, got %d", count)
+	}
+
+	// หลังเวลาผ่านไป 45 วินาที u1 หมดอายุ เหลือเฉพาะ u2
+	later := now.Add(45 * time.Second)
+	if tracker.HasToken("u1", later) {
+		t.Fatal("expected u1 to be expired after 45s")
+	}
+	if count := tracker.Count(later); count != 1 {
+		t.Fatalf("expected 1 active session after pruning u1, got %d", count)
+	}
+}
+
 // ==========================================
 // 2. Load / Benchmark Tests (ทดสอบยิงพร้อมกันแบบ Parallel)
 // ==========================================

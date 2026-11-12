@@ -26,9 +26,17 @@
 
         <!-- Title & Subtitle -->
         <h1 class="text-2xl font-bold text-amber-200 mb-2">เปิดดวง ระบบทดสอบ บูมบามเอไอ</h1>
-        <p class="text-sm text-slate-400 mb-6 leading-relaxed">
+        <p class="text-sm text-slate-400 mb-3 leading-relaxed">
             กรอกชื่อผู้ใช้และรหัสซีเรียลเชิญเข้าใช้งาน (Access Key) <br>เพื่อสร้างบัญชีทดสอบของคุณ
         </p>
+
+        <!-- แสดงจำนวนผู้ใช้งานระบบปัจจุบัน -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 mb-5 rounded-full bg-slate-950/90 border border-emerald-500/25 text-xs text-slate-300 shadow-inner">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>ผู้ใช้งานปัจจุบัน:</span>
+            <span id="activeUsersCount" class="font-semibold text-emerald-300 tabular-nums">...</span>
+            <span class="text-slate-400">คน</span>
+        </div>
 
         <!-- Form -->
         <form onsubmit="handleRegister(event)" class="space-y-4 text-left">
